@@ -10,3 +10,4 @@ The server auto-reloads; no restart needed after editing .env... actually env va
 - [ ] Task 3: decide endpoint returns Google Sites roadmap for the website goal
 - [ ] Task 6: Tutorial Rescue video-ingestion probe (3-min video) — THE day-one risk check
 - [ ] Task 7: Live voice session en-IN, then hi-IN
+- [ ] Task 5: `/api/guide` "mujhe DNS samajh nahi aaya" → Hindi hint, not the record value; "done" → run_check true; dikhao screenshot → names a visible control

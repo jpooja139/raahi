@@ -1,0 +1,62 @@
+"""Verifier — proves a roadmap step actually worked. No keys needed."""
+from __future__ import annotations
+
+import re
+
+import httpx
+from pydantic import BaseModel
+
+DNS_DOH = "https://dns.google/resolve"
+UA = {"User-Agent": "Mozilla/5.0 (RaahiVerifier)"}
+
+
+class CheckResult(BaseModel):
+    passed: bool
+    detail: str
+
+
+async def _dns(target: str) -> CheckResult:
+    domain = target.strip().rstrip(".").replace("https://", "").replace("http://", "").split("/")[0]
+    async with httpx.AsyncClient(timeout=10) as cx:
+        for rtype in ("CNAME", "A"):
+            r = await cx.get(DNS_DOH, params={"name": domain, "type": rtype})
+            data = r.json()
+            answers = [a["data"] for a in data.get("Answer", []) if a.get("data")]
+            if answers:
+                return CheckResult(
+                    passed=True,
+                    detail=f"{domain} has {rtype} record(s): {', '.join(answers[:3])}",
+                )
+    return CheckResult(
+        passed=False,
+        detail=(
+            f"No CNAME or A record found for {domain} yet. DNS changes can take "
+            "up to an hour to appear — check the record was saved, then try again."
+        ),
+    )
+
+
+async def _page(target: str) -> CheckResult:
+    url = target if target.startswith("http") else "https://" + target
+    try:
+        async with httpx.AsyncClient(timeout=10, headers=UA, follow_redirects=True) as cx:
+            r = await cx.get(url)
+    except httpx.HTTPError as e:
+        return CheckResult(passed=False, detail=f"{url} did not load: {type(e).__name__}")
+    title = ""
+    if m := re.search(r"<title[^>]*>(.*?)</title>", r.text, re.S | re.I):
+        title = m.group(1).strip()[:80]
+    ok = r.status_code < 300 and len(r.text) > 500
+    detail = f"{url} → HTTP {r.status_code}" + (f', title "{title}"' if title else "") + (
+        "" if ok else " — page loads but looks empty; is it published?"
+        if r.status_code < 300 else ""
+    )
+    return CheckResult(passed=ok, detail=detail)
+
+
+async def check(type: str, target: str) -> CheckResult:
+    if type == "dns":
+        return await _dns(target)
+    if type == "page":
+        return await _page(target)
+    return CheckResult(passed=True, detail="confirmed by user")
