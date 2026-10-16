@@ -1,11 +1,11 @@
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, WebSocket
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from . import config, guide, linkdoctor, planner, rescue, verifier
+from . import config, guide, linkdoctor, live, planner, rescue, verifier
 from .gemini import GeminiError
 from .youtube import ChannelNotFound, YouTubeError
 
@@ -94,6 +94,11 @@ def api_rescue(body: RescueIn) -> rescue.Rescue:
         raise HTTPException(400, str(e))
     except GeminiError as e:
         raise _gemini_http(e)
+
+
+@app.websocket("/ws/live")
+async def ws_live(ws: WebSocket):
+    await live.live_session(ws)
 
 
 @app.get("/")

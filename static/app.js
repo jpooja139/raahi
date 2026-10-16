@@ -342,3 +342,37 @@ document.getElementById("tr-form").addEventListener("submit", async (e) => {
     box.appendChild(el("div", "error", err.message));
   }
 });
+
+// ---- Voice (Task 7) ----
+const micBtn = document.getElementById("mic-btn");
+micBtn.disabled = false;
+micBtn.title = "Talk to Raahi";
+
+function voiceLang() { return LANG === "hi" ? "hi-IN" : "en-IN"; }
+function voiceState() {
+  return { decision: window.RAAHI.decision, current_step: window.RAAHI.current_step };
+}
+
+let liveTranscript = null;
+RaahiVoice.hooks({
+  onText(t) {
+    if (!liveTranscript) { liveTranscript = addMsg("raahi", ""); }
+    liveTranscript.textContent += t;
+    const log = document.getElementById("chat-log"); log.scrollTop = log.scrollHeight;
+  },
+  onTool(name) {
+    addMsg("system", (LANG === "hi" ? "⚙ राही जाँच रहा है: " : "⚙ Raahi is checking: ") + name);
+  },
+  onSpeaking(sp) { if (!sp && liveTranscript) { HISTORY.push({ role: "raahi", text: liveTranscript.textContent }); liveTranscript = null; } },
+  onStatus(s) {
+    micBtn.classList.toggle("live", s === "live");
+    if (s === "live") addMsg("system", LANG === "hi" ? "🎙 राही सुन रहा है — बोलिए" : "🎙 Raahi is listening — speak");
+    else if (s === "reconnecting") addMsg("system", LANG === "hi" ? "फिर जुड़ रहा है…" : "Reconnecting…");
+    else if (s.startsWith("error:")) addMsg("system", "⚠ " + s.slice(6));
+  },
+});
+
+micBtn.addEventListener("click", () => {
+  if (RaahiVoice.isActive()) { RaahiVoice.stop(); micBtn.classList.remove("live"); }
+  else RaahiVoice.start(voiceLang(), voiceState);
+});

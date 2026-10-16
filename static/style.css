@@ -93,3 +93,7 @@ button.ghost { background: none; border: 1px solid var(--line); color: var(--mut
 
 .spin { color: var(--muted); font-size: .88rem; }
 .error { color: var(--bad); font-size: .88rem; margin-top: 8px; white-space: pre-wrap; }
+
+#mic-btn { background: none; border: 1px solid var(--line); }
+#mic-btn.live { background: var(--gold); border-color: var(--gold-deep); animation: pulse 1.4s infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 var(--gold-soft); } 50% { box-shadow: 0 0 0 9px var(--gold-soft); } }

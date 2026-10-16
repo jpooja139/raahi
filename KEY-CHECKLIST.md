@@ -12,3 +12,4 @@ The server auto-reloads; no restart needed after editing .env... actually env va
 - [ ] Task 7: Live voice session en-IN, then hi-IN
 - [ ] Task 5: `/api/guide` "mujhe DNS samajh nahi aaya" → Hindi hint, not the record value; "done" → run_check true; dikhao screenshot → names a visible control
 - [ ] Task 6 PROBE (do FIRST): `curl -s -X POST localhost:8000/api/rescue -d '{"url":"<3-min tutorial>"}' -H 'Content-Type: application/json'` → steps with statuses; check `"source"` field: "video" = ingestion works, "transcript" = fallback engaged (both acceptable, video preferred)
+- [ ] Task 7: mic button → speak "what's my next step?" (en-IN) → spoken reply matches roadmap; "check it" on DNS step → verifier runs, result spoken; force-kill session → auto-reconnect keeps step; repeat in hi-IN; note Hinglish behaviour for the pitch
