@@ -27,10 +27,7 @@ header {
   background: var(--bg-soft);
 }
 .brand { display: flex; align-items: center; gap: 14px; }
-.brand-mark {
-  width: 42px; height: 42px; border-radius: 12px; flex: none;
-  background: radial-gradient(circle at 32% 28%, #ffe7a3, var(--gold) 45%, var(--gold-deep));
-}
+.brand-mark { width: 42px; height: 42px; border-radius: 12px; flex: none; object-fit: cover; }
 .brand h1 { margin: 0; font-size: 1.25rem; letter-spacing: .02em; }
 .brand .hindi { color: var(--gold); font-weight: 400; }
 .brand p { margin: 2px 0 0; color: var(--muted); font-size: .82rem; }
