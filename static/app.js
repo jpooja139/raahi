@@ -293,3 +293,52 @@ document.getElementById("chat-form").addEventListener("submit", async (e) => {
     addMsg("system", "⚠ " + err.message);
   }
 });
+
+// ---- Tutorial Rescue (Task 6) ----
+document.getElementById("tr-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const box = document.getElementById("tr-report");
+  const url = document.getElementById("tr-input").value.trim();
+  if (!url) return;
+  box.innerHTML = "";
+  box.appendChild(el("div", "spin", (LANG === "hi" ? "वीडियो पढ़ा जा रहा है… इसमें एक मिनट लग सकता है" : "Reading the video… this can take a minute")));
+  try {
+    const r = await api("/api/rescue", { url });
+    box.innerHTML = "";
+    const rep = el("div", "report");
+    const changed = r.steps.filter((s) => s.status === "changed").length;
+    rep.appendChild(el("div", "headline",
+      `${r.video_title} (${r.published_hint}) — ${changed} step(s) changed since` +
+      (r.source === "transcript" ? " · read from transcript" : "")));
+    r.steps.forEach((s) => {
+      const row = el("div", "row");
+      row.appendChild(el("span", "pill " + (s.status === "current" ? "ok" : s.status === "changed" ? "warn" : "broken"), s.status));
+      const body = el("div", "");
+      body.style.flex = "1"; body.style.minWidth = "220px";
+      body.appendChild(el("div", "", `${s.n}. ${s.instruction}`));
+      if (s.note) body.appendChild(el("div", "url", "→ " + s.note));
+      row.appendChild(body);
+      rep.appendChild(row);
+    });
+    const btn = el("button", "", LANG === "hi" ? "मुझे इसमें गाइड करो" : "Guide me through this");
+    btn.style.marginTop = "10px";
+    btn.onclick = () => {
+      renderDecision({
+        recommendation: "Rescued: " + r.video_title,
+        why: LANG === "hi" ? "यह रोडमैप ट्यूटोरियल से बना है — बदले हुए स्टेप अपडेट हो चुके हैं।" : "Roadmap built from the tutorial — changed steps already updated to today's UI.",
+        cost: "", time_minutes: r.steps.length * 5, rejected: [], clarifying_questions: [],
+        roadmap: r.steps.map((s) => ({
+          n: s.n, title: s.status === "changed" && s.note ? s.note : s.instruction,
+          why: s.status === "changed" ? (LANG === "hi" ? "पुराना तरीका: " : "Old way: ") + s.instruction : "",
+          minutes: 5, concept: "", check: { type: "manual", target: "" },
+        })),
+      });
+      addMsg("system", LANG === "hi" ? "रेस्क्यू रोडमैप तैयार — चैट में पूछते रहें" : "Rescue roadmap ready — ask me in chat as you go");
+    };
+    rep.appendChild(btn);
+    box.appendChild(rep);
+  } catch (err) {
+    box.innerHTML = "";
+    box.appendChild(el("div", "error", err.message));
+  }
+});

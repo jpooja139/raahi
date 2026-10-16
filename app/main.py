@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from . import config, guide, linkdoctor, planner, verifier
+from . import config, guide, linkdoctor, planner, rescue, verifier
 from .gemini import GeminiError
 from .youtube import ChannelNotFound, YouTubeError
 
@@ -78,6 +78,20 @@ def api_guide(body: GuideIn) -> guide.GuideReply:
         return guide.respond(
             body.decision, body.current_step, body.history, body.message, body.screenshot_b64
         )
+    except GeminiError as e:
+        raise _gemini_http(e)
+
+
+class RescueIn(BaseModel):
+    url: str
+
+
+@app.post("/api/rescue")
+def api_rescue(body: RescueIn) -> rescue.Rescue:
+    try:
+        return rescue.analyze(body.url)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
     except GeminiError as e:
         raise _gemini_http(e)
 
