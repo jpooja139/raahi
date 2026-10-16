@@ -59,7 +59,10 @@ async def _tool_result(name: str, state: dict) -> dict:
             return {"passed": False, "detail": "no active step to check"}
         if cur["check"]["type"] == "manual":
             return {"passed": True, "detail": "manual step — trust the user's word"}
-        res = await verifier.check(cur["check"]["type"], cur["check"]["target"])
+        try:
+            res = await verifier.check(cur["check"]["type"], cur["check"]["target"])
+        except Exception as e:  # network hiccup must not kill the voice session
+            return {"passed": False, "detail": f"check could not run ({type(e).__name__}) — try again"}
         return res.model_dump()
     return {"error": f"unknown tool {name}"}
 
@@ -105,46 +108,83 @@ async def live_session(ws: WebSocket):
                         )
 
             async def gemini_to_browser():
-                async for msg in session.receive():
-                    sc = msg.server_content
-                    if msg.tool_call:
-                        responses = []
-                        for fc in msg.tool_call.function_calls:
-                            await ws.send_text(
-                                json.dumps({"type": "toolcall", "name": fc.name})
-                            )
-                            result = await _tool_result(fc.name, state)
-                            responses.append(
-                                types.FunctionResponse(
-                                    id=fc.id, name=fc.name, response=result
-                                )
-                            )
-                        await session.send_tool_response(function_responses=responses)
-                        continue
-                    if sc is None:
-                        continue
-                    if sc.interrupted:
-                        await ws.send_text(json.dumps({"type": "interrupted"}))
-                    if sc.output_transcription and sc.output_transcription.text:
-                        await ws.send_text(
-                            json.dumps(
-                                {"type": "text", "text": sc.output_transcription.text}
-                            )
-                        )
-                    if sc.model_turn:
-                        for part in sc.model_turn.parts or []:
-                            if part.inline_data and part.inline_data.data:
+                # session.receive() completes after each model turn — loop it;
+                # reconnect only on GoAway or a real connection close.
+                while True:
+                    going_away = False
+                    async for msg in session.receive():
+                        if msg.go_away is not None:
+                            going_away = True
+                        sc = msg.server_content
+                        if msg.tool_call:
+                            responses = []
+                            for fc in msg.tool_call.function_calls:
                                 await ws.send_text(
-                                    json.dumps(
-                                        {
-                                            "type": "audio",
-                                            "data": base64.b64encode(
-                                                part.inline_data.data
-                                            ).decode(),
-                                        }
+                                    json.dumps({"type": "toolcall", "name": fc.name})
+                                )
+                                result = await _tool_result(fc.name, state)
+                                if fc.name == "run_check" and result.get("passed"):
+                                    cur = state.get("current_step", 1)
+                                    total = len(
+                                        (state.get("decision") or {}).get("roadmap", [])
+                                    )
+                                    state["current_step"] = min(cur + 1, max(total, 1))
+                                    await ws.send_text(
+                                        json.dumps(
+                                            {
+                                                "type": "check",
+                                                "n": cur,
+                                                "passed": True,
+                                                "detail": result.get("detail", ""),
+                                            }
+                                        )
+                                    )
+                                elif fc.name == "run_check":
+                                    await ws.send_text(
+                                        json.dumps(
+                                            {
+                                                "type": "check",
+                                                "n": state.get("current_step", 1),
+                                                "passed": False,
+                                                "detail": result.get("detail", ""),
+                                            }
+                                        )
+                                    )
+                                responses.append(
+                                    types.FunctionResponse(
+                                        id=fc.id, name=fc.name, response=result
                                     )
                                 )
-                # session ended server-side (GoAway / timeout)
+                            await session.send_tool_response(
+                                function_responses=responses
+                            )
+                            continue
+                        if sc is None:
+                            continue
+                        if sc.interrupted:
+                            await ws.send_text(json.dumps({"type": "interrupted"}))
+                        if sc.output_transcription and sc.output_transcription.text:
+                            await ws.send_text(
+                                json.dumps(
+                                    {"type": "text", "text": sc.output_transcription.text}
+                                )
+                            )
+                        if sc.model_turn:
+                            for part in sc.model_turn.parts or []:
+                                if part.inline_data and part.inline_data.data:
+                                    await ws.send_text(
+                                        json.dumps(
+                                            {
+                                                "type": "audio",
+                                                "data": base64.b64encode(
+                                                    part.inline_data.data
+                                                ).decode(),
+                                            }
+                                        )
+                                    )
+                    if going_away:
+                        break
+                # session really ending (GoAway) → tell the client to reopen
                 await ws.send_text(json.dumps({"type": "reconnect"}))
 
             done, pending = await asyncio.wait(

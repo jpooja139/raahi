@@ -13,3 +13,5 @@ The server auto-reloads; no restart needed after editing .env... actually env va
 - [ ] Task 5: `/api/guide` "mujhe DNS samajh nahi aaya" → Hindi hint, not the record value; "done" → run_check true; dikhao screenshot → names a visible control
 - [ ] Task 6 PROBE (do FIRST): `curl -s -X POST localhost:8000/api/rescue -d '{"url":"<3-min tutorial>"}' -H 'Content-Type: application/json'` → steps with statuses; check `"source"` field: "video" = ingestion works, "transcript" = fallback engaged (both acceptable, video preferred)
 - [ ] Task 7: mic button → speak "what's my next step?" (en-IN) → spoken reply matches roadmap; "check it" on DNS step → verifier runs, result spoken; force-kill session → auto-reconnect keeps step; repeat in hi-IN; note Hinglish behaviour for the pitch
+- [ ] Reviewer flags needing real keys: does gemini-3.8-live accept explicit language_code hi-IN (some native-audio models ignore/reject it)? Is Search grounding enabled on the AI Studio tier?
+- [ ] Cloud Run note: YouTube blocks transcript scraping from cloud IPs — run the Tutorial Rescue demo from the laptop, or pre-cache the demo video's rescue response

@@ -161,8 +161,11 @@ function renderDecision(d) {
 
   window.RAAHI.decision = d;
   window.RAAHI.current_step = 1;
+  if (typeof RaahiVoice !== "undefined") RaahiVoice.sendState(voiceState);
   const c = el("div", "report");
-  c.appendChild(el("div", "headline", `→ ${d.recommendation} · ${d.cost} · ~${d.time_minutes} min`));
+  const headline = ["→ " + d.recommendation, d.cost, d.time_minutes ? `~${d.time_minutes} min` : ""]
+    .filter((s) => s && s.trim()).join(" · ");
+  c.appendChild(el("div", "headline", headline));
   c.appendChild(el("p", "", d.why));
   if (d.rejected.length) {
     const det = document.createElement("details");
@@ -210,10 +213,15 @@ document.getElementById("dc-form").addEventListener("submit", (e) => {
   runDecide(goal, {});
 });
 
+function advanceStep(n) {
+  window.RAAHI.current_step = Math.min(n + 1, (window.RAAHI.decision?.roadmap.length || n));
+  if (typeof RaahiVoice !== "undefined") RaahiVoice.sendState(voiceState);
+}
+
 async function runCheck(step, statusEl) {
   if (step.check.type === "manual") {
     statusEl.className = "pill ok"; statusEl.textContent = LANG === "hi" ? "हो गया ✔" : "done ✔";
-    window.RAAHI.current_step = Math.min(step.n + 1, (window.RAAHI.decision?.roadmap.length || step.n));
+    advanceStep(step.n);
     return;
   }
   statusEl.className = "pill"; statusEl.textContent = "…";
@@ -221,7 +229,7 @@ async function runCheck(step, statusEl) {
     const r = await api("/api/verify", { type: step.check.type, target: step.check.target });
     statusEl.className = "pill " + (r.passed ? "ok" : "warn");
     statusEl.textContent = (r.passed ? "✔ " : "✗ ") + r.detail;
-    if (r.passed) window.RAAHI.current_step = Math.min(step.n + 1, window.RAAHI.decision.roadmap.length);
+    if (r.passed) advanceStep(step.n);
   } catch (err) {
     statusEl.className = "pill broken"; statusEl.textContent = err.message;
   }
@@ -278,14 +286,18 @@ document.getElementById("chat-form").addEventListener("submit", async (e) => {
     HISTORY.push({ role: "raahi", text: r.reply });
     if (r.run_check && window.RAAHI.decision) {
       const step = window.RAAHI.decision.roadmap.find((s) => s.n === window.RAAHI.current_step);
-      if (step && step.check.type !== "manual") {
+      if (step && step.check.type === "manual") {
+        const pill = document.getElementById("step-status-" + step.n);
+        if (pill) { pill.className = "pill ok"; pill.textContent = LANG === "hi" ? "हो गया ✔" : "done ✔"; }
+        advanceStep(step.n);
+      } else if (step) {
         const res = await api("/api/verify", step.check);
         const line = (res.passed ? "✔ " : "✗ ") + res.detail;
         addMsg("raahi", line);
         HISTORY.push({ role: "raahi", text: line });
         const pill = document.getElementById("step-status-" + step.n);
         if (pill) { pill.className = "pill " + (res.passed ? "ok" : "warn"); pill.textContent = res.passed ? "✔" : "✗"; }
-        if (res.passed) window.RAAHI.current_step = Math.min(step.n + 1, window.RAAHI.decision.roadmap.length);
+        if (res.passed) advanceStep(step.n);
       }
     }
   } catch (err) {
@@ -364,6 +376,11 @@ RaahiVoice.hooks({
     addMsg("system", (LANG === "hi" ? "⚙ राही जाँच रहा है: " : "⚙ Raahi is checking: ") + name);
   },
   onSpeaking(sp) { if (!sp && liveTranscript) { HISTORY.push({ role: "raahi", text: liveTranscript.textContent }); liveTranscript = null; } },
+  onCheck(m) {
+    const pill = document.getElementById("step-status-" + m.n);
+    if (pill) { pill.className = "pill " + (m.passed ? "ok" : "warn"); pill.textContent = m.passed ? "✔" : "✗"; }
+    if (m.passed) window.RAAHI.current_step = Math.min(m.n + 1, window.RAAHI.decision?.roadmap.length || m.n);
+  },
   onStatus(s) {
     micBtn.classList.toggle("live", s === "live");
     if (s === "live") addMsg("system", LANG === "hi" ? "🎙 राही सुन रहा है — बोलिए" : "🎙 Raahi is listening — speak");

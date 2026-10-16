@@ -8,5 +8,6 @@ gcloud run deploy raahi \
   --project "$PROJECT" \
   --region asia-south1 \
   --allow-unauthenticated \
+  --timeout=3600 \
   --set-env-vars "GEMINI_API_KEY=${GEMINI_API_KEY:?export it first},YOUTUBE_API_KEY=${YOUTUBE_API_KEY:?export it first}"
 echo "Verify: curl -s <service-url>/api/health"

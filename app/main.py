@@ -6,12 +6,12 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from . import config, guide, linkdoctor, live, planner, rescue, verifier
-from .gemini import GeminiError
+from .gemini import GeminiError, GeminiKeyMissing
 from .youtube import ChannelNotFound, YouTubeError
 
 
 def _gemini_http(e: GeminiError):
-    code = 503 if "missing" in str(e) else 502
+    code = 503 if isinstance(e, GeminiKeyMissing) else 502
     return HTTPException(code, str(e))
 
 app = FastAPI(title="Raahi")

@@ -55,8 +55,18 @@ async def _page(target: str) -> CheckResult:
 
 
 async def check(type: str, target: str) -> CheckResult:
-    if type == "dns":
-        return await _dns(target)
-    if type == "page":
-        return await _page(target)
+    try:
+        if type == "dns":
+            return await _dns(target)
+        if type == "page":
+            return await _page(target)
+    except Exception as e:  # a flaky network must give a readable fail, not a 500
+        return CheckResult(
+            passed=False,
+            detail=f"The check itself could not run ({type_name(e)}) — check your connection and try again.",
+        )
     return CheckResult(passed=True, detail="confirmed by user")
+
+
+def type_name(e: Exception) -> str:
+    return type(e).__name__

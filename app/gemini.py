@@ -12,6 +12,10 @@ class GeminiError(Exception):
     """Raised when a key is missing or Gemini returns unusable output."""
 
 
+class GeminiKeyMissing(GeminiError):
+    """The API key is absent — never mask this behind fallbacks."""
+
+
 _client = None
 
 M = TypeVar("M", bound=BaseModel)
@@ -20,7 +24,7 @@ M = TypeVar("M", bound=BaseModel)
 def client():
     global _client
     if not config.has_gemini():
-        raise GeminiError(
+        raise GeminiKeyMissing(
             "GEMINI_API_KEY missing — paste your real key into raahi/.env and retry."
         )
     if _client is None:
@@ -45,13 +49,16 @@ def generate_json(
     contents = list(parts or []) + [prompt]
 
     if grounding:
-        grounded = c.models.generate_content(
-            model=config.MODEL_TEXT,
-            contents=contents,
-            config=types.GenerateContentConfig(
-                tools=[types.Tool(google_search=types.GoogleSearch())]
-            ),
-        )
+        try:
+            grounded = c.models.generate_content(
+                model=config.MODEL_TEXT,
+                contents=contents,
+                config=types.GenerateContentConfig(
+                    tools=[types.Tool(google_search=types.GoogleSearch())]
+                ),
+            )
+        except Exception as e:
+            raise GeminiError(f"Grounded search failed: {e}") from e
         contents = [
             "Convert the following findings into the required JSON exactly. "
             "Do not add facts that are not in the findings.\n\n" + (grounded.text or "")

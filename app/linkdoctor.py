@@ -65,11 +65,13 @@ async def _check(cx: httpx.AsyncClient, sem: asyncio.Semaphore, url: str) -> int
             if r.status_code in (405, 501, 403):
                 r = await cx.get(url, follow_redirects=True)
             return r.status_code
-        except httpx.HTTPError:
+        except Exception:
+            # malformed URLs (httpx.InvalidURL) and network errors alike:
+            # one bad link must never kill the whole scan
             try:
                 r = await cx.get(url, follow_redirects=True)
                 return r.status_code
-            except httpx.HTTPError:
+            except Exception:
                 return None
 
 
@@ -78,19 +80,23 @@ async def scan(channel_url: str, max_videos: int = 50) -> LinkReport:
     videos = await list_videos(channel, max_videos)
     pairs = extract_links(videos)
 
+    # creators paste the same link block into every description — check each
+    # unique URL once, then map the result back to every video that carries it
+    unique_urls = list({u for _, u in pairs})
     sem = asyncio.Semaphore(MAX_CONCURRENT)
     async with httpx.AsyncClient(timeout=CHECK_TIMEOUT, headers=UA) as cx:
-        codes = await asyncio.gather(*(_check(cx, sem, u) for _, u in pairs))
+        codes = await asyncio.gather(*(_check(cx, sem, u) for u in unique_urls))
+    code_by_url = dict(zip(unique_urls, codes))
 
     items = [
         LinkItem(
             video_title=v.title,
             video_views=v.views,
             url=u,
-            status=classify(code),
-            http_code=code,
+            status=classify(code_by_url[u]),
+            http_code=code_by_url[u],
         )
-        for (v, u), code in zip(pairs, codes)
+        for (v, u) in pairs
     ]
     rank = {"broken": 0, "warn": 1, "ok": 2}
     items.sort(key=lambda i: (rank[i.status], -i.video_views))

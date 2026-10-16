@@ -107,14 +107,12 @@ def _extract_from_transcript(vid: str) -> _Extracted:
 
 def analyze(tutorial_url: str) -> Rescue:
     vid = video_id(tutorial_url)
+    canonical = f"https://www.youtube.com/watch?v={vid}"
     source = "video"
     try:
-        ex = _extract_from_video(tutorial_url)
-    except gemini.GeminiError as e:
-        if "missing" in str(e):
-            raise  # no key — surface it, don't mask it behind the fallback
-        source = "transcript"
-        ex = None
+        ex = _extract_from_video(canonical)
+    except gemini.GeminiKeyMissing:
+        raise  # no key — surface it, don't mask it behind the fallback
     except Exception:
         source = "transcript"
         ex = None
