@@ -54,12 +54,32 @@ async def _page(target: str) -> CheckResult:
     return CheckResult(passed=ok, detail=detail)
 
 
+async def _txt(domain: str, must_contain: str, label: str) -> CheckResult:
+    async with httpx.AsyncClient(timeout=10) as cx:
+        r = await cx.get(DNS_DOH, params={"name": domain, "type": "TXT"})
+    answers = [a["data"].strip('"') for a in r.json().get("Answer", []) if a.get("data")]
+    hit = [t for t in answers if must_contain.lower() in t.lower()]
+    if hit:
+        return CheckResult(passed=True, detail=f"{label} record found on {domain}: {hit[0][:80]}")
+    return CheckResult(
+        passed=False,
+        detail=f"No {label} record on {domain} yet"
+        + (f" (found {len(answers)} other TXT records)" if answers else "")
+        + " — add the TXT record at your domain provider, then check again.",
+    )
+
+
 async def check(type: str, target: str) -> CheckResult:
+    domain = target.strip().replace("https://", "").replace("http://", "").split("/")[0]
     try:
         if type == "dns":
             return await _dns(target)
         if type == "page":
             return await _page(target)
+        if type == "spf":
+            return await _txt(domain, "v=spf1", "SPF")
+        if type == "dmarc":
+            return await _txt("_dmarc." + domain, "v=DMARC1", "DMARC")
     except Exception as e:  # a flaky network must give a readable fail, not a 500
         return CheckResult(
             passed=False,

@@ -11,7 +11,7 @@ from .catalogue import TOOLS
 
 
 class Check(BaseModel):
-    type: Literal["dns", "page", "manual"]
+    type: Literal["dns", "page", "manual", "spf", "dmarc"]
     target: str
 
 
@@ -59,6 +59,8 @@ HARD RULES:
     - type "dns" with target = the bare domain, when the step connects a domain
     - type "page" with target = the URL that should load, when the step
       publishes something reachable
+    - type "spf" / "dmarc" with target = the sending domain, when the step sets
+      up email authentication records
     - type "manual" with target "" otherwise
 - recommendation = the main tool's name. why = 2-3 sentences comparing
   against the closest alternatives. cost = plain text like "Free (domain

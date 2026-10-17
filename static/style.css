@@ -186,3 +186,12 @@ button.ghost:hover { border-color: var(--gold); color: var(--gold); }
 
 .progress { margin-left: auto; font: 600 .78rem "Inter", sans-serif; color: var(--teal-pop); background: rgba(53,224,194,.1); border: 1px solid rgba(53,224,194,.25); padding: 4px 10px; border-radius: 999px; }
 .trust { margin: 0; padding: 0 14px 10px; color: var(--muted); font-size: .76rem; text-align: center; }
+
+.scenarios-wrap { max-width: 1480px; margin: 0 auto; padding: 4px max(20px, 4vw) 0; }
+.scen-title { font-family: "Sora", sans-serif; font-size: .82rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 6px 0 10px; }
+.scenarios { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.scen { text-align: left; background: linear-gradient(180deg, var(--panel-2), var(--panel)); border: 1px solid var(--line); border-radius: 14px; padding: 13px 15px; color: var(--ink); display: flex; gap: 11px; align-items: flex-start; transition: transform .12s, border-color .12s; }
+.scen:hover { transform: translateY(-2px); border-color: var(--gold-deep); }
+.scen .ico { font-size: 1.3rem; }
+.scen b { display: block; font-family: "Sora", sans-serif; font-size: .93rem; }
+.scen span { color: var(--muted); font-size: .8rem; line-height: 1.35; }
