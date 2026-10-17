@@ -30,7 +30,13 @@ def client():
     if _client is None:
         from google import genai
 
-        _client = genai.Client(api_key=config.GEMINI_API_KEY)
+        if config.USE_VERTEX:
+            # ADC: Cloud Run service account in prod, gcloud ADC locally
+            _client = genai.Client(
+                vertexai=True, project=config.GCP_PROJECT, location=config.GCP_LOCATION
+            )
+        else:
+            _client = genai.Client(api_key=config.GEMINI_API_KEY)
     return _client
 
 
