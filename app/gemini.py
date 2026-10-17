@@ -17,6 +17,7 @@ class GeminiKeyMissing(GeminiError):
 
 
 _client = None
+_key_client = None
 
 M = TypeVar("M", bound=BaseModel)
 
@@ -40,18 +41,34 @@ def client():
     return _client
 
 
+def key_client():
+    """YouTube-URL video ingestion is not available on Vertex AI yet —
+    those calls go through the Gemini API key explicitly."""
+    global _key_client
+    if config.GEMINI_API_KEY.lower() in ("", "dummy", "changeme", "your-key-here"):
+        raise GeminiKeyMissing(
+            "Video ingestion needs GEMINI_API_KEY (Vertex does not accept YouTube URLs yet)."
+        )
+    if _key_client is None:
+        from google import genai
+
+        _key_client = genai.Client(api_key=config.GEMINI_API_KEY)
+    return _key_client
+
+
 def generate_json(
     prompt: str,
     schema: Type[M],
     parts: list | None = None,
     grounding: bool = False,
+    use_key_client: bool = False,
 ) -> M:
     """One structured-output call. grounding=True runs a grounded text pass
     first (Search grounding and response_schema can't share one call), then
     converts that answer to the schema. Retries the JSON pass once."""
     from google.genai import types
 
-    c = client()
+    c = key_client() if use_key_client else client()
     contents = list(parts or []) + [prompt]
 
     if grounding:

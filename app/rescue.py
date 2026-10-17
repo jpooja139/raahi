@@ -93,7 +93,7 @@ def _extract_from_video(url: str) -> _Extracted:
     from google.genai import types
 
     part = types.Part(file_data=types.FileData(file_uri=url, mime_type="video/mp4"))
-    return gemini.generate_json(EXTRACT_PROMPT, _Extracted, parts=[part])
+    return gemini.generate_json(EXTRACT_PROMPT, _Extracted, parts=[part], use_key_client=True)
 
 
 def _extract_from_transcript(vid: str) -> _Extracted:

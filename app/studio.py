@@ -143,6 +143,7 @@ def _plan_from_video(url: str, vid: str, instruction: str) -> StudioPlan:
         VIDEO_PLAN_PROMPT.format(instruction=instruction or "find the best Shorts"),
         _VideoPlanLLM,
         parts=[part],
+        use_key_client=True,  # YouTube ingestion: Gemini API only, not Vertex
     )
     return StudioPlan(
         video_id=vid, source="video", duration_sec=max(llm.duration_sec, 1),
