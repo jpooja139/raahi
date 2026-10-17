@@ -92,7 +92,7 @@ def video_id(url: str) -> str:
 def _extract_from_video(url: str) -> _Extracted:
     from google.genai import types
 
-    part = types.Part(file_data=types.FileData(file_uri=url))
+    part = types.Part(file_data=types.FileData(file_uri=url, mime_type="video/mp4"))
     return gemini.generate_json(EXTRACT_PROMPT, _Extracted, parts=[part])
 
 

@@ -138,7 +138,7 @@ def _plan_from_video(url: str, vid: str, instruction: str) -> StudioPlan:
     Gemini ingests the YouTube URL itself. No SRT/caption-gaps on this path."""
     from google.genai import types
 
-    part = types.Part(file_data=types.FileData(file_uri=f"https://www.youtube.com/watch?v={vid}"))
+    part = types.Part(file_data=types.FileData(file_uri=f"https://www.youtube.com/watch?v={vid}", mime_type="video/mp4"))
     llm = gemini.generate_json(
         VIDEO_PLAN_PROMPT.format(instruction=instruction or "find the best Shorts"),
         _VideoPlanLLM,
