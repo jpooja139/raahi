@@ -148,7 +148,9 @@ async def run(handle: str, domain: str = "", lang: str = "en") -> PulseReport:
             diffs={},
         )
 
-    narration = gemini.generate_json(
+    import asyncio
+    narration = await asyncio.to_thread(
+        gemini.generate_json,
         NARRATE_PROMPT.format(lang=lang, current=str({k: cur[k] for k in cur if k != "top_videos"}), diffs=str(d)),
         _Narration,
     )

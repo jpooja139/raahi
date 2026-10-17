@@ -15,7 +15,7 @@ class CheckResult(BaseModel):
     detail: str
 
 
-async def _dns(target: str) -> CheckResult:
+async def _dns(target: str, expect: str = "") -> CheckResult:
     domain = target.strip().rstrip(".").replace("https://", "").replace("http://", "").split("/")[0]
     async with httpx.AsyncClient(timeout=10) as cx:
         for rtype in ("CNAME", "A"):
@@ -23,6 +23,14 @@ async def _dns(target: str) -> CheckResult:
             data = r.json()
             answers = [a["data"] for a in data.get("Answer", []) if a.get("data")]
             if answers:
+                if expect:
+                    hit = [a for a in answers if expect.lower() in a.lower()]
+                    if hit:
+                        return CheckResult(passed=True,
+                            detail=f"{domain} {rtype} points to the right place: {hit[0]}")
+                    return CheckResult(passed=False,
+                        detail=f"{domain} has {rtype} record(s) ({answers[0][:60]}) but none points to "
+                               f"the expected destination ({expect}). Fix the record value.")
                 return CheckResult(
                     passed=True,
                     detail=f"{domain} has {rtype} record(s): {', '.join(answers[:3])}",
@@ -69,11 +77,26 @@ async def _txt(domain: str, must_contain: str, label: str) -> CheckResult:
     )
 
 
-async def check(type: str, target: str) -> CheckResult:
+KNOWN_TYPES = {"dns", "page", "spf", "dmarc", "manual"}
+
+
+async def check(type: str, target: str, expect: str = "") -> CheckResult:
+    if type not in KNOWN_TYPES:
+        return CheckResult(passed=False, detail=f"Unknown check type '{type}' — refusing to pass it.")
+    if type == "manual":
+        # explicitly NOT independent verification; callers must present it as such
+        return CheckResult(passed=True, detail="marked done by you — not independently verified")
     domain = target.strip().replace("https://", "").replace("http://", "").split("/")[0]
+    if not target.strip():
+        return CheckResult(passed=False, detail="This step has no verification target yet — nothing to check.")
     try:
+        from .netguard import BlockedDestination, assert_public_url
+        try:
+            assert_public_url(target if type == "page" else domain)
+        except BlockedDestination as b:
+            return CheckResult(passed=False, detail=f"Refused: {b}")
         if type == "dns":
-            return await _dns(target)
+            return await _dns(target, expect)
         if type == "page":
             return await _page(target)
         if type == "spf":
@@ -85,7 +108,7 @@ async def check(type: str, target: str) -> CheckResult:
             passed=False,
             detail=f"The check itself could not run ({type_name(e)}) — check your connection and try again.",
         )
-    return CheckResult(passed=True, detail="confirmed by user")
+    return CheckResult(passed=False, detail="unreachable")
 
 
 def type_name(e: Exception) -> str:

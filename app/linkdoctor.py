@@ -59,6 +59,11 @@ def classify(code: int | None) -> str:
 
 
 async def _check(cx: httpx.AsyncClient, sem: asyncio.Semaphore, url: str) -> int | None:
+    from .netguard import BlockedDestination, assert_public_url
+    try:
+        assert_public_url(url)
+    except BlockedDestination:
+        return None  # treat as unreachable; never fetch private targets
     async with sem:
         try:
             r = await cx.head(url, follow_redirects=True)
@@ -75,9 +80,9 @@ async def _check(cx: httpx.AsyncClient, sem: asyncio.Semaphore, url: str) -> int
                 return None
 
 
-async def scan(channel_url: str, max_videos: int = 50) -> LinkReport:
+async def scan(channel_url: str, max_videos: int = 50, force: bool = False) -> LinkReport:
     channel = await resolve_channel(channel_url)
-    videos = await list_videos(channel, max_videos)
+    videos = await list_videos(channel, max_videos, force=force)
     pairs = extract_links(videos)
 
     # creators paste the same link block into every description — check each

@@ -60,7 +60,7 @@ async def _tool_result(name: str, state: dict) -> dict:
         if cur["check"]["type"] == "manual":
             return {"passed": True, "detail": "manual step — trust the user's word"}
         try:
-            res = await verifier.check(cur["check"]["type"], cur["check"]["target"])
+            res = await verifier.check(cur["check"]["type"], cur["check"]["target"], cur["check"].get("expect", ""))
         except Exception as e:  # network hiccup must not kill the voice session
             return {"passed": False, "detail": f"check could not run ({type(e).__name__}) — try again"}
         return res.model_dump()

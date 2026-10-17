@@ -46,7 +46,7 @@ class StudioPlan(BaseModel):
     source: str              # "transcript" | "none"
     duration_sec: float
     ops_understood: list[str]
-    silence_cuts: list[Cut]  # deterministic, from transcript gaps
+    silence_cuts: list[Cut]  # caption gaps (silence candidates) — from transcript timing, not audio analysis
     shorts: list[Short]      # model-selected, timestamped
     pacing_notes: list[str]
     keep_highlights: list[str]
@@ -94,7 +94,7 @@ def _silences(snips) -> list[Cut]:
         gap = b.start - gap_start
         if gap >= SILENCE_GAP_SEC:
             cuts.append(Cut(start=round(gap_start, 1), end=round(b.start, 1),
-                            reason=f"{gap:.1f}s silence"))
+                            reason=f"{gap:.1f}s caption gap (likely silence — verify in editor)"))
     return cuts[:40]
 
 

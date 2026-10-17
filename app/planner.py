@@ -13,6 +13,7 @@ from .catalogue import TOOLS
 class Check(BaseModel):
     type: Literal["dns", "page", "manual", "spf", "dmarc"]
     target: str
+    expect: str = ""  # optional expected destination/content for dns checks
 
 
 class Step(BaseModel):
@@ -70,13 +71,16 @@ HARD RULES:
 
 GOAL: {goal}
 ANSWERS SO FAR: {answers}
+CONCEPTS THIS CREATOR ALREADY LEARNED (skip re-teaching these; keep their
+steps but set concept to "" for ideas they already know): {skills}
 """
 
 
-def decide(goal: str, answers: dict) -> Decision:
+def decide(goal: str, answers: dict, known_skills: list[str] | None = None) -> Decision:
     prompt = PROMPT.format(
         catalogue=json.dumps(TOOLS, ensure_ascii=False, indent=1),
         goal=goal,
         answers=json.dumps(answers, ensure_ascii=False) or "{}",
+        skills=json.dumps(known_skills or [], ensure_ascii=False),
     )
     return gemini.generate_json(prompt, Decision)

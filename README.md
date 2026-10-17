@@ -79,6 +79,14 @@ transcript fallback), live voice with run-the-check tool calls.
 **Pitch-only (deliberately):** "why did my views drop" analytics (needs
 OAuth), creator tech map, recipe sharing.
 
+## Honesty & limits (read this, judges)
+
+- **Predefined vs AI:** scenario cards load handwritten "recipes" (zero latency, deliberately) and are badged *predefined recipe* in the UI; typed goals go through the Gemini planner and are badged *ai-planned*. Checks are live in both.
+- **Verification semantics:** unknown check types are refused; DNS checks support an expected destination (the website recipe requires `ghs.googlehosted.com`); "manual" completion is shown as *done (your word)* — never as verified. SPF/DMARC checks prove record presence (required for deliverability), not inbox placement.
+- **Studio:** "silence" cuts are caption-gap candidates from transcript timing, not audio analysis — labeled as such. Cloud rendering is planned v2 and its button is disabled.
+- **Security:** outbound fetches refuse private/metadata addresses (SSRF guard); API is rate-limited per IP (demo-grade); no auth yet — do not store secrets in profiles.
+- **Not yet evidenced:** completion-rate benchmarks, user study, willingness to pay. These are the v1 evaluation plan, not claims.
+
 ## Measured runs
 
 <!-- Fill from rehearsals before submission: tasks tried, completed,

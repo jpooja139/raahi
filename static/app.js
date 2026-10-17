@@ -112,7 +112,8 @@ document.getElementById("ld-form").addEventListener("submit", async (e) => {
   box.innerHTML = "";
   box.appendChild(el("div", "spin", STRINGS.wait_ld[LANG]));
   try {
-    const r = await api("/api/linkdoctor", { channel: q });
+    const r = await api("/api/linkdoctor", { channel: q, force: !!window.RAAHI.fixing });
+    window.RAAHI.handle = q;
     box.innerHTML = "";
     const rep = el("div", "report");
     rep.appendChild(
@@ -146,7 +147,9 @@ document.getElementById("ld-form").addEventListener("submit", async (e) => {
           title: LANG === "hi" ? "दुबारा स्कैन करें — broken गिनती गिरनी चाहिए" : "Re-scan the channel — the broken count should drop",
           why: LANG === "hi" ? "यही सबूत है कि काम हुआ" : "That is the proof the fix worked",
           minutes: 1, concept: "", check: { type: "manual", target: "" } });
+        window.RAAHI.fixing = true; // future re-scans bypass the cache to show fixes
         renderDecision({
+          _source: "recipe",
           recommendation: (LANG === "hi" ? "टूटे लिंक ठीक करें" : "Fix broken links") + ` · ${r.channel_title}`,
           why: LANG === "hi" ? `${r.broken} टूटे लिंक मिले — सबसे ज़्यादा views वाले पहले।` : `${r.broken} broken link(s) found — highest-view videos first.`,
           cost: "", time_minutes: steps.reduce((a, x) => a + x.minutes, 0),
@@ -202,7 +205,11 @@ function renderDecision(d) {
   const c = el("div", "report");
   const headline = ["→ " + d.recommendation, d.cost, d.time_minutes ? `~${d.time_minutes} min` : ""]
     .filter((s) => s && s.trim()).join(" · ");
-  c.appendChild(el("div", "headline", headline));
+  const hl = el("div", "headline", headline);
+  hl.appendChild(el("span", "plan-tag", d._source === "recipe"
+    ? (LANG === "hi" ? "तैयार recipe · जाँच live" : "predefined recipe · checks live")
+    : (LANG === "hi" ? "AI-planned" : "ai-planned")));
+  c.appendChild(hl);
   c.appendChild(el("p", "", d.why));
   if (d.rejected.length) {
     const det = document.createElement("details");
@@ -236,7 +243,7 @@ async function runDecide(goal, answers) {
   const card = document.getElementById("dc-card");
   card.innerHTML = ""; card.appendChild(el("div", "spin", STRINGS.wait_dc[LANG]));
   try {
-    const d = await api("/api/decide", { goal, answers });
+    const d = await api("/api/decide", { goal, answers, handle: window.RAAHI.handle || "" });
     renderDecision(d);
   } catch (err) {
     card.innerHTML = ""; card.appendChild(el("div", "error", err.message));
@@ -281,16 +288,16 @@ function saveState() {
 
 async function runCheck(step, statusEl) {
   if (step.check.type === "manual") {
-    statusEl.className = "pill ok"; statusEl.textContent = LANG === "hi" ? "हो गया ✔" : "done ✔";
+    statusEl.className = "pill warn"; statusEl.textContent = LANG === "hi" ? "हो गया (आपके कहे पर)" : "done (your word)";
     advanceStep(step.n);
     return;
   }
   statusEl.className = "pill"; statusEl.textContent = "…";
   try {
-    const r = await api("/api/verify", { type: step.check.type, target: step.check.target });
+    const r = await api("/api/verify", { type: step.check.type, target: step.check.target, expect: step.check.expect || "" });
     statusEl.className = "pill " + (r.passed ? "ok" : "warn");
     statusEl.textContent = (r.passed ? "✔ " : "✗ ") + r.detail;
-    if (r.passed) advanceStep(step.n);
+    if (r.passed) { advanceStep(step.n); learnFromStep(step); }
   } catch (err) {
     statusEl.className = "pill broken"; statusEl.textContent = err.message;
   }
@@ -350,16 +357,16 @@ document.getElementById("chat-form").addEventListener("submit", async (e) => {
       const step = window.RAAHI.decision.roadmap.find((s) => s.n === window.RAAHI.current_step);
       if (step && step.check.type === "manual") {
         const pill = document.getElementById("step-status-" + step.n);
-        if (pill) { pill.className = "pill ok"; pill.textContent = LANG === "hi" ? "हो गया ✔" : "done ✔"; }
+        if (pill) { pill.className = "pill warn"; pill.textContent = LANG === "hi" ? "हो गया (आपके कहे पर)" : "done (your word)"; }
         advanceStep(step.n);
       } else if (step) {
-        const res = await api("/api/verify", step.check);
+        const res = await api("/api/verify", { type: step.check.type, target: step.check.target, expect: step.check.expect || "" });
         const line = (res.passed ? "✔ " : "✗ ") + res.detail;
         addMsg("raahi", line);
         HISTORY.push({ role: "raahi", text: line });
         const pill = document.getElementById("step-status-" + step.n);
         if (pill) { pill.className = "pill " + (res.passed ? "ok" : "warn"); pill.textContent = res.passed ? "✔" : "✗"; }
-        if (res.passed) advanceStep(step.n);
+        if (res.passed) { advanceStep(step.n); learnFromStep(step); }
       }
     }
   } catch (err) {
@@ -398,6 +405,7 @@ document.getElementById("tr-form").addEventListener("submit", async (e) => {
     btn.style.marginTop = "10px";
     btn.onclick = () => {
       renderDecision({
+        _source: "recipe",
         recommendation: "Rescued: " + r.video_title,
         why: LANG === "hi" ? "यह रोडमैप ट्यूटोरियल से बना है — बदले हुए स्टेप अपडेट हो चुके हैं।" : "Roadmap built from the tutorial — changed steps already updated to today's UI.",
         cost: "", time_minutes: r.steps.length * 5, rejected: [], clarifying_questions: [],
@@ -522,6 +530,7 @@ const SCENARIOS = [
     needsDomain: true,
     run(domain) {
       renderDecision({
+        _source: "recipe",
         recommendation: "Google Sites", cost: S("Free (domain ~Rs 800/yr)", "फ्री (डोमेन ~₹800/साल)"), time_minutes: 45,
         why: S("Free, zero maintenance, embeds your YouTube videos natively, and connects your own domain without a paid plan.",
                "फ्री, कोई मेंटेनेंस नहीं, YouTube वीडियो सीधे embed होते हैं, और अपना डोमेन बिना paid plan जुड़ता है।"),
@@ -535,10 +544,10 @@ const SCENARIOS = [
                 S("Embedding streams from YouTube — nothing re-uploads.", "Embed से वीडियो YouTube से ही चलता है।")),
           mstep(3, "Add a Google Form for fan emails", "fan emails के लिए Google Form जोड़ें", "", 10,
                 S("Signups land in a Google Sheet automatically.", "साइनअप अपने आप Google Sheet में आते हैं।")),
-          mstep(4, "Publish the site", "साइट publish करें", "", 5, "", { type: "page", target: "" }),
+          mstep(4, "Publish the site", "साइट publish करें", "", 5, ""),
           mstep(5, `Connect ${domain} in Settings → Custom domains`, `Settings → Custom domains में ${domain} जोड़ें`, "", 10,
-                S("DNS is the internet's phonebook — a CNAME points your name at Google.", "DNS इंटरनेट की फोनबुक है — CNAME आपका नाम Google की ओर करता है।"),
-                { type: "dns", target: domain }),
+                S("DNS is the internet's phonebook — the CNAME must point at ghs.googlehosted.com.", "DNS इंटरनेट की फोनबुक है — CNAME ghs.googlehosted.com की ओर होना चाहिए।"),
+                { type: "dns", target: domain, expect: "ghs.googlehosted.com" }),
         ],
       });
       addMsg("system", S("Scenario loaded — say \u201cguide me\u201d or tap the mic.", "सीनारियो तैयार — \u201cguide me\u201d लिखें या mic दबाएं।"));
@@ -551,6 +560,7 @@ const SCENARIOS = [
     needsDomain: true,
     run(domain) {
       renderDecision({
+        _source: "recipe",
         recommendation: S("Email authentication fix", "Email authentication fix"), cost: S("Free", "फ्री"), time_minutes: 25,
         why: S("Gmail and Yahoo now junk mail from domains without SPF and DMARC records. Raahi checks your DNS live and proves when you're clean.",
                "Gmail/Yahoo अब बिना SPF-DMARC वाले डोमेन की मेल spam में डालते हैं। राही लाइव DNS जाँच कर सबूत देता है।"),
@@ -564,7 +574,7 @@ const SCENARIOS = [
                 S("DMARC tells inboxes what to do when a mail fails checks.", "DMARC बताता है कि फेल mail का क्या हो।"),
                 { type: "dmarc", target: domain }),
           mstep(4, "Add a basic DMARC record (v=DMARC1; p=none)", "basic DMARC record जोड़ें (v=DMARC1; p=none)", "", 10, ""),
-          mstep(5, `Re-check both — green means inbox, not spam`, `दोनों दुबारा जाँचें — green मतलब inbox`, "", 1, "", { type: "dmarc", target: domain }),
+          mstep(5, `Re-check both — records present (required for inbox; content still matters)`, `दोनों दुबारा जाँचें — records ज़रूरी हैं inbox के लिए`, "", 1, "", { type: "dmarc", target: domain }),
         ],
       });
     },
@@ -777,3 +787,10 @@ document.getElementById("st-form").addEventListener("submit", async (e) => {
 document.querySelectorAll("#tool-studio .chip[data-fill]").forEach((c) => {
   c.addEventListener("click", () => { const i = document.getElementById(c.dataset.fill); i.value = c.dataset.val; i.focus(); });
 });
+
+
+// learn a concept only after an INDEPENDENTLY verified pass, when we know who the creator is
+async function learnFromStep(step) {
+  if (!window.RAAHI.handle || !step.concept) return;
+  try { await api("/api/context/learn", { handle: window.RAAHI.handle, concept: step.concept }); } catch {}
+}

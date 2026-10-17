@@ -43,7 +43,7 @@ class Video(BaseModel):
     description: str
 
 
-async def _get(resource: str, params: dict) -> dict:
+async def _get(resource: str, params: dict, force: bool = False) -> dict:
     if not config.has_youtube():
         raise YouTubeError(
             "YOUTUBE_API_KEY missing — paste your real key into raahi/.env and retry."
@@ -53,7 +53,7 @@ async def _get(resource: str, params: dict) -> dict:
         (resource + json.dumps(full, sort_keys=True)).encode()
     ).hexdigest()
     cache_file = CACHE_DIR / f"{cache_key}.json"
-    if cache_file.exists() and time.time() - cache_file.stat().st_mtime < CACHE_TTL:
+    if not force and cache_file.exists() and time.time() - cache_file.stat().st_mtime < CACHE_TTL:
         return json.loads(cache_file.read_text())
 
     async with httpx.AsyncClient(timeout=15) as cx:
@@ -132,7 +132,7 @@ async def resolve_channel(url_or_handle: str) -> ChannelInfo:
     return _channel_from_items(await _get("channels", {**part, "id": cid}), value)
 
 
-async def list_videos(channel: ChannelInfo, max_videos: int = 50) -> list[Video]:
+async def list_videos(channel: ChannelInfo, max_videos: int = 50, force: bool = False) -> list[Video]:
     pl = await _get(
         "playlistItems",
         {
@@ -140,12 +140,13 @@ async def list_videos(channel: ChannelInfo, max_videos: int = 50) -> list[Video]
             "playlistId": channel.uploads_playlist_id,
             "maxResults": min(max_videos, 50),
         },
+        force=force,
     )
     ids = [it["contentDetails"]["videoId"] for it in pl.get("items", [])]
     if not ids:
         return []
     vids = await _get(
-        "videos", {"part": "snippet,statistics", "id": ",".join(ids)}
+        "videos", {"part": "snippet,statistics", "id": ",".join(ids)}, force=force
     )
     out = []
     for it in vids.get("items", []):
