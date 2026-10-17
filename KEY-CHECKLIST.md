@@ -15,3 +15,4 @@ The server auto-reloads; no restart needed after editing .env... actually env va
 - [ ] Task 7: mic button → speak "what's my next step?" (en-IN) → spoken reply matches roadmap; "check it" on DNS step → verifier runs, result spoken; force-kill session → auto-reconnect keeps step; repeat in hi-IN; note Hinglish behaviour for the pitch
 - [ ] Reviewer flags needing real keys: does gemini-3.8-live accept explicit language_code hi-IN (some native-audio models ignore/reject it)? Is Search grounding enabled on the AI Studio tier?
 - [ ] Cloud Run note: YouTube blocks transcript scraping from cloud IPs — run the Tutorial Rescue demo from the laptop, or pre-cache the demo video's rescue response
+- [ ] AFTER THE EVENT: rotate both API keys (they transited terminals during the hackathon) and add the new values to Secret Manager (`gcloud secrets versions add raahi-env --data-file=.env`)

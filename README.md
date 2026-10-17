@@ -46,8 +46,8 @@ Current: **v0.1.0** (`/api/health` reports it). Design invariants that never cha
 
 ```bash
 pip3 install --user -r requirements.txt
-cp .env.example .env     # add GEMINI_API_KEY (aistudio.google.com)
-                         # and YOUTUBE_API_KEY (YouTube Data API v3)
+./fetch-env.sh           # team: pulls .env from Secret Manager (needs gcloud login)
+# or: cp .env.example .env and add your own GEMINI_API_KEY + YOUTUBE_API_KEY
 python3 -m uvicorn app.main:app --port 8000
 # open http://localhost:8000
 ```
