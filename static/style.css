@@ -2,10 +2,10 @@
    frosted surfaces over a deep teal field. */
 :root {
   --bg: #060f12;
-  --glass: rgba(255, 255, 255, 0.045);
-  --glass-2: rgba(255, 255, 255, 0.075);
-  --edge: rgba(255, 255, 255, 0.09);
-  --edge-hi: rgba(255, 255, 255, 0.16);
+  --glass: rgba(255, 255, 255, 0.085);
+  --glass-2: rgba(255, 255, 255, 0.13);
+  --edge: rgba(255, 255, 255, 0.16);
+  --edge-hi: rgba(255, 255, 255, 0.35);
   --bg2: rgba(8, 20, 24, 0.55);
   --panel: var(--glass);
   --line: var(--edge);
@@ -20,28 +20,49 @@
   --warn: #ffd166; --warn-bg: rgba(255, 209, 102, 0.12);
   --bad: #ff8a70; --bad-bg: rgba(255, 138, 112, 0.12);
   --r: 18px;
-  --blur: blur(22px) saturate(140%);
+  --blur: blur(26px) saturate(180%);
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
 * { box-sizing: border-box; }
 body {
-  margin: 0; color: var(--ink); min-height: 100vh;
+  margin: 0; color: var(--ink); min-height: 100vh; position: relative;
   background:
-    radial-gradient(1000px 600px at 88% -12%, rgba(53, 224, 194, 0.10), transparent 60%),
-    radial-gradient(1200px 700px at -8% -18%, rgba(255, 200, 61, 0.09), transparent 55%),
-    radial-gradient(900px 900px at 50% 120%, rgba(53, 224, 194, 0.05), transparent 60%),
-    var(--bg);
+    radial-gradient(1100px 700px at 85% -10%, rgba(53, 224, 194, 0.22), transparent 55%),
+    radial-gradient(1300px 800px at -10% -15%, rgba(255, 200, 61, 0.20), transparent 50%),
+    radial-gradient(1000px 1000px at 50% 115%, rgba(32, 156, 196, 0.16), transparent 60%),
+    linear-gradient(165deg, #0b2228 0%, #081a1f 45%, #0d1a26 100%);
   background-attachment: fixed;
 }
+body::before, body::after {
+  content: ""; position: fixed; z-index: -1; border-radius: 50%;
+  filter: blur(90px); pointer-events: none;
+}
+body::before {
+  width: 55vw; height: 55vw; left: -12vw; top: -18vw;
+  background: radial-gradient(circle, rgba(255, 200, 61, 0.38), rgba(255, 140, 60, 0.14) 55%, transparent 70%);
+  animation: drift1 26s ease-in-out infinite alternate;
+}
+body::after {
+  width: 60vw; height: 60vw; right: -18vw; bottom: -22vw;
+  background: radial-gradient(circle, rgba(53, 224, 194, 0.34), rgba(40, 120, 200, 0.16) 55%, transparent 70%);
+  animation: drift2 32s ease-in-out infinite alternate;
+}
+@keyframes drift1 { to { transform: translate(14vw, 10vh) scale(1.15); } }
+@keyframes drift2 { to { transform: translate(-12vw, -12vh) scale(1.12); } }
 
 /* ---------- glass primitive ---------- */
 .panel, .tool, .scen {
-  background: var(--glass);
+  background:
+    linear-gradient(170deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 28%, rgba(255, 255, 255, 0.015) 60%, rgba(255, 255, 255, 0.06) 100%),
+    var(--glass);
   backdrop-filter: var(--blur);
   -webkit-backdrop-filter: var(--blur);
   border: 1px solid var(--edge);
-  border-radius: var(--r);
-  box-shadow: inset 0 1px 0 var(--edge-hi), 0 18px 48px rgba(0, 0, 0, 0.35);
+  border-radius: 22px;
+  box-shadow:
+    inset 0 1.5px 0 var(--edge-hi),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 60px rgba(0, 0, 0, 0.45);
 }
 
 /* ---------- header ---------- */
@@ -65,7 +86,7 @@ header {
 .hero { padding: 26px max(22px, 4vw) 6px; max-width: 1480px; margin: 0 auto; }
 .hero h1 {
   font-family: "Sora", sans-serif; font-weight: 800; margin: 0;
-  font-size: clamp(1.6rem, 3.4vw, 2.6rem); line-height: 1.12; letter-spacing: -0.015em;
+  font-size: clamp(2rem, 4.6vw, 3.6rem); line-height: 1.07; letter-spacing: -0.02em;
   text-wrap: balance;
 }
 .hero h1 span {
@@ -124,25 +145,28 @@ main > section, .tools, .tool { min-width: 0; }
 
 /* ---------- inputs & buttons ---------- */
 input, textarea {
-  background: rgba(0, 0, 0, 0.25); color: var(--ink);
-  border: 1px solid var(--edge); border-radius: 12px; padding: 11px 14px;
+  background: rgba(4, 12, 15, 0.45); color: var(--ink);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--edge); border-radius: 14px; padding: 11px 15px;
   font: inherit; font-size: .94rem; transition: border-color .15s, box-shadow .15s;
 }
 input::placeholder, textarea::placeholder { color: #67807f; }
 input:focus, textarea:focus { outline: none; border-color: rgba(255, 200, 61, 0.55); box-shadow: 0 0 0 3px var(--gold-soft); }
 button { font: inherit; cursor: pointer; }
 .cta {
-  background: var(--gold); color: #231803; border: 0; border-radius: 12px;
-  padding: 11px 19px; font-weight: 700; letter-spacing: .01em; text-transform: lowercase;
-  transition: transform .13s, background .13s;
+  background: linear-gradient(180deg, #ffe493 0%, var(--gold) 45%, #edb21f 100%);
+  color: #231803; border: 0; border-radius: 999px;
+  padding: 11px 21px; font-weight: 700; letter-spacing: .01em; text-transform: lowercase;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 8px 22px rgba(255, 200, 61, 0.3);
+  transition: transform .13s, box-shadow .13s;
 }
-.cta:hover { transform: translateY(-1px); background: var(--gold-hot); }
+.cta:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 12px 28px rgba(255, 200, 61, 0.42); }
 .cta:active { transform: none; }
 button:disabled { opacity: .4; cursor: not-allowed; transform: none !important; }
 button.ghost {
   background: var(--glass); backdrop-filter: var(--blur);
-  border: 1px solid var(--edge); color: var(--muted);
-  border-radius: 12px; padding: 10px 15px; font-weight: 600; text-transform: lowercase;
+  border: 1px solid var(--edge); color: var(--ink);
+  border-radius: 999px; padding: 10px 17px; font-weight: 600; text-transform: lowercase;
   transition: color .13s, border-color .13s;
 }
 button.ghost:hover { border-color: rgba(255, 200, 61, 0.5); color: var(--gold); }
@@ -174,7 +198,8 @@ button.ghost:hover { border-color: rgba(255, 200, 61, 0.5); color: var(--gold); 
 
 .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 11px; }
 .chip {
-  background: none; border: 1px dashed var(--edge); color: var(--muted);
+  background: rgba(255, 255, 255, 0.05); border: 1px solid var(--edge); color: var(--muted);
+  backdrop-filter: var(--blur);
   border-radius: 999px; padding: 6px 13px; font-size: .8rem; font-weight: 500;
   text-transform: lowercase; transition: all .13s;
 }
