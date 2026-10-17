@@ -19,7 +19,10 @@ app = FastAPI(title="Raahi")
 STATIC = Path(__file__).resolve().parent.parent / "static"
 
 
-VERSION = (Path(__file__).resolve().parent.parent / "VERSION").read_text().strip()
+try:
+    VERSION = (Path(__file__).resolve().parent.parent / "VERSION").read_text().strip()
+except OSError:
+    VERSION = "0.1.0"
 
 
 @app.get("/api/health")
