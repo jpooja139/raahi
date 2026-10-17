@@ -53,6 +53,10 @@ HARD RULES:
 - If the goal or answers leave a decision-changing fact unknown (budget,
   which accounts they already have, audience country, time for upkeep),
   return clarifying_questions (1-3, plain language) and an EMPTY roadmap.
+- NEVER invent placeholder values for check targets (no "yourdomain.com",
+  "example.com", "your-site"). If a dns/page check would need the creator's
+  real domain or URL and it is not in the goal/answers, ASK for it via
+  clarifying_questions instead of planning with a fake target.
 - Otherwise clarifying_questions is empty and roadmap has 3-6 steps.
 - Each step: title (imperative, one action), why (one sentence), minutes
   (realistic), concept (ONE sentence teaching the idea behind the step —

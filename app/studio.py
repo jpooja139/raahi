@@ -41,6 +41,10 @@ class _PlanLLM(BaseModel):
     keep_highlights: list[str]
 
 
+class _VideoPlanLLM(_PlanLLM):
+    duration_sec: float
+
+
 class StudioPlan(BaseModel):
     video_id: str
     source: str              # "transcript" | "none"
@@ -119,16 +123,43 @@ TRANSCRIPT:
 """
 
 
+VIDEO_PLAN_PROMPT = """You are Raahi Studio. Watch this video and plan an edit
+for the creator's instruction: {instruction}
+
+Return ops_understood, shorts (2-3 segments of 20-55s with exact start/end
+seconds from the video, title, opening hook line, reason), pacing_notes (2-4,
+with timestamps), keep_highlights (2-3, with timestamps), and duration_sec
+(the video's total length in seconds). Only use moments that exist in the video.
+"""
+
+
+def _plan_from_video(url: str, vid: str, instruction: str) -> StudioPlan:
+    """Cloud fallback: YouTube blocks transcript reads from cloud IPs, but
+    Gemini ingests the YouTube URL itself. No SRT/caption-gaps on this path."""
+    from google.genai import types
+
+    part = types.Part(file_data=types.FileData(file_uri=f"https://www.youtube.com/watch?v={vid}"))
+    llm = gemini.generate_json(
+        VIDEO_PLAN_PROMPT.format(instruction=instruction or "find the best Shorts"),
+        _VideoPlanLLM,
+        parts=[part],
+    )
+    return StudioPlan(
+        video_id=vid, source="video", duration_sec=max(llm.duration_sec, 1),
+        ops_understood=llm.ops_understood,
+        silence_cuts=[],
+        shorts=[x for x in llm.shorts if x.end > x.start and x.end - x.start <= 75][:3],
+        pacing_notes=llm.pacing_notes[:4], keep_highlights=llm.keep_highlights[:3],
+        captions_srt="", render_status="planned-v2",
+    )
+
+
 def plan(url: str, instruction: str) -> StudioPlan:
     vid = video_id(url)
     try:
         snips = list(_fetch_transcript(vid))
-    except Exception as e:
-        raise gemini.GeminiError(
-            f"Could not read this video's transcript ({type(e).__name__}). "
-            "Captions must exist on the video. Try another video, or run "
-            "Raahi locally (YouTube blocks transcript reads from cloud IPs)."
-        ) from e
+    except Exception:
+        return _plan_from_video(url, vid, instruction)
 
     duration = snips[-1].start + snips[-1].duration
     srt = _build_srt(snips)

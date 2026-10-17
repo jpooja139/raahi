@@ -766,7 +766,11 @@ document.getElementById("st-form").addEventListener("submit", async (e) => {
     }
 
     const actions = el("div", "chips");
+    if (!p.captions_srt) rep.appendChild(el("div", "honest", S(
+      "planned from the video itself (cloud mode) — captions & gap-cuts need a local run",
+      "वीडियो से प्लान बना (cloud mode) — captions के लिए local run चाहिए")));
     const srtBtn = el("button", "cta", S("⬇ Download captions (.srt)", "⬇ Captions (.srt)"));
+    srtBtn.hidden = !p.captions_srt;
     srtBtn.onclick = () => dl("captions.srt", p.captions_srt, "text/plain");
     const packBtn = el("button", "ghost", S("⬇ Export edit plan (JSON)", "⬇ एडिट प्लान (JSON)"));
     packBtn.onclick = () => dl("raahi-edit-plan.json", JSON.stringify(p, null, 2), "application/json");

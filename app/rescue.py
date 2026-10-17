@@ -128,12 +128,19 @@ def analyze(tutorial_url: str) -> Rescue:
             ) from e
 
     steps_text = "\n".join(f"{s.n}. {s.instruction}" for s in ex.steps)
-    verified = gemini.generate_json(
-        VERIFY_PROMPT.format(tool=ex.tool_name, steps=steps_text),
-        _Verified,
-        grounding=True,
-    )
-    vmap = {v.n: v for v in verified.steps}
+    freshness_note = ""
+    try:
+        verified = gemini.generate_json(
+            VERIFY_PROMPT.format(tool=ex.tool_name, steps=steps_text),
+            _Verified,
+            grounding=True,
+        )
+        vmap = {v.n: v for v in verified.steps}
+    except gemini.GeminiError:
+        # grounding quota/outage: return the extracted steps honestly unverified
+        vmap = {}
+        freshness_note = ("freshness check unavailable right now (search quota) — "
+                          "steps extracted from the video but NOT verified against current docs")
     return Rescue(
         video_title=ex.video_title,
         published_hint=ex.published_hint,
@@ -143,7 +150,7 @@ def analyze(tutorial_url: str) -> Rescue:
                 n=s.n,
                 instruction=s.instruction,
                 status=vmap[s.n].status if s.n in vmap else "unverifiable",
-                note=vmap[s.n].note if s.n in vmap else "could not verify this step",
+                note=vmap[s.n].note if s.n in vmap else (freshness_note or "could not verify this step"),
             )
             for s in ex.steps
         ],
