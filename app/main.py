@@ -5,7 +5,8 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from . import config, guide, linkdoctor, live, planner, rescue, verifier
+from . import config, context, guide, linkdoctor, live, planner, pulse, rescue, verifier
+from . import store
 from .gemini import GeminiError, GeminiKeyMissing
 from .youtube import ChannelNotFound, YouTubeError
 
@@ -98,6 +99,30 @@ def api_rescue(body: RescueIn) -> rescue.Rescue:
         raise HTTPException(400, str(e))
     except GeminiError as e:
         raise _gemini_http(e)
+
+
+class PulseIn(BaseModel):
+    channel: str
+    domain: str = ""
+    lang: str = "en"
+
+
+@app.post("/api/pulse")
+async def api_pulse(body: PulseIn) -> pulse.PulseReport:
+    try:
+        return await pulse.run(body.channel, body.domain, body.lang)
+    except ChannelNotFound as e:
+        raise HTTPException(400, str(e))
+    except YouTubeError as e:
+        raise HTTPException(503, str(e))
+    except GeminiError as e:
+        raise _gemini_http(e)
+
+
+@app.get("/api/context/{handle}")
+def api_context(handle: str):
+    doc = context.get_profile(handle)
+    return {"backend": store.backend(), **doc}
 
 
 @app.websocket("/ws/live")

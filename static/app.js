@@ -570,6 +570,17 @@ const SCENARIOS = [
     },
   },
   {
+    ico: "📈", id: "pulse",
+    t: { en: "My channel pulse", hi: "मेरा चैनल pulse" },
+    s: { en: "What changed this week — with proof", hi: "इस हफ्ते क्या बदला — सबूत के साथ" },
+    run() {
+      const h = (window.prompt ? window.prompt(S("Your @handle?", "आपका @handle?")) : "") || "";
+      if (!h.trim()) return;
+      const dom = (window.prompt ? window.prompt(S("Your domain (optional, for email/DNS checks)?", "आपका डोमेन (optional)?")) : "") || "";
+      runPulse(h.trim(), dom.trim());
+    },
+  },
+  {
     ico: "🛟", id: "tutorial",
     t: { en: "A tutorial got me stuck", hi: "ट्यूटोरियल में अटक गई" },
     s: { en: "Paste it — get today's steps, then a guide", hi: "पेस्ट करें — आज के स्टेप + गाइड" },
@@ -604,3 +615,51 @@ renderScenarios();
 const _setLang2 = setLang;
 setLang = function (l) { _setLang2(l); renderScenarios(); };
 applyStrings();
+
+
+// ---- Pulse rendering ----
+async function runPulse(channel, domain) {
+  const card = document.getElementById("dc-card");
+  const rbox = document.getElementById("dc-roadmap");
+  document.getElementById("dc-questions").innerHTML = "";
+  rbox.innerHTML = "";
+  card.innerHTML = "";
+  card.appendChild(el("div", "spin", S("Measuring your channel… ~20 seconds", "आपका चैनल नापा जा रहा है… ~20 सेकंड")));
+  document.getElementById("tool-decide").scrollIntoView({ behavior: "smooth" });
+  try {
+    const r = await api("/api/pulse", { channel, domain, lang: LANG });
+    card.innerHTML = "";
+    const rep = el("div", "report");
+    rep.appendChild(el("div", "headline",
+      (r.baseline ? S("📈 Pulse baseline for ", "📈 Pulse baseline: ") : S("📈 Since your last check — ", "📈 पिछली जाँच के बाद — ")) + channel));
+    r.insights.forEach((ins) => {
+      const row = el("div", "row");
+      const body = el("div", "");
+      body.style.flex = "1"; body.style.minWidth = "220px";
+      body.appendChild(el("div", "", ins.headline));
+      body.appendChild(el("div", "url", ins.detail + "  →  " + ins.action));
+      row.appendChild(body);
+      if (ins.check_type !== "manual") {
+        const status = el("span", "pill", "·");
+        const btn = el("button", "ghost", S("Check", "जाँचें"));
+        btn.onclick = async () => {
+          status.textContent = "…";
+          try {
+            const res = await api("/api/verify", { type: ins.check_type, target: ins.check_target });
+            status.className = "pill " + (res.passed ? "ok" : "warn");
+            status.textContent = (res.passed ? "✔ " : "✗ ") + res.detail;
+          } catch (e) { status.className = "pill broken"; status.textContent = e.message; }
+        };
+        row.appendChild(status); row.appendChild(btn);
+      }
+      rep.appendChild(row);
+    });
+    rep.appendChild(el("div", "spin", r.baseline
+      ? S("Run Pulse again after your next upload — from then on it reports only what changed.", "अगले upload के बाद फिर चलाएं — तब से सिर्फ बदलाव दिखेंगे।")
+      : S("Raahi can run this for you every morning.", "राही इसे रोज़ सुबह आपके लिए चला सकता है।")));
+    card.appendChild(rep);
+  } catch (err) {
+    card.innerHTML = ""; card.appendChild(el("div", "error", err.message));
+  }
+}
+renderScenarios();

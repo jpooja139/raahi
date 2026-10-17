@@ -6,3 +6,4 @@ python-dotenv
 pydantic
 websockets
 youtube-transcript-api
+google-cloud-storage
