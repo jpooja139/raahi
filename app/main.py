@@ -18,10 +18,14 @@ app = FastAPI(title="Raahi")
 STATIC = Path(__file__).resolve().parent.parent / "static"
 
 
+VERSION = (Path(__file__).resolve().parent.parent / "VERSION").read_text().strip()
+
+
 @app.get("/api/health")
 def health():
     return {
         "ok": True,
+        "version": VERSION,
         "models": {"text": config.MODEL_TEXT, "live": config.MODEL_LIVE},
         "keys": config.key_status(),
     }

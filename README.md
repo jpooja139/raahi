@@ -26,6 +26,22 @@ step actually worked — it never just hands over a wall of instructions.
 Plus **Link Doctor**: scan any channel's video descriptions and get the
 broken links ranked by the views they're bleeding.
 
+## How you work with Raahi (the mechanism)
+
+1. **Start from a one-tap scenario** (or say your goal in your own words, Hindi or English).
+2. Raahi shows a **decision card** — what it chose, what it rejected, cost, time.
+3. The **roadmap** guides one step at a time: chat, voice (🎙), or "dikhao" screen-share when stuck.
+4. Every step ends in a **check** — DNS, page, SPF/DMARC, link re-scan — "done" is proven, never claimed.
+5. Your plan survives refreshes; the progress pill always shows where you are.
+
+## Versioning & roadmap
+
+Current: **v0.1.0** (`/api/health` reports it). Design invariants that never change:
+*hold the creator's context · decide on the creator's side · prove outcomes independently.*
+- **v1 — Intelligence layer:** Creator Context Engine (personalised env: skills learned, decisions + outcomes) and **Pulse** — daily/weekly diff-based insights (new broken links, vanished DNS/SPF records, traffic shifts), each with a one-tap verified fix.
+- **v2 — Raahi Cut:** prompt-based Shorts extraction from existing YouTube videos (EDL + FFmpeg, approval-first).
+- **North star (2035):** the creator's fiduciary engineer — the judgment-and-verification layer between creators and platform AIs.
+
 ## Run locally
 
 ```bash
