@@ -29,7 +29,7 @@
 <main>
   <section class="panel chat-panel" aria-label="Chat with Raahi">
     <div class="chat-head">
-      <span class="dot"></span><span data-str="chat_title">Talk to Raahi</span>
+      <span class="dot"></span><span data-str="chat_title">Talk to Raahi</span><span id="progress" class="progress" hidden></span>
     </div>
     <div id="chat-log" class="chat-log"></div>
     <form id="chat-form" class="chat-input">
@@ -38,6 +38,7 @@
       <button type="button" id="dikhao-btn" class="ghost" hidden data-str="dikhao"></button>
       <button type="submit" class="cta" data-str="send"></button>
     </form>
+    <p class="trust" data-str="trust"></p>
   </section>
 
   <section class="tools" aria-label="Raahi's tools">

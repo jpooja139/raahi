@@ -35,6 +35,12 @@ const STRINGS = {
   },
   dc_go: { en: "Plan it", hi: "प्लान करो" },
   thinking: { en: "Raahi is thinking…", hi: "राही सोच रहा है…" },
+  wait_ld: { en: "Scanning… ~15 seconds", hi: "स्कैन हो रहा है… ~15 सेकंड" },
+  wait_tr: { en: "Reading the video and today's docs… 1–2 minutes", hi: "वीडियो और आज के docs पढ़े जा रहे हैं… 1–2 मिनट" },
+  wait_dc: { en: "Comparing tools and building your roadmap… ~40 seconds", hi: "टूल्स की तुलना और रोडमैप… ~40 सेकंड" },
+  trust: { en: "🔒 Raahi never asks for passwords or OTPs", hi: "🔒 राही कभी पासवर्ड या OTP नहीं मांगता" },
+  fixme: { en: "🔧 Fix these with me", hi: "🔧 मेरे साथ ठीक करें" },
+  resumed: { en: "Resumed your plan:", hi: "आपका प्लान वापस लोड हुआ:" },
 };
 
 let LANG = "en";
@@ -104,7 +110,7 @@ document.getElementById("ld-form").addEventListener("submit", async (e) => {
   const q = document.getElementById("ld-input").value.trim();
   if (!q) return;
   box.innerHTML = "";
-  box.appendChild(el("div", "spin", STRINGS.thinking[LANG]));
+  box.appendChild(el("div", "spin", STRINGS.wait_ld[LANG]));
   try {
     const r = await api("/api/linkdoctor", { channel: q });
     box.innerHTML = "";
@@ -123,6 +129,34 @@ document.getElementById("ld-form").addEventListener("submit", async (e) => {
       rep.appendChild(row);
     });
     if (r.broken + r.warned === 0) rep.appendChild(el("div", "spin", "All links healthy ✔"));
+    if (r.broken > 0) {
+      const fix = el("button", "cta", STRINGS.fixme[LANG]);
+      fix.style.marginTop = "12px";
+      fix.onclick = () => {
+        const broken = r.items.filter((i) => i.status === "broken").slice(0, 5);
+        const steps = broken.map((i, k) => ({
+          n: k + 1,
+          title: (LANG === "hi" ? `"${i.video_title}" के description में यह लिंक बदलें` : `Replace this link in the description of "${i.video_title}"`),
+          why: `${i.url} (HTTP ${i.http_code || "dead"}) · ${i.video_views.toLocaleString()} views`,
+          minutes: 3,
+          concept: k === 0 ? (LANG === "hi" ? "YouTube Studio → Content → वीडियो → Description में लिंक बदलें।" : "YouTube Studio → Content → the video → edit the Description to swap the link.") : "",
+          check: { type: "manual", target: "" },
+        }));
+        steps.push({ n: steps.length + 1,
+          title: LANG === "hi" ? "दुबारा स्कैन करें — broken गिनती गिरनी चाहिए" : "Re-scan the channel — the broken count should drop",
+          why: LANG === "hi" ? "यही सबूत है कि काम हुआ" : "That is the proof the fix worked",
+          minutes: 1, concept: "", check: { type: "manual", target: "" } });
+        renderDecision({
+          recommendation: (LANG === "hi" ? "टूटे लिंक ठीक करें" : "Fix broken links") + ` · ${r.channel_title}`,
+          why: LANG === "hi" ? `${r.broken} टूटे लिंक मिले — सबसे ज़्यादा views वाले पहले।` : `${r.broken} broken link(s) found — highest-view videos first.`,
+          cost: "", time_minutes: steps.reduce((a, x) => a + x.minutes, 0),
+          rejected: [], clarifying_questions: [], roadmap: steps,
+        });
+        addMsg("system", LANG === "hi" ? "फ़िक्स रोडमैप तैयार — चैट में पूछते रहें" : "Fix roadmap ready — ask me in chat as you go");
+        document.getElementById("tool-decide").scrollIntoView({ behavior: "smooth" });
+      };
+      rep.appendChild(fix);
+    }
     box.appendChild(rep);
   } catch (err) {
     box.innerHTML = "";
@@ -164,6 +198,7 @@ function renderDecision(d) {
   window.RAAHI.decision = d;
   window.RAAHI.current_step = 1;
   if (typeof RaahiVoice !== "undefined") RaahiVoice.sendState(voiceState);
+  updateProgress(); saveState();
   const c = el("div", "report");
   const headline = ["→ " + d.recommendation, d.cost, d.time_minutes ? `~${d.time_minutes} min` : ""]
     .filter((s) => s && s.trim()).join(" · ");
@@ -198,7 +233,7 @@ function renderDecision(d) {
 
 async function runDecide(goal, answers) {
   const card = document.getElementById("dc-card");
-  card.innerHTML = ""; card.appendChild(el("div", "spin", STRINGS.thinking[LANG]));
+  card.innerHTML = ""; card.appendChild(el("div", "spin", STRINGS.wait_dc[LANG]));
   try {
     const d = await api("/api/decide", { goal, answers });
     renderDecision(d);
@@ -218,6 +253,29 @@ document.getElementById("dc-form").addEventListener("submit", (e) => {
 function advanceStep(n) {
   window.RAAHI.current_step = Math.min(n + 1, (window.RAAHI.decision?.roadmap.length || n));
   if (typeof RaahiVoice !== "undefined") RaahiVoice.sendState(voiceState);
+  updateProgress(); saveState();
+}
+
+function updateProgress() {
+  const p = document.getElementById("progress");
+  const d = window.RAAHI.decision;
+  if (!p) return;
+  if (!d || !d.roadmap.length) { p.hidden = true; return; }
+  const cur = window.RAAHI.current_step;
+  const left = d.roadmap.filter((s) => s.n >= cur).reduce((a, s) => a + s.minutes, 0);
+  p.hidden = false;
+  p.textContent = (LANG === "hi")
+    ? `स्टेप ${Math.min(cur, d.roadmap.length)} / ${d.roadmap.length} · ~${left} मिनट बाकी`
+    : `Step ${Math.min(cur, d.roadmap.length)} of ${d.roadmap.length} · ~${left} min left`;
+}
+
+function saveState() {
+  try {
+    localStorage.setItem("raahi", JSON.stringify({
+      decision: window.RAAHI.decision, current_step: window.RAAHI.current_step,
+      goal: window.RAAHI.goal || "", history: HISTORY.slice(-20),
+    }));
+  } catch {}
 }
 
 async function runCheck(step, statusEl) {
@@ -286,6 +344,7 @@ document.getElementById("chat-form").addEventListener("submit", async (e) => {
     thinking.remove();
     addMsg("raahi", r.reply);
     HISTORY.push({ role: "raahi", text: r.reply });
+    saveState();
     if (r.run_check && window.RAAHI.decision) {
       const step = window.RAAHI.decision.roadmap.find((s) => s.n === window.RAAHI.current_step);
       if (step && step.check.type === "manual") {
@@ -315,7 +374,7 @@ document.getElementById("tr-form").addEventListener("submit", async (e) => {
   const url = document.getElementById("tr-input").value.trim();
   if (!url) return;
   box.innerHTML = "";
-  box.appendChild(el("div", "spin", (LANG === "hi" ? "वीडियो पढ़ा जा रहा है… इसमें एक मिनट लग सकता है" : "Reading the video… this can take a minute")));
+  box.appendChild(el("div", "spin", STRINGS.wait_tr[LANG]));
   try {
     const r = await api("/api/rescue", { url });
     box.innerHTML = "";
@@ -382,6 +441,7 @@ RaahiVoice.hooks({
     const pill = document.getElementById("step-status-" + m.n);
     if (pill) { pill.className = "pill " + (m.passed ? "ok" : "warn"); pill.textContent = m.passed ? "✔" : "✗"; }
     if (m.passed) window.RAAHI.current_step = Math.min(m.n + 1, window.RAAHI.decision?.roadmap.length || m.n);
+    updateProgress(); saveState();
   },
   onStatus(s) {
     micBtn.classList.toggle("live", s === "live");
@@ -417,3 +477,17 @@ document.querySelectorAll(".chip[data-fill]").forEach((c) => {
   });
 });
 applyStrings();
+
+
+// ---- restore state (survives refresh) ----
+try {
+  const saved = JSON.parse(localStorage.getItem("raahi") || "null");
+  if (saved && saved.decision) {
+    window.RAAHI.goal = saved.goal;
+    (saved.history || []).forEach((m) => { HISTORY.push(m); addMsg(m.role === "user" ? "user" : "raahi", m.text); });
+    renderDecision(saved.decision);
+    window.RAAHI.current_step = saved.current_step || 1;
+    updateProgress();
+    addMsg("system", STRINGS.resumed[LANG] + " " + saved.decision.recommendation);
+  }
+} catch {}
