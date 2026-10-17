@@ -195,3 +195,15 @@ button.ghost:hover { border-color: var(--gold); color: var(--gold); }
 .scen .ico { font-size: 1.3rem; }
 .scen b { display: block; font-family: "Sora", sans-serif; font-size: .93rem; }
 .scen span { color: var(--muted); font-size: .8rem; line-height: 1.35; }
+
+.honest { color: var(--muted); font-size: .78rem; margin: 8px 0 0; }
+.badges { display: flex; gap: 7px; flex-wrap: wrap; margin: 10px 0; }
+.badge { background: rgba(53,224,194,.1); color: var(--teal-pop); border: 1px solid rgba(53,224,194,.25); border-radius: 999px; padding: 4px 11px; font-size: .78rem; font-weight: 600; }
+.timeline { position: relative; height: 34px; background: var(--bg2); border: 1px solid var(--line); border-radius: 8px; margin: 10px 0; overflow: hidden; }
+.tl-cut { position: absolute; top: 0; bottom: 0; background: rgba(255,138,112,.45); }
+.tl-short { position: absolute; top: 0; bottom: 0; background: rgba(255,200,61,.55); border-left: 2px solid var(--gold); border-right: 2px solid var(--gold); cursor: pointer; }
+.tl-label { font-size: .72rem; color: var(--muted); display: flex; justify-content: space-between; }
+.skeleton { height: 14px; border-radius: 7px; margin: 9px 0; background: linear-gradient(90deg, var(--bg2) 25%, var(--panel-2) 50%, var(--bg2) 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+.plan-tag { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--warn-bg); color: var(--warn); border-radius: 6px; padding: 3px 8px; margin-left: 8px; }
+.yt-embed { width: 100%; aspect-ratio: 16/9; border: 1px solid var(--line); border-radius: 11px; margin-top: 10px; }

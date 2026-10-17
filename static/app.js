@@ -663,3 +663,117 @@ async function runPulse(channel, domain) {
   }
 }
 renderScenarios();
+
+// ---- Raahi Studio (honest video-edit planning) ----
+Object.assign(STRINGS, {
+  st_title: { en: "Raahi Studio", hi: "राही स्टूडियो" },
+  st_sub: { en: "Tell it the edit — get cuts, captions & Shorts with timecodes", hi: "एडिट बोलिए — cuts, captions और Shorts timecodes के साथ" },
+  st_url: { en: "YouTube video URL (your existing video)", hi: "YouTube वीडियो URL" },
+  st_go: { en: "Plan my edit", hi: "एडिट प्लान करो" },
+  st_instruction: { en: "e.g. remove silences, add captions, create a Short", hi: "जैसे: silences हटाओ, captions, एक Short" },
+  st_honest: { en: "Real today: edit plan, SRT captions, Shorts timecodes — works in any editor. Cloud rendering: planned v2.", hi: "आज असली: एडिट प्लान, SRT captions, Shorts timecodes। Cloud rendering: v2 में।" },
+  st_wait: { en: "Reading transcript & planning your edit… ~30 seconds", hi: "Transcript पढ़कर एडिट प्लान बन रहा है… ~30 सेकंड" },
+});
+applyStrings();
+
+function dl(filename, text, type) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([text], { type }));
+  a.download = filename;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+
+function fmtT(s) { const m = Math.floor(s / 60); return `${m}:${String(Math.round(s % 60)).padStart(2, "0")}`; }
+
+document.getElementById("st-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const url = document.getElementById("st-url").value.trim();
+  const instruction = document.getElementById("st-instruction").value.trim();
+  const box = document.getElementById("st-result");
+  if (!url) return;
+  box.innerHTML = "";
+  box.appendChild(el("div", "spin", STRINGS.st_wait[LANG]));
+  for (let i = 0; i < 3; i++) box.appendChild(el("div", "skeleton"));
+  try {
+    const p = await api("/api/studio/plan", { url, instruction });
+    box.innerHTML = "";
+    const rep = el("div", "report");
+
+    const badges = el("div", "badges");
+    p.ops_understood.forEach((o) => badges.appendChild(el("span", "badge", o)));
+    rep.appendChild(badges);
+
+    // preview player (clicking a Short seeks it)
+    const frame = document.createElement("iframe");
+    frame.className = "yt-embed";
+    frame.allow = "autoplay; encrypted-media";
+    frame.src = `https://www.youtube.com/embed/${p.video_id}`;
+    rep.appendChild(frame);
+
+    // timeline
+    const tl = el("div", "timeline");
+    p.silence_cuts.forEach((c) => {
+      const seg = el("div", "tl-cut");
+      seg.style.left = (c.start / p.duration_sec) * 100 + "%";
+      seg.style.width = Math.max(0.4, ((c.end - c.start) / p.duration_sec) * 100) + "%";
+      seg.title = c.reason;
+      tl.appendChild(seg);
+    });
+    p.shorts.forEach((s) => {
+      const seg = el("div", "tl-short");
+      seg.style.left = (s.start / p.duration_sec) * 100 + "%";
+      seg.style.width = ((s.end - s.start) / p.duration_sec) * 100 + "%";
+      seg.title = s.title;
+      seg.onclick = () => { frame.src = `https://www.youtube.com/embed/${p.video_id}?start=${Math.floor(s.start)}&autoplay=1`; };
+      tl.appendChild(seg);
+    });
+    rep.appendChild(tl);
+    const lbl = el("div", "tl-label");
+    lbl.appendChild(el("span", "", "0:00"));
+    lbl.appendChild(el("span", "", S(`gold = Shorts (click to preview) · red = silence cuts`, "सुनहरा = Shorts (क्लिक करें) · लाल = silence cuts")));
+    lbl.appendChild(el("span", "", fmtT(p.duration_sec)));
+    rep.appendChild(lbl);
+
+    p.shorts.forEach((s) => {
+      const row = el("div", "row");
+      const body = el("div", "");
+      body.style.flex = "1"; body.style.minWidth = "220px";
+      body.appendChild(el("div", "", `🎯 ${s.title} · ${fmtT(s.start)}–${fmtT(s.end)}`));
+      body.appendChild(el("div", "url", `Hook: "${s.hook}" — ${s.reason}`));
+      row.appendChild(body);
+      const cp = el("button", "ghost", S("Copy timecode", "Timecode copy"));
+      cp.onclick = async () => { try { await navigator.clipboard.writeText(`${fmtT(s.start)}-${fmtT(s.end)} ${s.title}`); cp.textContent = "✔"; } catch {} };
+      row.appendChild(cp);
+      rep.appendChild(row);
+    });
+
+    if (p.pacing_notes.length) {
+      const det = document.createElement("details");
+      det.appendChild(el("summary", "", S("Pacing notes", "Pacing नोट्स") + ` (${p.pacing_notes.length})`));
+      p.pacing_notes.forEach((n) => det.appendChild(el("p", "url", "• " + n)));
+      rep.appendChild(det);
+    }
+
+    const actions = el("div", "chips");
+    const srtBtn = el("button", "cta", S("⬇ Download captions (.srt)", "⬇ Captions (.srt)"));
+    srtBtn.onclick = () => dl("captions.srt", p.captions_srt, "text/plain");
+    const packBtn = el("button", "ghost", S("⬇ Export edit plan (JSON)", "⬇ एडिट प्लान (JSON)"));
+    packBtn.onclick = () => dl("raahi-edit-plan.json", JSON.stringify(p, null, 2), "application/json");
+    const render = el("button", "ghost", S("Render in cloud", "Cloud में render"));
+    render.disabled = true;
+    actions.appendChild(srtBtn); actions.appendChild(packBtn); actions.appendChild(render);
+    const tag = el("span", "plan-tag", "planned · v2");
+    actions.appendChild(tag);
+    rep.appendChild(actions);
+
+    box.appendChild(rep);
+  } catch (err) {
+    box.innerHTML = "";
+    box.appendChild(el("div", "error", err.message));
+  }
+});
+// chips added after boot need wiring
+document.querySelectorAll("#tool-studio .chip[data-fill]").forEach((c) => {
+  c.addEventListener("click", () => { const i = document.getElementById(c.dataset.fill); i.value = c.dataset.val; i.focus(); });
+});
