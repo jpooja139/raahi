@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Raahi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 <header>
   <div class="brand">
     <img class="brand-mark" src="/static/logo.png" alt="">
-    <div>
-      <h1>Raahi <span class="hindi">राही</span></h1>
-      <p data-str="tagline"></p>
-    </div>
+    <span class="brand-name">Raahi <em>राही</em></span>
   </div>
   <div class="lang-toggle" role="group" aria-label="Language">
     <button id="lang-en" class="active" type="button">EN</button>
@@ -21,49 +21,69 @@
   </div>
 </header>
 
+<section class="hero">
+  <h1 id="hero-h1">Your AI engineer. Decides. Guides. <span>Proves it works.</span></h1>
+  <p data-str="tagline"></p>
+</section>
+
 <main>
   <section class="panel chat-panel" aria-label="Chat with Raahi">
+    <div class="chat-head">
+      <span class="dot"></span><span data-str="chat_title">Talk to Raahi</span>
+    </div>
     <div id="chat-log" class="chat-log"></div>
     <form id="chat-form" class="chat-input">
-      <button type="button" id="mic-btn" title="Voice (coming in Task 7)" disabled>🎙</button>
+      <button type="button" id="mic-btn" title="Voice">🎙</button>
       <input id="chat-text" autocomplete="off" data-strph="chat_placeholder">
-      <button type="button" id="dikhao-btn" hidden data-str="dikhao"></button>
-      <button type="submit" data-str="send"></button>
+      <button type="button" id="dikhao-btn" class="ghost" hidden data-str="dikhao"></button>
+      <button type="submit" class="cta" data-str="send"></button>
     </form>
   </section>
 
-  <section class="panel cards-panel" aria-label="Raahi's workbench">
-    <div class="tool-launcher">
-      <div class="tool" id="tool-linkdoctor">
-        <h2 data-str="ld_title"></h2>
-        <p data-str="ld_sub"></p>
-        <form id="ld-form">
-          <input id="ld-input" data-strph="ld_placeholder" autocomplete="off">
-          <button type="submit" data-str="ld_scan"></button>
-        </form>
-        <div id="ld-report"></div>
+  <section class="tools" aria-label="Raahi's tools">
+
+    <div class="tool" id="tool-linkdoctor">
+      <div class="tool-head"><span class="tool-ico">🔗</span>
+        <div><h2 data-str="ld_title"></h2><p data-str="ld_sub"></p></div>
       </div>
-      <div class="tool" id="tool-rescue">
-        <h2 data-str="tr_title"></h2>
-        <p data-str="tr_sub"></p>
-        <form id="tr-form">
-          <input id="tr-input" data-strph="tr_placeholder" autocomplete="off">
-          <button type="submit" data-str="tr_go"></button>
-        </form>
-        <div id="tr-report"></div>
-      </div>
-      <div class="tool" id="tool-decide">
-        <h2 data-str="dc_title"></h2>
-        <p data-str="dc_sub"></p>
-        <form id="dc-form">
-          <input id="dc-input" data-strph="dc_placeholder" autocomplete="off">
-          <button type="submit" data-str="dc_go"></button>
-        </form>
-        <div id="dc-questions"></div>
-        <div id="dc-card"></div>
-        <div id="dc-roadmap"></div>
-      </div>
+      <form id="ld-form">
+        <input id="ld-input" data-strph="ld_placeholder" autocomplete="off">
+        <button type="submit" class="cta" data-str="ld_scan"></button>
+      </form>
+      <div class="chips"><button type="button" class="chip" data-fill="ld-input" data-val="@GoogleDevelopers">try @GoogleDevelopers</button></div>
+      <div id="ld-report"></div>
     </div>
+
+    <div class="tool" id="tool-rescue">
+      <div class="tool-head"><span class="tool-ico">🛟</span>
+        <div><h2 data-str="tr_title"></h2><p data-str="tr_sub"></p></div>
+      </div>
+      <form id="tr-form">
+        <input id="tr-input" data-strph="tr_placeholder" autocomplete="off">
+        <button type="submit" class="cta" data-str="tr_go"></button>
+      </form>
+      <div class="chips"><button type="button" class="chip" data-fill="tr-input" data-val="https://www.youtube.com/watch?v=RPtyPYJHCEY">try a Google Sites tutorial</button></div>
+      <div id="tr-report"></div>
+    </div>
+
+    <div class="tool" id="tool-decide">
+      <div class="tool-head"><span class="tool-ico">🚀</span>
+        <div><h2 data-str="dc_title"></h2><p data-str="dc_sub"></p></div>
+      </div>
+      <form id="dc-form">
+        <input id="dc-input" data-strph="dc_placeholder" autocomplete="off">
+        <button type="submit" class="cta" data-str="dc_go"></button>
+      </form>
+      <div class="chips">
+        <button type="button" class="chip" data-fill="dc-input" data-val="my own website with my videos and an email signup">🌐 my own website</button>
+        <button type="button" class="chip" data-fill="dc-input" data-val="sell my recipe e-book to my Indian audience">📙 sell my e-book</button>
+        <button type="button" class="chip" data-fill="dc-input" data-val="collect emails from my fans">✉️ email list</button>
+      </div>
+      <div id="dc-questions"></div>
+      <div id="dc-card"></div>
+      <div id="dc-roadmap"></div>
+    </div>
+
   </section>
 </main>
 

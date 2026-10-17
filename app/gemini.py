@@ -50,12 +50,14 @@ def generate_json(
 
     if grounding:
         try:
-            grounded = c.models.generate_content(
-                model=config.MODEL_TEXT,
-                contents=contents,
-                config=types.GenerateContentConfig(
-                    tools=[types.Tool(google_search=types.GoogleSearch())]
-                ),
+            grounded = _with_429_retry(
+                lambda: c.models.generate_content(
+                    model=config.MODEL_TEXT,
+                    contents=contents,
+                    config=types.GenerateContentConfig(
+                        tools=[types.Tool(google_search=types.GoogleSearch())]
+                    ),
+                )
             )
         except Exception as e:
             raise GeminiError(f"Grounded search failed: {e}") from e
@@ -68,16 +70,37 @@ def generate_json(
     raw = ""
     for _ in range(2):  # one retry per Global Constraints
         try:
-            resp = c.models.generate_content(
-                model=config.MODEL_TEXT,
-                contents=contents,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    response_schema=schema,
-                ),
+            resp = _with_429_retry(
+                lambda: c.models.generate_content(
+                    model=config.MODEL_TEXT,
+                    contents=contents,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        response_schema=schema,
+                    ),
+                )
             )
             raw = resp.text or ""
             return schema.model_validate_json(raw)
         except Exception as e:  # noqa: BLE001 — surfaced via GeminiError below
             last_err = e
     raise GeminiError(f"Gemini JSON call failed: {last_err}; raw={raw[:500]}")
+
+
+def _with_429_retry(fn, waits=(20, 40)):
+    """Free-tier TPM quotas reset per minute: on RESOURCE_EXHAUSTED, wait and
+    retry instead of failing a live demo. Runs in FastAPI's threadpool, so
+    time.sleep here never blocks the event loop."""
+    import time
+
+    last = None
+    for wait in (0, *waits):
+        if wait:
+            time.sleep(wait)
+        try:
+            return fn()
+        except Exception as e:  # noqa: BLE001
+            if "RESOURCE_EXHAUSTED" not in str(e) and "429" not in str(e):
+                raise
+            last = e
+    raise last

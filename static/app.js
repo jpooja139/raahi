@@ -41,10 +41,12 @@ let LANG = "en";
 
 function applyStrings() {
   document.querySelectorAll("[data-str]").forEach((el) => {
-    el.textContent = STRINGS[el.dataset.str][LANG];
+    const s = STRINGS[el.dataset.str];
+    if (s) el.textContent = s[LANG];
   });
   document.querySelectorAll("[data-strph]").forEach((el) => {
-    el.placeholder = STRINGS[el.dataset.strph][LANG];
+    const s = STRINGS[el.dataset.strph];
+    if (s) el.placeholder = s[LANG];
   });
 }
 
@@ -393,3 +395,25 @@ micBtn.addEventListener("click", () => {
   if (RaahiVoice.isActive()) { RaahiVoice.stop(); micBtn.classList.remove("live"); }
   else RaahiVoice.start(voiceLang(), voiceState);
 });
+
+// ---- UI: hero/head strings + example chips ----
+STRINGS.tagline = {
+  en: "For creators who master content, not tech — in Hindi or English, by voice or text.",
+  hi: "उन क्रिएटर्स के लिए जो कंटेंट के उस्ताद हैं, टेक के नहीं — हिंदी या English में, आवाज़ से या लिखकर।",
+};
+STRINGS.chat_title = { en: "Talk to Raahi", hi: "राही से बात करें" };
+const HERO = {
+  en: 'Your AI engineer. Decides. Guides. <span>Proves it works.</span>',
+  hi: 'आपका AI इंजीनियर। फ़ैसला। गाइड। <span>और सबूत कि काम हुआ।</span>',
+};
+const heroEl = document.getElementById("hero-h1");
+const _setLang = setLang;
+setLang = function (l) { _setLang(l); heroEl.innerHTML = HERO[l]; };
+document.querySelectorAll(".chip[data-fill]").forEach((c) => {
+  c.addEventListener("click", () => {
+    const inp = document.getElementById(c.dataset.fill);
+    inp.value = c.dataset.val;
+    inp.focus();
+  });
+});
+applyStrings();

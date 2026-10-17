@@ -106,4 +106,9 @@ def index():
     return FileResponse(STATIC / "index.html")
 
 
+@app.get("/favicon.ico", include_in_schema=False)
+def favicon():
+    return FileResponse(STATIC / "logo.png")
+
+
 app.mount("/static", StaticFiles(directory=STATIC), name="static")
