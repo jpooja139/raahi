@@ -42,6 +42,16 @@ Current: **v0.1.0** (`/api/health` reports it). Design invariants that never cha
 - **v2 — Raahi Cut:** prompt-based Shorts extraction from existing YouTube videos (EDL + FFmpeg, approval-first).
 - **North star (2035):** the creator's fiduciary engineer — the judgment-and-verification layer between creators and platform AIs.
 
+## Running with Vertex AI (recommended; the deployed URL uses this)
+
+```bash
+gcloud auth application-default login   # once
+USE_VERTEX=1 GCP_PROJECT=raahi-hackathon python3 -m uvicorn app.main:app --port 8000
+```
+Grounded freshness checks (Tutorial Rescue) run on Vertex's postpaid quota.
+On the plain API-key path, grounding may exhaust prepaid quota and steps
+arrive labeled *unverified* — honest degradation, documented, not a pass.
+
 ## Run locally
 
 ```bash

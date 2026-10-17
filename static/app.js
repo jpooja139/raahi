@@ -259,7 +259,8 @@ document.getElementById("dc-form").addEventListener("submit", (e) => {
 });
 
 function advanceStep(n) {
-  window.RAAHI.current_step = Math.min(n + 1, (window.RAAHI.decision?.roadmap.length || n));
+  const total = window.RAAHI.decision?.roadmap.length || n;
+  window.RAAHI.current_step = Math.min(n + 1, total + 1); // total+1 == complete
   if (typeof RaahiVoice !== "undefined") RaahiVoice.sendState(voiceState);
   updateProgress(); saveState();
 }
@@ -270,11 +271,17 @@ function updateProgress() {
   if (!p) return;
   if (!d || !d.roadmap.length) { p.hidden = true; return; }
   const cur = window.RAAHI.current_step;
-  const left = d.roadmap.filter((s) => s.n >= cur).reduce((a, s) => a + s.minutes, 0);
   p.hidden = false;
+  if (cur > d.roadmap.length) {
+    p.textContent = LANG === "hi" ? "सब पूरा ✓" : "Complete ✓";
+    p.style.color = "var(--ok)"; p.style.borderColor = "rgba(81,227,173,.35)"; p.style.background = "var(--ok-bg)";
+    return;
+  }
+  p.style.color = ""; p.style.borderColor = ""; p.style.background = "";
+  const left = d.roadmap.filter((s) => s.n >= cur).reduce((a, s) => a + s.minutes, 0);
   p.textContent = (LANG === "hi")
-    ? `स्टेप ${Math.min(cur, d.roadmap.length)} / ${d.roadmap.length} · ~${left} मिनट बाकी`
-    : `Step ${Math.min(cur, d.roadmap.length)} of ${d.roadmap.length} · ~${left} min left`;
+    ? `स्टेप ${cur} / ${d.roadmap.length} · ~${left} मिनट बाकी`
+    : `Step ${cur} of ${d.roadmap.length} · ~${left} min left`;
 }
 
 function saveState() {

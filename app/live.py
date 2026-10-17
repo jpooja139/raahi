@@ -67,7 +67,18 @@ async def _tool_result(name: str, state: dict) -> dict:
     return {"error": f"unknown tool {name}"}
 
 
+_SESSIONS: dict[str, int] = {}
+MAX_SESSIONS_PER_IP = 2
+
+
 async def live_session(ws: WebSocket):
+    ip = ws.client.host if ws.client else "?"
+    if _SESSIONS.get(ip, 0) >= MAX_SESSIONS_PER_IP:
+        await ws.accept()
+        await ws.send_text(json.dumps({"type": "error", "detail": "Too many voice sessions from this address — close one and retry."}))
+        await ws.close()
+        return
+    _SESSIONS[ip] = _SESSIONS.get(ip, 0) + 1
     await ws.accept()
     lang = ws.query_params.get("lang", "en-IN")
     state: dict = {"decision": None, "current_step": 1}
@@ -204,6 +215,7 @@ async def live_session(ws: WebSocket):
         except Exception:
             pass
     finally:
+        _SESSIONS[ip] = max(0, _SESSIONS.get(ip, 1) - 1)
         try:
             await ws.close()
         except Exception:

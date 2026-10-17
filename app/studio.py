@@ -91,6 +91,17 @@ def _build_srt(snips) -> str:
     return "\n".join(out)
 
 
+def _bounded_shorts(shorts: list[Short], duration: float) -> list[Short]:
+    out = []
+    for x in shorts:
+        start = max(0.0, min(x.start, duration))
+        end = max(0.0, min(x.end, duration))
+        if end > start and 5 <= end - start <= 75:
+            out.append(Short(start=round(start, 1), end=round(end, 1),
+                             title=x.title, hook=x.hook, reason=x.reason))
+    return out[:3]
+
+
 def _silences(snips) -> list[Cut]:
     cuts = []
     for a, b in zip(snips, snips[1:]):
@@ -111,7 +122,8 @@ from it — never invent moments that are not in the transcript.
 Return:
 - ops_understood: the editing operations the instruction asks for, as short
   labels (e.g. "remove silences", "captions", "YouTube Short").
-- shorts: 2-3 self-contained 20-55 second segments that would work as
+- shorts: self-contained 20-55 second segments. If the instruction names a
+  number of Shorts, return exactly that many; otherwise 2-3. that would work as
   vertical Shorts. Each: exact start/end from the timestamps, a punchy title,
   the spoken "hook" line it opens with, and why it works.
 - pacing_notes: 2-4 concrete observations (long monologue stretches, repeated
@@ -149,7 +161,7 @@ def _plan_from_video(url: str, vid: str, instruction: str) -> StudioPlan:
         video_id=vid, source="video", duration_sec=max(llm.duration_sec, 1),
         ops_understood=llm.ops_understood,
         silence_cuts=[],
-        shorts=[x for x in llm.shorts if x.end > x.start and x.end - x.start <= 75][:3],
+        shorts=_bounded_shorts(llm.shorts, max(llm.duration_sec, 1)),
         pacing_notes=llm.pacing_notes[:4], keep_highlights=llm.keep_highlights[:3],
         captions_srt="", render_status="planned-v2",
     )
@@ -179,7 +191,7 @@ def plan(url: str, instruction: str) -> StudioPlan:
         duration_sec=round(duration, 1),
         ops_understood=llm.ops_understood,
         silence_cuts=_silences(snips),
-        shorts=[s for s in llm.shorts if s.end > s.start and s.end - s.start <= 75][:3],
+        shorts=_bounded_shorts(llm.shorts, duration),
         pacing_notes=llm.pacing_notes[:4],
         keep_highlights=llm.keep_highlights[:3],
         captions_srt=srt,

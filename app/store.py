@@ -59,13 +59,15 @@ def put(key: str, doc: dict) -> bool:
                 payload, content_type="application/json"
             )
             return True
-        except Exception:
+        except Exception as e:
+            print(f"[store] GCS write FAILED for {key}: {type(e).__name__}: {e}", flush=True)
             return False
     try:
         _LOCAL_DIR.mkdir(exist_ok=True)
         (_LOCAL_DIR / f"{key}.json").write_text(payload)
         return True
-    except Exception:
+    except Exception as e:
+        print(f"[store] local write FAILED for {key}: {type(e).__name__}: {e}", flush=True)
         return False
 
 

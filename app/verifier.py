@@ -24,7 +24,8 @@ async def _dns(target: str, expect: str = "") -> CheckResult:
             answers = [a["data"] for a in data.get("Answer", []) if a.get("data")]
             if answers:
                 if expect:
-                    hit = [a for a in answers if expect.lower() in a.lower()]
+                    want = expect.lower().rstrip(".")
+                    hit = [a for a in answers if a.lower().rstrip(".") == want]
                     if hit:
                         return CheckResult(passed=True,
                             detail=f"{domain} {rtype} points to the right place: {hit[0]}")
@@ -47,8 +48,9 @@ async def _dns(target: str, expect: str = "") -> CheckResult:
 async def _page(target: str) -> CheckResult:
     url = target if target.startswith("http") else "https://" + target
     try:
-        async with httpx.AsyncClient(timeout=10, headers=UA, follow_redirects=True) as cx:
-            r = await cx.get(url)
+        from .netguard import safe_request
+        async with httpx.AsyncClient(timeout=10, headers=UA) as cx:
+            r = await safe_request(cx, "GET", url)
     except httpx.HTTPError as e:
         return CheckResult(passed=False, detail=f"{url} did not load: {type(e).__name__}")
     title = ""

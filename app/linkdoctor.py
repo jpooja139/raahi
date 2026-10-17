@@ -64,17 +64,18 @@ async def _check(cx: httpx.AsyncClient, sem: asyncio.Semaphore, url: str) -> int
         assert_public_url(url)
     except BlockedDestination:
         return None  # treat as unreachable; never fetch private targets
+    from .netguard import safe_request
     async with sem:
         try:
-            r = await cx.head(url, follow_redirects=True)
+            r = await safe_request(cx, "HEAD", url)
             if r.status_code in (405, 501, 403):
-                r = await cx.get(url, follow_redirects=True)
+                r = await safe_request(cx, "GET", url)
             return r.status_code
         except Exception:
-            # malformed URLs (httpx.InvalidURL) and network errors alike:
+            # malformed URLs, blocked hops and network errors alike:
             # one bad link must never kill the whole scan
             try:
-                r = await cx.get(url, follow_redirects=True)
+                r = await safe_request(cx, "GET", url)
                 return r.status_code
             except Exception:
                 return None
