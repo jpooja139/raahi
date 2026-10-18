@@ -1,0 +1,501 @@
+[
+ {
+  "video_id": "b4ij06Tt3U4",
+  "url": "https://www.youtube.com/watch?v=b4ij06Tt3U4",
+  "title": "How to Create a Business Email | Complete Setup with Gmail for Free",
+  "channel": "Stewart Gauld",
+  "published": "2020-07-03T17:56:14Z",
+  "duration_s": 609,
+  "query": "how to connect custom domain to google sites",
+  "tool": "Google Workspace / Gmail with custom domain",
+  "complaints": [
+   "Hello! I was trying to follow your tutorial but unfortunately, Domains.Google is no longer available. Can I use other domain provider and still be able to sync it with my Google email account? Thank you in advance for yo",
+   "but google domains doesn't exists anymore...",
+   "This does not work anymore. Squarespace aquired this domain business and will rip you off for a domain name you can buy 2-3 times cheaper somewhere else."
+  ],
+  "complaint_likes": [
+   2,
+   0,
+   0
+  ],
+  "changed_label": "Google Domains no longer exists (sold to Squarespace), so the domain-purchase step shown in the video is gone.",
+  "keywords": [
+   "google domains",
+   "squarespace"
+  ],
+  "confidence": "high",
+  "keywords_draft": [
+   "google domains",
+   "squarespace",
+   "discontinued"
+  ]
+ },
+ {
+  "video_id": "1G51dz5Gt-g",
+  "url": "https://www.youtube.com/watch?v=1G51dz5Gt-g",
+  "title": "How to use Google Sites to Create Website with Domain",
+  "channel": "Kevin Stratvert",
+  "published": "2020-11-23T11:00:01Z",
+  "duration_s": 1353,
+  "query": "how to connect custom domain to google sites",
+  "tool": "Google Sites with custom domain",
+  "complaints": [
+   "2024: This is out of Date...Squarespace runs this now....& it is kinda cumbersome.",
+   "The link to Google Domains just leads to Google Help. 😕 (Edit to add to comment): Google Domains is discontinued. Please disregard from consideration of this service... 😑",
+   "I'm not sure what happened to custom-url but its not working anymore. too bad as this was precisely why I was watching this video."
+  ],
+  "complaint_likes": [
+   3,
+   1,
+   0
+  ],
+  "changed_label": "Google Domains was discontinued and taken over by Squarespace; the custom-URL setup no longer works as shown.",
+  "keywords": [
+   "google domains",
+   "squarespace",
+   "custom url"
+  ],
+  "confidence": "high",
+  "keywords_draft": [
+   "google domains",
+   "squarespace",
+   "discontinued"
+  ]
+ },
+ {
+  "video_id": "xdGG-9aKq74",
+  "url": "https://www.youtube.com/watch?v=xdGG-9aKq74",
+  "title": "How to Set Up FREE Email With Your Own Domain Name | Free Business Email",
+  "channel": "Vic's Tutorials",
+  "published": "2022-07-06T12:15:07Z",
+  "duration_s": 1393,
+  "query": "how to connect custom domain to google sites",
+  "tool": "Free custom-domain email (Zoho Mail)",
+  "complaints": [
+   "I think, this forever free plan is no longer available in 2025 in Australia",
+   "just a heads up, the Forever free plan tab has been removed as of 2025.",
+   "and they removed the free plan it gone"
+  ],
+  "complaint_likes": [
+   0,
+   0,
+   0
+  ],
+  "changed_label": "The 'Forever Free' plan option/tab has been removed, so the free-email path in the video is gone.",
+  "keywords": [
+   "forever free",
+   "free plan"
+  ],
+  "confidence": "high",
+  "keywords_draft": [
+   "forever free",
+   "free plan",
+   "removed"
+  ]
+ },
+ {
+  "video_id": "FHL75CGDjgA",
+  "url": "https://www.youtube.com/watch?v=FHL75CGDjgA",
+  "title": "How to Add Custom Domain to Blogger Blogspot [Part - 6]",
+  "channel": "Blogging Mafia",
+  "published": "2019-04-08T15:56:23Z",
+  "duration_s": 821,
+  "query": "how to connect custom domain to google sites",
+  "tool": "Blogger (Blogspot) custom domain",
+  "complaints": [
+   "There is no option for third party domain in my blogger."
+  ],
+  "complaint_likes": [
+   5
+  ],
+  "changed_label": "Blogger's settings no longer show the third-party/custom domain option shown in the video.",
+  "keywords": [
+   "third-party",
+   "third party",
+   "custom domain"
+  ],
+  "confidence": "medium",
+  "keywords_draft": [
+   "third-party domain",
+   "custom domain",
+   "blogger settings"
+  ]
+ },
+ {
+  "video_id": "njri8_gJTs0",
+  "url": "https://www.youtube.com/watch?v=njri8_gJTs0",
+  "title": "Google Analytics Beginners Tutorial (see update in description)",
+  "channel": "Josh Hall",
+  "published": "2022-01-25T21:22:55Z",
+  "duration_s": 853,
+  "query": "google analytics setup tutorial",
+  "tool": "Google Analytics",
+  "complaints": [
+   "Has this changed ? I don't see the side menu with acquisition/behaviro",
+   "now outdated"
+  ],
+  "complaint_likes": [
+   0,
+   0
+  ],
+  "changed_label": "Universal Analytics was replaced by GA4; the Acquisition/Behavior side menu in the video no longer exists.",
+  "keywords": [
+   "ga4",
+   "google analytics 4",
+   "universal analytics",
+   "acquisition",
+   "behavior"
+  ],
+  "confidence": "high",
+  "keywords_draft": [
+   "ga4",
+   "universal analytics",
+   "acquisition",
+   "behavior"
+  ]
+ },
+ {
+  "video_id": "vshlg0U3UqA",
+  "url": "https://www.youtube.com/watch?v=vshlg0U3UqA",
+  "title": "How to Set Up Google Analytics - Complete Beginner Guide",
+  "channel": "WsCube Tech",
+  "published": "2022-04-30T12:37:27Z",
+  "duration_s": 773,
+  "query": "google analytics setup tutorial",
+  "tool": "Google Analytics",
+  "complaints": [
+   "Tracking code option is missing what to do?"
+  ],
+  "complaint_likes": [
+   0
+  ],
+  "changed_label": "The 'Tracking code' option shown in the video is no longer present (GA4 uses a different install flow).",
+  "keywords": [
+   "tracking code",
+   "tracking id",
+   "ga4",
+   "google analytics 4",
+   "data stream",
+   "measurement id"
+  ],
+  "confidence": "medium",
+  "keywords_draft": [
+   "tracking code",
+   "ga4",
+   "data stream",
+   "measurement id"
+  ]
+ },
+ {
+  "video_id": "trBA7xGgzjk",
+  "url": "https://www.youtube.com/watch?v=trBA7xGgzjk",
+  "title": "How To Create A Facebook Business Page In 2022",
+  "channel": "Stewart Gauld",
+  "published": "2022-01-07T16:30:06Z",
+  "duration_s": 863,
+  "query": "how to create facebook business page",
+  "tool": "Facebook Page",
+  "complaints": [
+   "I can't figure out how to unpublish my page. There is no settings option on the left hand side and I'm struggling to navigate around this...grh :(",
+   "Hi!! Help how do i unpublish my Page, i just created and dont want to pubkish yet. But i dont have the visibility option anywhere 😭 pls help!!",
+   "10 months ago, and Meta has already changed the design of their system. Cannot find the same menus or options he shows. Bumper because it's a good tutorial."
+  ],
+  "complaint_likes": [
+   1,
+   0,
+   0
+  ],
+  "changed_label": "Meta redesigned Pages: the Settings entry in the left menu and the 'unpublish page' option are no longer where the video shows.",
+  "keywords": [
+   "unpublish",
+   "deactivat",
+   "new pages experience",
+   "page settings"
+  ],
+  "confidence": "medium",
+  "keywords_draft": [
+   "settings",
+   "unpublish",
+   "meta",
+   "new pages experience"
+  ]
+ },
+ {
+  "video_id": "6Kn0MFAaQDM",
+  "url": "https://www.youtube.com/watch?v=6Kn0MFAaQDM",
+  "title": "Facebook Ads Tutorial 2024 - How To Create Facebook Ads For Beginners (QUICK GUIDE)",
+  "channel": "Website Learners",
+  "published": "2021-06-14T06:15:40Z",
+  "duration_s": 1324,
+  "query": "how to create facebook business page",
+  "tool": "Facebook Ads",
+  "complaints": [
+   "The pixel caffeine is no longer working......",
+   "A question of this kind, the interface has changed, I can't find where to see effective advertising?"
+  ],
+  "complaint_likes": [
+   0,
+   0
+  ],
+  "changed_label": "The Pixel Caffeine tool no longer works and the Ads interface for viewing ad performance has changed.",
+  "keywords": [
+   "pixel caffeine",
+   "events manager"
+  ],
+  "confidence": "medium",
+  "keywords_draft": [
+   "pixel caffeine",
+   "ads manager",
+   "interface"
+  ]
+ },
+ {
+  "video_id": "2f6mfgzTQSA",
+  "url": "https://www.youtube.com/watch?v=2f6mfgzTQSA",
+  "title": "How To Create Instagram Business Account In Hindi | Instagram Par Business Account Kaise Banaye",
+  "channel": "Manish4u",
+  "published": "2020-08-20T14:16:42Z",
+  "duration_s": 215,
+  "query": "how to set up instagram business account",
+  "tool": "Instagram Business account",
+  "complaints": [
+   "Switch to professional account ka option nahi aa raha",
+   "Mere pass switch to professional ki option nhi",
+   "Nahi ara hai yrr switch to professional account"
+  ],
+  "complaint_likes": [
+   15,
+   1,
+   0
+  ],
+  "changed_label": "The 'Switch to professional/business account' option is not showing where the video shows it in Settings.",
+  "keywords": [
+   "professional account",
+   "switch to professional",
+   "account type and tools",
+   "business account"
+  ],
+  "confidence": "medium",
+  "keywords_draft": [
+   "switch to professional",
+   "professional account",
+   "settings"
+  ]
+ },
+ {
+  "video_id": "Q7AOvWpIVHU",
+  "url": "https://www.youtube.com/watch?v=Q7AOvWpIVHU",
+  "title": "Build a Mindblowing 3D Portfolio Website // Three.js Beginner’s Tutorial",
+  "channel": "Fireship",
+  "published": "2021-05-21T16:36:40Z",
+  "duration_s": 938,
+  "query": "wordpress website tutorial for beginners",
+  "tool": "Vite / Three.js project setup",
+  "complaints": [
+   "This tutorial is slightly outdated, to install Vite you can op simple enter 'npm init vite'. Hope this helped😀"
+  ],
+  "complaint_likes": [
+   1
+  ],
+  "changed_label": "The Vite install command shown is outdated; viewers say 'npm init vite' is now the way to scaffold.",
+  "keywords": [
+   "npm init vite",
+   "npm create vite",
+   "create-vite",
+   "create vite"
+  ],
+  "confidence": "medium",
+  "keywords_draft": [
+   "npm init vite",
+   "vite",
+   "create-vite"
+  ]
+ },
+ {
+  "video_id": "eTLWd70Y3F0",
+  "url": "https://www.youtube.com/watch?v=eTLWd70Y3F0",
+  "title": "How to Set up a Shopify Store in 13 Minutes - Shopify Tutorial for Beginners",
+  "channel": "Metics Media",
+  "published": "2022-01-21T18:12:44Z",
+  "duration_s": 838,
+  "query": "shopify store setup tutorial",
+  "tool": "Shopify",
+  "complaints": [
+   "the site changed up alot since you made this video. Its a little harder now to make.",
+   "Hi. Thank you this video. Also, for some reason I don't see the slideshow section 😢",
+   "hi :) just a heads up the shopify link provided only offers a 3 day trial not a 14 day one ( I know this video was posted 2 years ago so not surprised they have changed it)"
+  ],
+  "complaint_likes": [
+   1,
+   0,
+   0
+  ],
+  "changed_label": "Shopify's admin/theme editor changed: no Slideshow section option, and the free trial is no longer 14 days.",
+  "keywords": [
+   "slideshow",
+   "free trial",
+   "trial"
+  ],
+  "confidence": "high",
+  "keywords_draft": [
+   "slideshow",
+   "free trial",
+   "theme editor"
+  ]
+ },
+ {
+  "video_id": "f_fGXgh0A8k",
+  "url": "https://www.youtube.com/watch?v=f_fGXgh0A8k",
+  "title": "Use Snap Camera Face Filters in OBS Live Streams FREE!",
+  "channel": "Michael Feyrer Jr.",
+  "published": "2022-01-03T13:15:01Z",
+  "duration_s": 404,
+  "query": "obs studio setup tutorial",
+  "tool": "Snap Camera with OBS",
+  "complaints": [
+   "This app no longer works and keeping this video up is just wasting peoples time",
+   "They discontinued this😔😭",
+   "This was such a good app. Why was it discontinuedddd whyyyyy.. Someone please clone it"
+  ],
+  "complaint_likes": [
+   3,
+   2,
+   2
+  ],
+  "changed_label": "Snap Camera was discontinued and its download site is gone, so the whole workflow no longer works.",
+  "keywords": [
+   "snap camera"
+  ],
+  "confidence": "high",
+  "keywords_draft": [
+   "snap camera",
+   "discontinued",
+   "snapcamera"
+  ]
+ },
+ {
+  "video_id": "pEd7jw0uNE4",
+  "url": "https://www.youtube.com/watch?v=pEd7jw0uNE4",
+  "title": "The BEST Voicemeeter SETUP GUIDE on YouTube!",
+  "channel": "Patchd Studio",
+  "published": "2022-07-11T14:00:21Z",
+  "duration_s": 239,
+  "query": "obs studio setup tutorial",
+  "tool": "Voicemeeter with OBS",
+  "complaints": [
+   "I don’t have a voice meter aux output option it’s only showing a list of a1- a5 to b1 -b3. HELP PLEASE",
+   "I couldn't find the voicemeeter aux output option I followed all the steps in the video I just cant find it so far I used the voicemeeter out b2 option and everything seems to be working fine"
+  ],
+  "complaint_likes": [
+   12,
+   7
+  ],
+  "changed_label": "Viewers cannot find the Voicemeeter 'Aux' output option shown in the video; B2 output used instead.",
+  "keywords": [
+   "aux",
+   "b2"
+  ],
+  "confidence": "medium",
+  "keywords_draft": [
+   "aux output",
+   "voicemeeter",
+   "b2"
+  ]
+ },
+ {
+  "video_id": "7H1r1fC_HMY",
+  "url": "https://www.youtube.com/watch?v=7H1r1fC_HMY",
+  "title": "How to Make Your Budget Mic Sound PRO in OBS Studio ✅",
+  "channel": "Cpaws Music",
+  "published": "2022-12-16T18:00:03Z",
+  "duration_s": 456,
+  "query": "obs studio setup tutorial",
+  "tool": "OBS Studio audio filters",
+  "complaints": [
+   "the ReaEQ interface button doesn't show after picking the reaeq-standalone... got any advise? I even tried restarting OBS but to no avail",
+   "Ty, bro help me a lot <3 Yo! If anyone is struggling to get ReaPlugs (ReaEQ) working in OBS, here is the fix: The problem is that the installer sometimes throws the files into a weird subfolder like C:\\Program Files\\Comm",
+   "reaeq-standalone isn't showing up in the OBS drop down. I see \"reaeq,\" but not \"reaeq-standalone.\""
+  ],
+  "complaint_likes": [
+   2,
+   1,
+   0
+  ],
+  "changed_label": "OBS update changed audio monitoring and the interface; ReaEQ VST filter has no open-interface button.",
+  "keywords": [
+   "monitoring",
+   "reaeq",
+   "vst"
+  ],
+  "confidence": "medium",
+  "keywords_draft": [
+   "monitoring",
+   "audio monitoring",
+   "vst",
+   "interface"
+  ]
+ },
+ {
+  "video_id": "C_0FSgVgqnc",
+  "url": "https://www.youtube.com/watch?v=C_0FSgVgqnc",
+  "title": "DNS record for site ownership verification - Google Search Console Training",
+  "channel": "Google Search Central",
+  "published": "2019-12-11T17:30:00Z",
+  "duration_s": 183,
+  "query": "google search console setup",
+  "tool": "Google Search Console",
+  "complaints": [
+   "Ridiculous as usual by Google. Although this video is outdated it is still linked within the search console registration process. Years ago it was easier by just adding the verification code to the head section of the we",
+   "there is no godaddy option.",
+   "This is outdated. None of the drop down mentioned exist (Im on Namecheap), and there is no advanced detailed instructions link for me to click."
+  ],
+  "complaint_likes": [
+   4,
+   1,
+   0
+  ],
+  "changed_label": "Search Console's DNS verification flow changed: the provider dropdown (GoDaddy, Namecheap) and 'advanced detailed instructions' link are gone.",
+  "keywords": [
+   "domain name provider",
+   "provider",
+   "godaddy",
+   "namecheap",
+   "txt record"
+  ],
+  "confidence": "high",
+  "keywords_draft": [
+   "dns verification",
+   "provider",
+   "dropdown",
+   "html tag"
+  ]
+ },
+ {
+  "video_id": "kdbniwINFFA",
+  "url": "https://www.youtube.com/watch?v=kdbniwINFFA",
+  "title": "How to Verify Your Domain on Google Search Console in 2019 (DNS and TXT Record)",
+  "channel": "Blog With Ben",
+  "published": "2019-09-07T00:47:10Z",
+  "duration_s": 575,
+  "query": "google search console setup",
+  "tool": "Google Search Console (Bluehost DNS)",
+  "complaints": [
+   "The video provide complete details however Blue host has updated the version thus can't see the option that you shown/told in the email."
+  ],
+  "complaint_likes": [
+   1
+  ],
+  "changed_label": "Bluehost updated its dashboard, so the DNS/TXT record option shown is no longer visible.",
+  "keywords": [
+   "bluehost",
+   "zone editor",
+   "txt"
+  ],
+  "confidence": "medium",
+  "keywords_draft": [
+   "bluehost",
+   "dns",
+   "txt record"
+  ]
+ }
+]
