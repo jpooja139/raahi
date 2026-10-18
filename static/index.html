@@ -22,7 +22,7 @@
 </header>
 
 <section class="hero">
-  <h1 id="hero-h1">Your AI engineer. Decides. Guides. <span>Proves it works.</span></h1>
+  <h1 id="hero-h1">Not every creator has an engineer. <span>Raahi is yours.</span></h1>
   <p data-str="tagline"></p>
 </section>
 
@@ -47,6 +47,23 @@
   </section>
 
   <section class="tools" aria-label="Raahi's tools">
+
+    <div class="tool" id="tool-rescue">
+      <div class="tool-head"><span class="tool-ico">🛟</span>
+        <div><h2 data-str="tr_title"></h2><p data-str="tr_sub"></p></div>
+      </div>
+      <form id="tr-form">
+        <input id="tr-input" data-strph="tr_placeholder" autocomplete="off">
+        <button type="submit" class="cta" data-str="tr_go"></button>
+      </form>
+      <div class="chips">
+        <button type="button" class="chip" data-fill="tr-input" data-val="https://www.youtube.com/watch?v=njri8_gJTs0">try a 2022 Google Analytics tutorial</button>
+        <button type="button" class="chip" data-fill="tr-input" data-val="https://www.youtube.com/watch?v=2f6mfgzTQSA">a 2020 Instagram tutorial</button>
+        <button type="button" class="chip" data-fill="tr-input" data-val="https://www.youtube.com/watch?v=RPtyPYJHCEY">a Google Sites tutorial that still works</button>
+      </div>
+      <p class="honest" data-str="tr_honest"></p>
+      <div id="tr-report"></div>
+    </div>
 
     <div class="tool" id="tool-linkdoctor">
       <div class="tool-head"><span class="tool-ico">🔗</span>
@@ -75,23 +92,6 @@
       </div>
       <p class="honest" data-str="st_honest"></p>
       <div id="st-result"></div>
-    </div>
-
-    <div class="tool" id="tool-rescue">
-      <div class="tool-head"><span class="tool-ico">🛟</span>
-        <div><h2 data-str="tr_title"></h2><p data-str="tr_sub"></p></div>
-      </div>
-      <form id="tr-form">
-        <input id="tr-input" data-strph="tr_placeholder" autocomplete="off">
-        <button type="submit" class="cta" data-str="tr_go"></button>
-      </form>
-      <div class="chips">
-        <button type="button" class="chip" data-fill="tr-input" data-val="https://www.youtube.com/watch?v=RPtyPYJHCEY">try a Google Sites tutorial</button>
-        <button type="button" class="chip" data-fill="tr-input" data-val="https://www.youtube.com/watch?v=njri8_gJTs0">a 2022 Google Analytics tutorial</button>
-        <button type="button" class="chip" data-fill="tr-input" data-val="https://www.youtube.com/watch?v=2f6mfgzTQSA">a 2020 Instagram tutorial</button>
-      </div>
-      <p class="honest" data-str="tr_honest"></p>
-      <div id="tr-report"></div>
     </div>
 
     <div class="tool" id="tool-decide">
