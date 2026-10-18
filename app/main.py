@@ -18,6 +18,16 @@ def _gemini_http(e: GeminiError):
 app = FastAPI(title="Raahi")
 STATIC = Path(__file__).resolve().parent.parent / "static"
 
+@app.middleware("http")
+async def _revalidate_ui(request, call_next):
+    """The page and its scripts must be re-checked on every load (a cheap 304 via
+    ETag); otherwise a browser keeps last deploy's app.js against the new API."""
+    resp = await call_next(request)
+    if request.url.path == "/" or request.url.path.startswith("/static/"):
+        resp.headers["Cache-Control"] = "no-cache"
+    return resp
+
+
 # -- minimal per-IP rate limit: 40 API requests / 60 s (demo-grade, in-memory) --
 import time as _time
 from collections import defaultdict, deque
@@ -133,12 +143,25 @@ def api_guide(body: GuideIn) -> guide.GuideReply:
 
 class RescueIn(BaseModel):
     url: str
+    lang: str = "en"
+    force: bool = False  # re-check against today's docs, ignoring the 7-day cache
+
+
+@app.post("/api/rescue/extract")
+def api_rescue_extract(body: RescueIn) -> rescue.Extraction:
+    """Stage 1 alone, so the UI can show the video's steps while they're checked."""
+    try:
+        return rescue.extract(body.url)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    except GeminiError as e:
+        raise _gemini_http(e)
 
 
 @app.post("/api/rescue")
 def api_rescue(body: RescueIn) -> rescue.Rescue:
     try:
-        return rescue.analyze(body.url)
+        return rescue.analyze(body.url, body.lang, body.force)
     except ValueError as e:
         raise HTTPException(400, str(e))
     except GeminiError as e:

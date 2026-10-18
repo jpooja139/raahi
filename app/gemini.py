@@ -42,12 +42,16 @@ def client():
 
 
 def key_client():
-    """YouTube-URL video ingestion is not available on Vertex AI yet —
-    those calls go through the Gemini API key explicitly."""
+    """YouTube-URL video ingestion. Vertex accepts YouTube URLs when the part's
+    mime_type is "video/*" ("video/mp4" returns 500 INTERNAL — verified
+    2026-10-18), so under USE_VERTEX this is just client(); otherwise the
+    Gemini API key."""
     global _key_client
+    if config.USE_VERTEX:
+        return client()
     if config.GEMINI_API_KEY.lower() in ("", "dummy", "changeme", "your-key-here"):
         raise GeminiKeyMissing(
-            "Video ingestion needs GEMINI_API_KEY (Vertex does not accept YouTube URLs yet)."
+            "Video ingestion needs GEMINI_API_KEY or USE_VERTEX=1."
         )
     if _key_client is None:
         from google import genai
@@ -56,19 +60,83 @@ def key_client():
     return _key_client
 
 
+def youtube_part(url: str):
+    """A YouTube URL as a video part, with the mime type each backend accepts."""
+    from google.genai import types
+
+    mime = "video/*" if config.USE_VERTEX else "video/mp4"
+    return types.Part(file_data=types.FileData(file_uri=url, mime_type=mime))
+
+
+def generate_grounded(prompt: str, thinking: str = ""):
+    """One Search-grounded text call. Returns (text, grounding_metadata) so the
+    caller can tie each claim to its sources — the metadata is the evidence.
+    thinking: "" (model default) | "low" | "minimal"."""
+    from google.genai import types
+
+    c = client()
+    level = {"low": types.ThinkingLevel.LOW, "minimal": types.ThinkingLevel.MINIMAL}.get(thinking)
+    try:
+        resp = _with_429_retry(
+            lambda: c.models.generate_content(
+                model=config.MODEL_TEXT,
+                contents=[prompt],
+                config=types.GenerateContentConfig(
+                    tools=[types.Tool(google_search=types.GoogleSearch())],
+                    thinking_config=types.ThinkingConfig(thinking_level=level) if level else None,
+                ),
+            )
+        )
+    except Exception as e:
+        raise GeminiError(f"Grounded search failed: {e}") from e
+    cand = (resp.candidates or [None])[0]
+    gm = cand.grounding_metadata if cand else None
+    parts = (cand.content.parts if cand is not None and cand.content else None) or []
+    text = join_text_parts(parts, gm)
+    return text or resp.text or "", gm
+
+
+def join_text_parts(parts, gm) -> str:
+    """Join the non-thought text parts. Grounding supports give byte offsets
+    *within their own Part* (segment.part_index); when the answer spans several
+    text parts, shift each support onto the joined text so sources stay on the
+    right step."""
+    texts, offsets, pos = [], {}, 0
+    for i, p in enumerate(parts):
+        if getattr(p, "text", None) and not getattr(p, "thought", None):
+            offsets[i] = pos
+            texts.append(p.text)
+            pos += len(p.text.encode("utf-8"))
+    if gm is not None and len(offsets) > 1:
+        for sup in gm.grounding_supports or []:
+            seg = sup.segment
+            shift = offsets.get(getattr(seg, "part_index", None)) if seg is not None else None
+            if shift:
+                seg.start_index = (seg.start_index or 0) + shift
+                if seg.end_index is not None:
+                    seg.end_index += shift
+    return "".join(texts)
+
+
 def generate_json(
     prompt: str,
     schema: Type[M],
     parts: list | None = None,
     grounding: bool = False,
     use_key_client: bool = False,
+    media_resolution: str = "",
 ) -> M:
     """One structured-output call. grounding=True runs a grounded text pass
     first (Search grounding and response_schema can't share one call), then
-    converts that answer to the schema. Retries the JSON pass once."""
+    converts that answer to the schema. Retries the JSON pass once.
+    media_resolution: "" (model default) | "low" | "medium" for video parts."""
     from google.genai import types
 
     c = key_client() if use_key_client else client()
+    media = {
+        "low": types.MediaResolution.MEDIA_RESOLUTION_LOW,
+        "medium": types.MediaResolution.MEDIA_RESOLUTION_MEDIUM,
+    }.get(media_resolution)
     contents = list(parts or []) + [prompt]
 
     if grounding:
@@ -100,6 +168,7 @@ def generate_json(
                     config=types.GenerateContentConfig(
                         response_mime_type="application/json",
                         response_schema=schema,
+                        media_resolution=media,
                     ),
                 )
             )

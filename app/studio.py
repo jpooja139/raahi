@@ -148,14 +148,12 @@ with timestamps), keep_highlights (2-3, with timestamps), and duration_sec
 def _plan_from_video(url: str, vid: str, instruction: str) -> StudioPlan:
     """Cloud fallback: YouTube blocks transcript reads from cloud IPs, but
     Gemini ingests the YouTube URL itself. No SRT/caption-gaps on this path."""
-    from google.genai import types
-
-    part = types.Part(file_data=types.FileData(file_uri=f"https://www.youtube.com/watch?v={vid}", mime_type="video/mp4"))
+    part = gemini.youtube_part(f"https://www.youtube.com/watch?v={vid}")
     llm = gemini.generate_json(
         VIDEO_PLAN_PROMPT.format(instruction=instruction or "find the best Shorts"),
         _VideoPlanLLM,
         parts=[part],
-        use_key_client=True,  # YouTube ingestion: Gemini API only, not Vertex
+        use_key_client=True,  # YouTube ingestion: Vertex (video/*) or the API key
     )
     return StudioPlan(
         video_id=vid, source="video", duration_sec=max(llm.duration_sec, 1),

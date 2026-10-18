@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutorial Rescue Pipeline</title>
+<link rel="stylesheet" href="../assets/hub.css">
+</head>
+<body>
+<header class="top"><a href="../index.html">&larr; Hub</a></header>
+<main>
+  <h1>Tutorial Rescue pipeline</h1>
+  <p class="lede">Paste an old YouTube tutorial. Raahi extracts the steps, checks each against current docs, and writes a comment the creator can pin. The model proposes; code decides what may be shown as fact.</p>
+  <p class="src">Source: app/rescue.py (module docstring), docs/architecture.md section 3b.</p>
+
+  <h2>The five stages</h2>
+  <ol class="flow">
+    <li><b>1. Extract</b>
+      Gemini watches the video at low media resolution and lists the steps with the m:ss where each is shown. If video ingestion fails, it falls back to the timed transcript. YouTube Data API supplies the real publish date and duration.
+      <span class="out">Output: steps with m:ss and menu names.</span></li>
+    <li><b>2. Verify</b>
+      Steps go to Search-grounded calls in batches of 4, run in parallel, thinking set to low. The answer uses a fixed STEP-block format, parsed with a regex. No second LLM pass re-words it.
+      <span class="out">Output: a verdict per step: current, changed or unverifiable.</span></li>
+    <li><b>3. Evidence</b>
+      Each step's sources come from the grounding metadata's byte-offset supports, at most 3 per step. Sources on the vendor's root domain are flagged official and listed first.
+      <span class="out">Output: source chips per step.</span></li>
+    <li><b>4. Validate</b>
+      A current or changed verdict with no source becomes unverifiable. Timestamps past the video's end are dropped.
+      <span class="out">Output: steps that may be shown as fact.</span></li>
+    <li><b>5. Update</b>
+      The pin-ready "what changed" comment is a template filled from sourced verdicts only.
+      <span class="out">Output: the comment text.</span></li>
+  </ol>
+  <p class="src">Constants: VERIFY_BATCH=4, VERIFY_THINKING="low", VIDEO_RESOLUTION="low", MAX_SOURCES=3, MAX_STEPS=12 (app/rescue.py).</p>
+
+  <h2>Flow</h2>
+  <div class="wrap">
+  <svg viewBox="0 0 760 150" role="img" aria-label="Pipeline: URL, extract, verify in parallel batches, evidence, validate, update comment" style="min-width:680px;display:block;width:100%;height:auto">
+    <style>
+      .bx { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+      .t { fill: var(--text); font: 13px system-ui, sans-serif; text-anchor: middle; }
+      .s { fill: var(--muted); font: 11px system-ui, sans-serif; text-anchor: middle; }
+      .ar { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+    </style>
+    <rect class="bx" x="6" y="45" width="100" height="56" rx="8"/><text class="t" x="56" y="70">Extract</text><text class="s" x="56" y="88">video or transcript</text>
+    <rect class="bx" x="150" y="12" width="100" height="36" rx="8"/><text class="t" x="200" y="35">batch 1-4</text>
+    <rect class="bx" x="150" y="57" width="100" height="36" rx="8"/><text class="t" x="200" y="80">batch 5-8</text>
+    <rect class="bx" x="150" y="102" width="100" height="36" rx="8"/><text class="t" x="200" y="125">batch 9-12</text>
+    <rect class="bx" x="300" y="45" width="100" height="56" rx="8"/><text class="t" x="350" y="70">Evidence</text><text class="s" x="350" y="88">byte offsets</text>
+    <rect class="bx" x="450" y="45" width="100" height="56" rx="8"/><text class="t" x="500" y="70">Validate</text><text class="s" x="500" y="88">sourced or not</text>
+    <rect class="bx" x="600" y="45" width="150" height="56" rx="8"/><text class="t" x="675" y="70">Update comment</text><text class="s" x="675" y="88">template</text>
+    <path class="ar" d="M106 73 L150 30 M106 73 L150 75 M106 73 L150 120"/>
+    <path class="ar" d="M250 30 L300 73 M250 75 L300 73 M250 120 L300 73"/>
+    <path class="ar" d="M400 73 L450 73 M550 73 L600 73"/>
+  </svg>
+  </div>
+  <p class="src">Stage 2 is drawn as three parallel batches, the 12-step maximum. Source: docs/architecture.md 3b.</p>
+
+  <h2>Timings that appear in the sources</h2>
+  <ul>
+    <li>Longest job is about 90 s, inside Cloud Run's request model. <span class="src">docs/architecture.md section 6</span></li>
+    <li>Verify, whole tutorial: median 10.8 s. Extraction: median 21.6 s, up to 107 s for a 21-minute video (one at a time). <span class="src"><a href="../evals/rescue-eval.html">eval results</a></span></li>
+    <li>Cache: a result is reused for 7 days (CACHE_DAYS). <span class="src">app/rescue.py</span></li>
+  </ul>
+
+  <h2>Invariants</h2>
+  <div class="wrap"><table>
+    <thead><tr><th>Invariant</th><th>Enforced in</th></tr></thead>
+    <tbody>
+      <tr><td>A "current" or "changed" verdict with no grounding source is shown as unconfirmed.</td><td><code>rescue.validate</code></td></tr>
+      <tr><td>Sources come from the response's grounding supports (byte offsets), never from what the model writes.</td><td><code>rescue.sources_by_step</code></td></tr>
+      <tr><td>"Official" is a root-domain string match against the vendor's domains, not model opinion.</td><td><code>rescue.mark_official</code></td></tr>
+      <tr><td>A timestamp past the video's real end is dropped.</td><td><code>rescue.validate</code></td></tr>
+      <tr><td>The public update comment is a template filled from sourced verdicts. The model never writes it.</td><td><code>rescue.update_card</code></td></tr>
+      <tr><td>A partial or failed check is never cached.</td><td><code>rescue.analyze</code></td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">Source: docs/architecture.md section 3b. In code the downgraded status is named "unverifiable"; the UI calls it unconfirmed.</p>
+
+  <h2>What the unit tests cover</h2>
+  <p>Pure helpers in tests/test_rescue.py: URL forms, timestamp parsing, ISO duration, STEP-block parsing (markdown, dashes, first verdict wins), byte offsets with Hindi text, source dedupe and cap, downgrading unsourced verdicts and bad timestamps (the unsourced claim is hidden), "changed" with no replacement step, refusing non-tutorial videos, sources on multi-part answers, user-content hosts never official, update-card content (English and Hindi month), step ranges, root domains, official flagging, counts, no-cache headers on the UI. The live Gemini calls are not unit-tested.</p>
+  <p class="src">Source: test names in tests/test_rescue.py.</p>
+
+  <nav class="related">Related: <a href="../decisions/adr-index.html">Decisions</a> &middot; <a href="../caveats/limitations.html">Limitations</a> &middot; <a href="../ops/runbook.html">Runbook</a> &middot; <a href="../research/problem-evidence.html">Problem evidence</a></nav>
+</main>
+<footer>Raahi hub &middot; <a href="../index.html">index</a></footer>
+</body>
+</html>

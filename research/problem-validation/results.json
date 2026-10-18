@@ -1,0 +1,325 @@
+{
+ "B_new": {
+  "cohort": "B_new",
+  "videos": 151,
+  "comments_analyzed": 10208,
+  "median_views": 148513,
+  "median_age_days": 117,
+  "pct_videos_commented_last_90d": 95.4,
+  "OUTDATED": {
+   "pct_videos_with_signal": 14.6,
+   "per_1000_comments": 2.94,
+   "videos_with_signal": 22
+  },
+  "STILL_OK": {
+   "pct_videos_with_signal": 4.0,
+   "per_1000_comments": 0.59,
+   "videos_with_signal": 6
+  },
+  "STUCK": {
+   "pct_videos_with_signal": 46.4,
+   "per_1000_comments": 14.01,
+   "videos_with_signal": 70
+  },
+  "LINK_DEAD": {
+   "pct_videos_with_signal": 0.0,
+   "per_1000_comments": 0.0,
+   "videos_with_signal": 0
+  },
+  "of_outdated_videos_pct_creator_replied_to_a_problem_comment": 22.7,
+  "pct_videos_with_creator_update_comment": 4.6,
+  "pct_videos_with_affiliate_links": 20.5
+ },
+ "B_old": {
+  "cohort": "B_old",
+  "videos": 144,
+  "comments_analyzed": 24109,
+  "median_views": 1145030,
+  "median_age_days": 1991,
+  "pct_videos_commented_last_90d": 66.0,
+  "OUTDATED": {
+   "pct_videos_with_signal": 45.8,
+   "per_1000_comments": 7.13,
+   "videos_with_signal": 66
+  },
+  "STILL_OK": {
+   "pct_videos_with_signal": 17.4,
+   "per_1000_comments": 1.7,
+   "videos_with_signal": 25
+  },
+  "STUCK": {
+   "pct_videos_with_signal": 77.1,
+   "per_1000_comments": 20.08,
+   "videos_with_signal": 111
+  },
+  "LINK_DEAD": {
+   "pct_videos_with_signal": 4.9,
+   "per_1000_comments": 0.62,
+   "videos_with_signal": 7
+  },
+  "of_outdated_videos_pct_creator_replied_to_a_problem_comment": 28.8,
+  "pct_videos_with_creator_update_comment": 10.4,
+  "pct_videos_with_affiliate_links": 44.4
+ },
+ "C_new": {
+  "cohort": "C_new",
+  "videos": 46,
+  "comments_analyzed": 4199,
+  "median_views": 918917,
+  "median_age_days": 94,
+  "pct_videos_commented_last_90d": 95.7,
+  "OUTDATED": {
+   "pct_videos_with_signal": 13.0,
+   "per_1000_comments": 1.91,
+   "videos_with_signal": 6
+  },
+  "STILL_OK": {
+   "pct_videos_with_signal": 10.9,
+   "per_1000_comments": 1.91,
+   "videos_with_signal": 5
+  },
+  "STUCK": {
+   "pct_videos_with_signal": 28.3,
+   "per_1000_comments": 3.33,
+   "videos_with_signal": 13
+  },
+  "LINK_DEAD": {
+   "pct_videos_with_signal": 2.2,
+   "per_1000_comments": 0.24,
+   "videos_with_signal": 1
+  },
+  "of_outdated_videos_pct_creator_replied_to_a_problem_comment": 0.0,
+  "pct_videos_with_creator_update_comment": 0.0,
+  "pct_videos_with_affiliate_links": 52.2
+ },
+ "C_old": {
+  "cohort": "C_old",
+  "videos": 44,
+  "comments_analyzed": 8388,
+  "median_views": 5422521,
+  "median_age_days": 1935,
+  "pct_videos_commented_last_90d": 75.0,
+  "OUTDATED": {
+   "pct_videos_with_signal": 11.4,
+   "per_1000_comments": 0.95,
+   "videos_with_signal": 5
+  },
+  "STILL_OK": {
+   "pct_videos_with_signal": 9.1,
+   "per_1000_comments": 1.55,
+   "videos_with_signal": 4
+  },
+  "STUCK": {
+   "pct_videos_with_signal": 52.3,
+   "per_1000_comments": 3.93,
+   "videos_with_signal": 23
+  },
+  "LINK_DEAD": {
+   "pct_videos_with_signal": 2.3,
+   "per_1000_comments": 0.12,
+   "videos_with_signal": 1
+  },
+  "of_outdated_videos_pct_creator_replied_to_a_problem_comment": 20.0,
+  "pct_videos_with_creator_update_comment": 4.5,
+  "pct_videos_with_affiliate_links": 84.1
+ },
+ "remakes_same_channel_same_query": [
+  {
+   "group": "B",
+   "query": "how to connect custom domain to google sites",
+   "channel": "Kevin Stratvert",
+   "old": "How to use Google Sites to Create Website with Domain",
+   "new": "How to Build a Website with ChatGPT Sites"
+  },
+  {
+   "group": "B",
+   "query": "how to connect custom domain to google sites",
+   "channel": "Website Learners",
+   "old": "How to Make a Food Ordering Website and App in just 30 minutes",
+   "new": "Deploy Your Google AI Studio Website in Under 5 Minutes — No Code!"
+  },
+  {
+   "group": "B",
+   "query": "how to connect custom domain to google sites",
+   "channel": "Kevin Stratvert",
+   "old": "How to use Google Sites to Create Website with Domain",
+   "new": "5 Best Website Builders (Tested & Ranked)"
+  },
+  {
+   "group": "B",
+   "query": "how to connect custom domain to google sites",
+   "channel": "Stewart Gauld",
+   "old": "How To Set Up Google Workspace Business Emails | Google Workspace Tutorial",
+   "new": "Setup Business Emails with Google in 2026 | Full Google Workspace Setup"
+  },
+  {
+   "group": "B",
+   "query": "google analytics setup tutorial",
+   "channel": "Ahrefs",
+   "old": "Complete SEO Course for Beginners: Learn to Rank #1 in Google",
+   "new": "Complete AI SEO Course for Beginners: Learn AEO in 86 Minutes"
+  },
+  {
+   "group": "B",
+   "query": "wordpress website tutorial for beginners",
+   "channel": "CodeWithHarry",
+   "old": "Php Tutorial for Beginners in Hindi with MySQL Project",
+   "new": "Git Tutorial for Beginners: Learn Git in One Video"
+  },
+  {
+   "group": "B",
+   "query": "shopify store setup tutorial",
+   "channel": "Metics Media",
+   "old": "Shopify Tutorial for Beginners - Step by Step",
+   "new": "The Ultimate Beginner’s Guide to Claude AI"
+  },
+  {
+   "group": "B",
+   "query": "shopify store setup tutorial",
+   "channel": "Metics Media",
+   "old": "Shopify Tutorial for Beginners - Step by Step",
+   "new": "How to Build a Full Shopify Store using AI (Claude Code)"
+  },
+  {
+   "group": "B",
+   "query": "shopify store setup tutorial",
+   "channel": "Learn With Shopify",
+   "old": "The OFFICIAL Shopify Tutorial: Set Up Your Store the Right Way",
+   "new": "How to Use Claude to Build and Run a Shopify Store"
+  },
+  {
+   "group": "B",
+   "query": "shopify store setup tutorial",
+   "channel": "Learn With Shopify",
+   "old": "The OFFICIAL Shopify Tutorial: Set Up Your Store the Right Way",
+   "new": "The COMPLETE Shopify Tutorial 2026"
+  },
+  {
+   "group": "B",
+   "query": "obs studio setup tutorial",
+   "channel": "Cpaws Music",
+   "old": "How to Make Your Budget Mic Sound PRO in OBS Studio ✅",
+   "new": "Multistream to Twitch, YouTube & Kick — The Easy Method (2026)"
+  },
+  {
+   "group": "B",
+   "query": "obs studio setup tutorial",
+   "channel": "Cpaws Music",
+   "old": "How to Make Your Budget Mic Sound PRO in OBS Studio ✅",
+   "new": "How To Setup Stream Overlays In OBS Studio (For Beginners 2026)"
+  },
+  {
+   "group": "B",
+   "query": "obs studio setup tutorial",
+   "channel": "Cpaws Music",
+   "old": "How to Make Your Budget Mic Sound PRO in OBS Studio ✅",
+   "new": "Aitum Stream Suite Full Setup Tutorial (Multistream + Vertical Streaming)"
+  },
+  {
+   "group": "B",
+   "query": "obs studio setup tutorial",
+   "channel": "EXPOSUREEE",
+   "old": "OBS Studio for Screen Recording + Gameplay Recording Tutorial in Hindi",
+   "new": "How to Live Stream on KICK & Perfect OBS Settings For KICK"
+  },
+  {
+   "group": "B",
+   "query": "obs studio setup tutorial",
+   "channel": "EXPOSUREEE",
+   "old": "OBS Studio for Screen Recording + Gameplay Recording Tutorial in Hindi",
+   "new": "Live Stream on KICK & YouTube at Same Time | OBS Studio"
+  },
+  {
+   "group": "B",
+   "query": "youtube channel monetization setup",
+   "channel": "Manoj Dey",
+   "old": "Youtube Monetizasion Enabled Process Changed | How To Enable Youtube Channel Monetization ?",
+   "new": "No Face No Voice ❌ Unique Faceless YouTube Channel Idea 🔥Without Face & Voice 😱 Kids Channel Idea"
+  },
+  {
+   "group": "B",
+   "query": "youtube channel monetization setup",
+   "channel": "Manoj Dey",
+   "old": "Youtube Monetizasion Enabled Process Changed | How To Enable Youtube Channel Monetization ?",
+   "new": "BIG Monetization Update | YouTube अब नए Channels को Monetise नहीं करेगा 🥲 "
+  },
+  {
+   "group": "B",
+   "query": "youtube channel monetization setup",
+   "channel": "Manoj Dey",
+   "old": "Youtube Monetizasion Enabled Process Changed | How To Enable Youtube Channel Monetization ?",
+   "new": "Facebook Monetization Biggest Update 2026 🔥 अब होगा छप्परफाड़ Earning 🤑"
+  },
+  {
+   "group": "C",
+   "query": "best budget microphone for youtube",
+   "channel": "Manoj Dey",
+   "old": "Best Mic For Youtube Videos || BOYA BY M1 Review in HINDI",
+   "new": "Best Wireless Mic For Youtube Video | Under ₹1000 😍🔥 Mic For Android & IPhone📱 "
+  },
+  {
+   "group": "C",
+   "query": "best budget microphone for youtube",
+   "channel": "Manoj Dey",
+   "old": "Best Mic For Youtube Videos || BOYA BY M1 Review in HINDI",
+   "new": "सस्ता है पर बढ़िया है 😍 Best Wireless Mic For Youtube Videos ₹800 Only 🔥"
+  },
+  {
+   "group": "C",
+   "query": "best budget microphone for youtube",
+   "channel": "Manoj Dey",
+   "old": "Best Mic For Youtube Videos || BOYA BY M1 Review in HINDI",
+   "new": "इतना तगड़ा Wireless Mic ₹800 Only 😍 Best Wireless Mic For Youtube Video 🔥"
+  },
+  {
+   "group": "C",
+   "query": "best budget microphone for youtube",
+   "channel": "Manoj Dey",
+   "old": "Best Mic For Youtube Videos || BOYA BY M1 Review in HINDI",
+   "new": "सस्ता में तगड़ा 🔥 Best Wireless Mic ₹800 Only 😍 Best Mic For Youtube Videos "
+  },
+  {
+   "group": "C",
+   "query": "best budget microphone for youtube",
+   "channel": "Manoj Dey",
+   "old": "Best Mic For Youtube Videos || BOYA BY M1 Review in HINDI",
+   "new": "Best Mic For Youtube Video | Unique Design, Long Battery Life 🔋😍"
+  },
+  {
+   "group": "C",
+   "query": "best budget microphone for youtube",
+   "channel": "Manoj Dey",
+   "old": "Best Mic For Youtube Videos || BOYA BY M1 Review in HINDI",
+   "new": "Best Cheapest Wireless Mic ₹700 Only For Youtube Videos 😍 Sasta Wireless Mic 🔥"
+  },
+  {
+   "group": "C",
+   "query": "best budget microphone for youtube",
+   "channel": "Manoj Dey",
+   "old": "Best Mic For Youtube Videos || BOYA BY M1 Review in HINDI",
+   "new": "₹600 VS ₹700 Mic | Which is Best Mic For Youtube Video | Best Wireless Mic 😍"
+  },
+  {
+   "group": "C",
+   "query": "best phone under 15000",
+   "channel": "Trakin Tech",
+   "old": "Most Powerful Smartphone Under Rs.15000!?⚡iQOO Z6 5G Unboxing And First Impressions",
+   "new": "Top 5 Best Smartphones Under ₹20000 Budget ⚡ June 2026"
+  },
+  {
+   "group": "C",
+   "query": "best phone under 15000",
+   "channel": "Technology Gyan",
+   "old": "Watch Before you Buy an iPhone * Very Imp  *",
+   "new": "This Is the Best Phone for You - under ₹20,000 Budget!"
+  },
+  {
+   "group": "C",
+   "query": "best phone under 15000",
+   "channel": "Trakin Tech",
+   "old": "Most Powerful Smartphone Under Rs.15000!?⚡iQOO Z6 5G Unboxing And First Impressions",
+   "new": "Mivi One 5G Unboxing & First Look ⚡120Hz, Snapdragon 4 Gen 2, 6000mAh @11,999*"
+  }
+ ],
+ "B_new_pct_titles_with_year_or_updated": 28.5
+}

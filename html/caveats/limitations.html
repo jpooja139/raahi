@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limitations</title>
+<link rel="stylesheet" href="../assets/hub.css">
+</head>
+<body>
+<header class="top"><a href="../index.html">&larr; Hub</a></header>
+<main>
+  <h1>Limitations</h1>
+  <p class="lede">What Raahi does not claim, and where it can be wrong.</p>
+
+  <h2>Tutorial Rescue</h2>
+  <ul>
+    <li><b>Verdicts are "as of" the check date.</b> Results are cached for 7 days, then re-checked. <span class="src">app/rescue.py</span></li>
+    <li><b>Grounding can miss very recent UI changes.</b> If Search finds nothing current, the step is marked unverifiable. It is not marked current.</li>
+    <li><b>"Official source" is a string match.</b> It compares root domains with the list the model extracts for the tool. A vendor with several domains can be missed. <span class="src">rescue.mark_official</span></li>
+    <li><b>Transcript fallback is weaker in production.</b> YouTube often blocks transcript requests from cloud IPs. Video ingestion is the main path. <span class="src">docs/architecture.md section 4</span></li>
+    <li><b>Cost.</b> Every uncached check makes Vertex calls: one extraction plus one grounded call per 4 steps. We have no per-check cost figure in the sources. <span class="src">app/rescue.py</span></li>
+    <li><b>Extraction is slow under load.</b> Median 21.6 s one video at a time, but up to 651 s with 4 videos at once. Demo videos are pre-warmed (7-day cache). <span class="src">eval/RESULTS.md</span></li>
+    <li><b>The eval is small and hand-reviewed by the builder.</b> 16 cases, 10 controls. The run 2 prompt was tuned after seeing 6 of the controls; only the 4 holdout videos are an untuned precision check. Some "option not showing" cases may be account or region issues. <span class="src"><a href="../evals/rescue-eval.html">eval results</a>, eval/CASES.md</span></li>
+  </ul>
+
+  <h2>Competitor note</h2>
+  <p>YouTube's own "Ask" feature on videos is the closest alternative we know of. Our understanding is that it answers questions about the video, but does not re-check each step against today's docs with cited sources. This is our understanding, not a verified claim.</p>
+
+  <h2>From the README, "Honesty and limits"</h2>
+  <ul>
+    <li><b>Predefined vs AI:</b> scenario cards are handwritten recipes, badged "predefined recipe". Typed goals go through the Gemini planner and are badged "ai-planned". Checks are live in both.</li>
+    <li><b>Verification:</b> unknown check types are refused. Manual completion shows as "done (your word)", never verified. SPF/DMARC checks prove record presence, not inbox placement.</li>
+    <li><b>Studio:</b> "silence" cuts are caption-gap candidates from transcript timing, not audio analysis. Cloud rendering is planned v2 and its button is disabled.</li>
+    <li><b>Security:</b> outbound fetches refuse private and metadata addresses. The API is rate-limited per IP (demo-grade). There is no auth yet, so do not store secrets in profiles.</li>
+    <li><b>Not yet evidenced:</b> completion-rate benchmarks, user study, willingness to pay. These are the v1 evaluation plan, not claims.</li>
+    <li><b>API-key path:</b> grounding may exhaust prepaid quota; steps then arrive labeled unverified. Documented, not a pass.</li>
+  </ul>
+  <p class="src">Source: README.md.</p>
+
+  <nav class="related">Related: <a href="../rescue/pipeline.html">Pipeline</a> &middot; <a href="../research/problem-evidence.html">Problem evidence</a> &middot; <a href="../ops/runbook.html">Runbook</a> &middot; <a href="../decisions/adr-index.html">Decisions</a></nav>
+</main>
+<footer>Raahi hub &middot; <a href="../index.html">index</a></footer>
+</body>
+</html>

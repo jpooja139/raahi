@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Problem Evidence</title>
+<link rel="stylesheet" href="../assets/hub.css">
+</head>
+<body>
+<header class="top"><a href="../index.html">&larr; Hub</a></header>
+<main>
+  <h1>Problem evidence: old tutorials break</h1>
+  <p class="lede">Viewers of old software-setup tutorials report that steps no longer work far more often than viewers of recent ones. Creators rarely reply.</p>
+  <p class="src">Source: research/problem-validation/results.json (authority), research/problem-validation/REPORT.md. Cohort B_old: 144 setup tutorials published 2019-2022, median 1,145,030 views. Cohort B_new: 151 tutorials from the last 6 months.</p>
+
+  <h2>Old vs new</h2>
+  <div class="bars">
+    <div class="bar-group"><div class="lbl">Videos with "doesn't work anymore" comments</div>
+      <div class="bar-row"><span>2019-2022</span><div class="track"><div class="fill a" style="width:45.8%"></div></div><span>45.8%</span></div>
+      <div class="bar-row"><span>Last 6 months</span><div class="track"><div class="fill b" style="width:14.6%"></div></div><span>14.6%</span></div>
+    </div>
+    <div class="bar-group"><div class="lbl">Videos with a comment in the last 90 days</div>
+      <div class="bar-row"><span>2019-2022</span><div class="track"><div class="fill a" style="width:66%"></div></div><span>66.0%</span></div>
+      <div class="bar-row"><span>Last 6 months</span><div class="track"><div class="fill b" style="width:95.4%"></div></div><span>95.4%</span></div>
+    </div>
+    <div class="bar-group"><div class="lbl">Videos with a creator update comment</div>
+      <div class="bar-row"><span>2019-2022</span><div class="track"><div class="fill a" style="width:10.4%"></div></div><span>10.4%</span></div>
+      <div class="bar-row"><span>Last 6 months</span><div class="track"><div class="fill b" style="width:4.6%"></div></div><span>4.6%</span></div>
+    </div>
+    <div class="bar-group"><div class="lbl">Outdated videos where the creator replied to a problem comment</div>
+      <div class="bar-row"><span>2019-2022</span><div class="track"><div class="fill a" style="width:28.8%"></div></div><span>28.8%</span></div>
+      <div class="bar-row"><span>Last 6 months</span><div class="track"><div class="fill b" style="width:22.7%"></div></div><span>22.7%</span></div>
+    </div>
+  </div>
+  <p class="src">Source: results.json, cohorts B_old and B_new. The last chart is a share of videos that already had outdated comments. Bar length equals percent.</p>
+  <p>Read the second chart with care: 66.0% of old videos still get fresh comments, so the audience is still arriving. The reply rate of 28.8% means most problem comments get no creator answer.</p>
+
+  <h2>Method</h2>
+  <ul>
+    <li>YouTube Data API v3 for video lists, metadata and top-level comments.</li>
+    <li>Cohorts by publish date and topic: B_old (2019-2022) and B_new (last 6 months), same kind of software-setup query.</li>
+    <li>A regex codebook tags each comment, for example OUTDATED, STILL_OK, STUCK, LINK_DEAD. The cohort numbers count videos with at least one tagged comment.</li>
+    <li>Commenter identities are not stored.</li>
+  </ul>
+  <p class="src">Source: results.json fields; REPORT.md. The regex codebook is in research/problem-validation/analyze.py. Query list and comment counts (24,109 old, 10,208 new) are in results.json.</p>
+
+  <h2>Caveats stated in the report</h2>
+  <ul>
+    <li>The OUTDATED regex used for the 45.8% / 14.6% numbers has not been hand-checked for precision. In a separate sample (comments on 94 videos from YouTube Creators, Creator Insider, vidIQ and Think Media), the same kind of "outdated" tag was about 50% precise on 13 matches, so treat the absolute rates as upper bounds; the old-vs-new gap is the stronger signal.</li>
+    <li>Counts are API snapshots; comments react to what the sampled channels posted.</li>
+    <li>The report calls this a real viewer pain that creators do not voice themselves.</li>
+    <li>Dead-link tools already exist with near-zero revenue, per the report (one example: $119 all-time).</li>
+    <li>Tutorial Rescue evals were chosen from viewer comments by hand: 47 candidates scanned, 16 kept, keywords frozen before the first run. See <code>eval/CASES.md</code>. Results will be on the eval page once it is written.</li>
+  </ul>
+  <p class="src">Source: REPORT.md; eval/CASES.md.</p>
+
+  <div class="note warn">Not yet evidenced, per the README: completion-rate benchmarks, a user study, willingness to pay.</div>
+
+  <nav class="related">Related: <a href="../rescue/pipeline.html">Pipeline</a> &middot; <a href="../caveats/limitations.html">Limitations</a> &middot; <a href="../decisions/adr-index.html">Decisions</a></nav>
+</main>
+<footer>Raahi hub &middot; <a href="../index.html">index</a></footer>
+</body>
+</html>

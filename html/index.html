@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raahi Project Hub</title>
+<link rel="stylesheet" href="./assets/hub.css">
+</head>
+<body>
+<main>
+  <h1>Raahi project hub</h1>
+  <p class="lede">Raahi is a FastAPI and vanilla-JS web app on Cloud Run, using Gemini 3.8 Flash on Vertex AI. Its hero feature, Tutorial Rescue, watches an old YouTube tutorial, re-checks each step against today's docs with Google Search grounding, and shows sources.</p>
+  <p class="src">Team GoldHunter, Google Cloud AI Builder Cup 2026. Source: README.md.</p>
+
+  <div class="note">Start here: <a href="./rescue/pipeline.html">how Tutorial Rescue works</a>, then <a href="./research/problem-evidence.html">the problem evidence</a>.</div>
+
+  <div id="registry"></div>
+  <noscript><p>This index needs JavaScript to render its page list. Pages: rescue/pipeline.html, research/problem-evidence.html, decisions/adr-index.html, ops/runbook.html, caveats/limitations.html.</p></noscript>
+</main>
+<footer>The list above renders from the <code>artifacts</code> array in this file. To add a page, add one entry.</footer>
+
+<script>
+const artifacts = [
+  { area: "Rescue",   type: "Architecture", title: "Tutorial Rescue pipeline and invariants", path: "./rescue/pipeline.html", status: "Active" },
+  { area: "Evals",    type: "Results",      title: "Tutorial Rescue eval results", path: "./evals/rescue-eval.html", status: "Active" },
+  { area: "Research", type: "Evidence",     title: "Problem evidence: old vs new tutorials", path: "./research/problem-evidence.html", status: "Active" },
+  { area: "Decisions", type: "ADR",         title: "Architecture decision records", path: "./decisions/adr-index.html", status: "Active" },
+  { area: "Ops",      type: "Runbook",      title: "Run, deploy and roll back", path: "./ops/runbook.html", status: "Active" },
+  { area: "Caveats",  type: "Limits",       title: "Limitations", path: "./caveats/limitations.html", status: "Active" }
+];
+
+const root = document.getElementById("registry");
+const areas = [...new Set(artifacts.map(a => a.area))];
+for (const area of areas) {
+  const h = document.createElement("h2");
+  h.textContent = area;
+  const ul = document.createElement("ul");
+  ul.className = "cards";
+  for (const a of artifacts.filter(x => x.area === area)) {
+    const li = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = a.path;
+    link.textContent = a.title;
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    const type = document.createElement("span");
+    type.textContent = a.type;
+    const tag = document.createElement("span");
+    tag.className = "tag " + a.status;
+    tag.textContent = a.status;
+    meta.append(type, tag);
+    li.append(link, meta);
+    ul.append(li);
+  }
+  root.append(h, ul);
+}
+</script>
+</body>
+</html>

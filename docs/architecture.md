@@ -41,7 +41,6 @@ flowchart LR
     CB[Cloud Build + Artifact Registry]
   end
 
-  KEY[Gemini API key<br/>ONLY YouTube video ingestion<br/>— not on Vertex yet]
   YT[YouTube Data API v3]
   DNS[Google Public DNS DoH]
   WEB[(open web — public IPs only)]
@@ -49,8 +48,7 @@ flowchart LR
   UI --> RL --> ENG
   MIC --> LIVE <--> VAI
   LIVE --> VER
-  ENG --> VAI
-  ENG -->|video URLs only| KEY
+  ENG -->|text · YouTube video · Search grounding| VAI
   ENG --> YT
   VER --> DNS & WEB
   CTX --> GCS
@@ -58,22 +56,47 @@ flowchart LR
   SM -.mounts.-> Run
 ```
 
-## 3 · The hybrid AI decision (and why it's not a hack)
+## 3 · One AI backend (Vertex), one seam
 
 All reasoning runs on **Vertex AI** with service-account auth: no key in the
 request path, postpaid project billing (kills free-tier quota fragility),
-org-grade controls. One capability — ingesting a YouTube URL as video — is a
-**Gemini-API-only feature today**; those two call sites (`studio`, `rescue`
-extraction) explicitly use the mounted key via `gemini.key_client()`. When
-Vertex gains YouTube ingestion, the hybrid collapses to one line deleted.
+org-grade controls. YouTube URLs are ingested as video on Vertex too: the part
+must carry `mime_type="video/*"` (`video/mp4` returns 500 INTERNAL — verified
+2026-10-18), which `gemini.youtube_part()` sets per backend. So under
+`USE_VERTEX=1` the old hybrid is gone and `key_client()` is just `client()`.
 Rollback of the whole Vertex move is one env var (`USE_VERTEX=0`).
+
+## 3b · Tutorial Rescue pipeline (evidence, not opinion)
+
+```mermaid
+flowchart LR
+  URL[old tutorial URL] --> META[YouTube Data API<br/>real publish date + duration]
+  URL --> EX[Gemini watches the video<br/>low media resolution<br/>steps + m:ss + menu names]
+  EX -. fails .-> TR[timed transcript fallback]
+  EX --> B1[grounded check<br/>steps 1-4] & B2[steps 5-8] & B3[steps 9-12]
+  B1 & B2 & B3 --> P[regex STEP-block parser<br/>UTF-8 byte offsets]
+  P --> S[sources from grounding supports<br/>official-domain match]
+  S --> V[validator]
+  META --> V
+  V --> UI[step list · timestamp links ·<br/>source chips · pin-ready update]
+```
+
+| Invariant | Enforced in |
+|---|---|
+| A "current"/"changed" verdict with no grounding source is shown as *unconfirmed* | `rescue.validate` |
+| Sources come from the response's grounding supports (byte offsets), never from what the model writes | `rescue.sources_by_step` |
+| "official" is a root-domain string match against the tool vendor's domains, not model opinion | `rescue.mark_official` |
+| A timestamp past the video's real end is dropped | `rescue.validate` |
+| The public update comment is a template filled from sourced verdicts; the model never writes it | `rescue.update_card` |
+| A partial or failed check is never cached | `rescue.analyze` |
 
 ## 4 · Failure modes → designed behavior
 
 | Failure | What the user sees |
 |---|---|
 | Gemini 429 / per-minute quota | automatic backoff-retry (20s, 40s); then a readable error — never a blank spinner |
-| Search grounding outage | Rescue still returns extracted steps, each labeled "NOT verified against current docs" |
+| Search grounding outage | Rescue still returns extracted steps, each labeled *unconfirmed*, with a "NOT verified against current docs" note; the update comment is withheld |
+| One of the parallel grounding batches fails | its steps show *unconfirmed*, a "some steps couldn't be checked" note appears, and the result is not cached |
 | YouTube blocks transcript (cloud IPs) | Studio switches to video ingestion; UI notes "cloud mode — captions need a local run" |
 | Live session GoAway (~10 min) | client reconnects (capped ×3, backoff) carrying roadmap state |
 | One malformed link in 105 | that link reports `unreachable`; the scan completes |

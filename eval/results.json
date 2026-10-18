@@ -1,0 +1,3700 @@
+{
+ "verify_prompt_sha": "003c3ac0fd42",
+ "workers": 1,
+ "cases": {
+  "summary": {
+   "videos": 16,
+   "errors": 0,
+   "steps": 145,
+   "changed": 49,
+   "current": 90,
+   "unverifiable": 6,
+   "downgraded": 6,
+   "pct_steps_with_source": 95.9,
+   "pct_steps_with_official": 53.8,
+   "pct_steps_with_timestamp": 100.0,
+   "videos_from_transcript": 0,
+   "median_extract_s": 0.0,
+   "median_verify_s": 10.8,
+   "max_total_s": 50.7,
+   "HIT": 12,
+   "OTHER": 1,
+   "MISS": 3,
+   "videos_with_any_changed": 13
+  },
+  "rows": [
+   {
+    "video_id": "b4ij06Tt3U4",
+    "title": "How to Create a Business Email | Complete Setup with Gmail for Free",
+    "published": "2020-07-03T17:56:14Z",
+    "extract_s": 0.0,
+    "verify_s": 8.7,
+    "source": "video",
+    "tool": "Google Domains",
+    "note": "",
+    "counts": {
+     "current": 4,
+     "changed": 7,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 11,
+     "with_official_source": 4,
+     "with_timestamp": 11
+    },
+    "n_steps": 11,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:23",
+      "status": "changed",
+      "instruction": "Search for your desired domain name on Google Domains and click Get it.",
+      "today": "Google Domains has been shut down following its acquisition by Squarespace, so you must use another registrar like Squarespace Domains to search for and register a domain.",
+      "downgraded": false,
+      "sources": [
+       "squarespace.com",
+       "domains.google"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:50",
+      "status": "changed",
+      "instruction": "Select your desired top-level domain (TLD) and click the cart icon to view your cart.",
+      "today": "Because Google Domains has ceased operations and migrated to Squarespace, you must select your TLD and access your shopping cart through an alternative domain registrar such as Squarespace Domains.",
+      "downgraded": false,
+      "sources": [
+       "squarespace.com",
+       "domains.google"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:35",
+      "status": "changed",
+      "instruction": "Click Check out and fill in your contact information, then click Save & Continue.",
+      "today": "You cannot check out or save contact details on Google Domains because the service is discontinued; instead, complete the checkout and registrant contact steps on a registrar like Squarespace Domains.",
+      "downgraded": false,
+      "sources": [
+       "squarespace.com",
+       "domains.google"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "2:45",
+      "status": "changed",
+      "instruction": "Enter your payment details and click Buy to purchase the domain.",
+      "today": "Google Domains no longer processes payments or domain registrations, so you must complete your payment and purchase through a separate domain registrar such as Squarespace Domains.",
+      "downgraded": false,
+      "sources": [
+       "squarespace.com",
+       "domains.google"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "3:37",
+      "status": "changed",
+      "instruction": "Navigate to the Email tab on the left menu and click Add email alias.",
+      "today": "Google Domains has been shut down and migrated to Squarespace Domains, where you must manage your domain and configure email forwarding under the Email section in Squarespace.",
+      "downgraded": false,
+      "sources": [
+       "best-domain-registrars.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "3:54",
+      "status": "changed",
+      "instruction": "Enter the alias username and your existing Gmail address to forward emails to, then click Add.",
+      "today": "Because Google Domains has ceased operations and transferred accounts to Squarespace, email forwarding rules must now be created in Squarespace Domains under the Email settings.",
+      "downgraded": false,
+      "sources": [
+       "best-domain-registrars.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "5:16",
+      "status": "current",
+      "instruction": "In Gmail, click Settings > See all settings, then go to the Accounts and Import tab.",
+      "today": "In Gmail, click the Settings gear icon, select \"See all settings\", and open the \"Accounts and Import\" tab.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "google.com *"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "5:25",
+      "status": "current",
+      "instruction": "Under Send mail as, click Add another email address.",
+      "today": "Under the \"Send mail as\" section in Gmail settings, click \"Add another email address\".",
+      "downgraded": false,
+      "sources": [
+       "google.com *"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "5:38",
+      "status": "current",
+      "instruction": "Enter your name and custom business email address, then click Next Step.",
+      "today": "In the Gmail \"Add another email address\" pop-up, enter your name and email address, then click \"Next Step\".",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "6:14",
+      "status": "changed",
+      "instruction": "Set the SMTP Server to smtp.gmail.com, enter your Gmail address and password, change the Port to 465 with SSL selected, and click Add Account.",
+      "today": "Google no longer accepts regular account passwords for Gmail SMTP authentication, so enter a generated 16-character Google App Password in the Password field instead of your Gmail password.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "proximatesolutions.com"
+      ]
+     },
+     {
+      "n": 11,
+      "t": "8:24",
+      "status": "current",
+      "instruction": "Check your Gmail inbox for the confirmation email, copy the verification code, paste it into the verification box, and click Verify.",
+      "today": "Locate the verification email sent to your inbox, copy the numerical confirmation code, paste it into the verification field, and click \"Verify\".",
+      "downgraded": false,
+      "sources": [
+       "youtube.com",
+       "deployrocketship.com"
+      ]
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ]
+   },
+   {
+    "video_id": "1G51dz5Gt-g",
+    "title": "How to use Google Sites to Create Website with Domain",
+    "published": "2020-11-23T11:00:01Z",
+    "extract_s": 0.0,
+    "verify_s": 11.0,
+    "source": "video",
+    "tool": "Google Sites",
+    "note": "",
+    "counts": {
+     "current": 8,
+     "changed": 4,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 12,
+     "with_official_source": 10,
+     "with_timestamp": 12
+    },
+    "n_steps": 12,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:05",
+      "status": "changed",
+      "instruction": "Search for your desired domain name on Google Domains and click Get it.",
+      "today": "Google Domains has been shut down and its business sold to Squarespace, so you must search for and register a domain through Squarespace Domains or another third-party registrar instead.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "best-domain-registrars.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:38",
+      "status": "changed",
+      "instruction": "Add the selected domain to your cart and click Check out to complete the purchase.",
+      "today": "Because Google Domains no longer operates as a domain registrar, purchases must be checked out through a third-party registrar such as Squarespace Domains.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "best-domain-registrars.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:32",
+      "status": "changed",
+      "instruction": "In the domain overview dashboard, locate Create a website and click Build website.",
+      "today": "The Google Domains overview dashboard no longer exists; instead, you create your site directly by opening Google Sites (sites.google.com) or using sites.new.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "newgooglesites.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "3:40",
+      "status": "changed",
+      "instruction": "Under Simple site powered by Google Sites, click Continue, then click Start new site.",
+      "today": "This Google Domains integration is gone; to start a site, go to Google Sites (sites.google.com) and click Blank under \"Start a new site\", or connect your custom domain via the Settings gear icon under \"Custom domains\".",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "elementor.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "4:24",
+      "status": "current",
+      "instruction": "Hover near the top of the site canvas, click Add logo, and upload your logo and favicon under Brand images.",
+      "today": "Hovering over the top-left area of the header reveals the \"Add logo\" button, which opens the settings dialog to the \"Brand images\" section where you can upload both a logo and a favicon.",
+      "downgraded": false,
+      "sources": [
+       "stewartgauld.com",
+       "skillshare.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "5:40",
+      "status": "current",
+      "instruction": "Click Announcement banner in Settings, toggle Show banner on, and configure the color, announcement message, button label, and link.",
+      "today": "In Settings, select \"Announcement banner\", toggle on \"Show banner\", and set your banner color, announcement message, button label, and destination link.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "sharpschool.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "7:21",
+      "status": "current",
+      "instruction": "Customize the header section by selecting Header type and choosing Change image to upload or select a background.",
+      "today": "Hover over or select the header to access the toolbar options for \"Header type\" and \"Change image\" to upload or select a background.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "google.com *",
+       "online-tech-tips.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "10:41",
+      "status": "current",
+      "instruction": "Open the Insert tab on the right panel and click a Layout template to insert image and text sections.",
+      "today": "Open the Insert tab in the right panel and click any layout template under the section labeled \"Content blocks\" (or Layouts) to add combined image and text sections.",
+      "downgraded": false,
+      "sources": [
+       "fandm.edu",
+       "online-tech-tips.com",
+       "cuny.edu"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "13:00",
+      "status": "current",
+      "instruction": "Click Image carousel in the Insert panel, add at least two images, and click Insert.",
+      "today": "In the Insert panel, click Image carousel, select or upload at least two images, and click Insert.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "14:36",
+      "status": "current",
+      "instruction": "Navigate to the Pages tab, click the plus icon to add a New page, and drag pages to organize sub-pages in the navigation menu.",
+      "today": "In the Pages panel, hover over or click the plus icon to choose New page, and drag pages to arrange them or create subpages.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 11,
+      "t": "17:28",
+      "status": "current",
+      "instruction": "From the Insert tab, click Button to add a call-to-action button and link it to an existing page.",
+      "today": "Click Button in the Insert panel to add a button and choose an existing page from the Link field dropdown.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "steegle.com"
+      ]
+     },
+     {
+      "n": 12,
+      "t": "20:53",
+      "status": "current",
+      "instruction": "Click Publish in the top-right corner, confirm your web address and custom URL settings, and click Publish.",
+      "today": "When you click Publish, a dialog appears where you can configure the site's web address, review custom domain/URL options, and finalize publishing by clicking Publish.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "online-tech-tips.com"
+      ]
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   {
+    "video_id": "xdGG-9aKq74",
+    "title": "How to Set Up FREE Email With Your Own Domain Name | Free Business Email",
+    "published": "2022-07-06T12:15:07Z",
+    "extract_s": 0.0,
+    "verify_s": 50.7,
+    "source": "video",
+    "tool": "Zoho Mail",
+    "note": "",
+    "counts": {
+     "current": 8,
+     "changed": 0,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 8,
+     "with_official_source": 6,
+     "with_timestamp": 8
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:36",
+      "status": "current",
+      "instruction": "Go to zoho.com, click Learn More under Mail, navigate to Pricing, and click Try Now under the Forever Free Plan.",
+      "today": "Navigating to zoho.com, choosing Mail, going to Pricing, and scrolling down to the Forever Free Plan card still works, where the button is labeled \"Sign Up\" instead of \"Try Now\".",
+      "downgraded": false,
+      "sources": [
+       "zoho.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "2:46",
+      "status": "current",
+      "instruction": "Fill in your Name, Email Address, and Password, agree to the terms, click Sign Up, and enter the verification OTP sent to your email.",
+      "today": "Filling in your details, agreeing to the terms, clicking \"Sign Up\", and verifying your email with the OTP sent to your inbox remains the active account creation process.",
+      "downgraded": false,
+      "sources": [
+       "zoho.com *",
+       "unstoppabledomains.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "4:30",
+      "status": "current",
+      "instruction": "Click Add now under Add an existing domain, enter your domain name, organization name, and industry type, then click Add.",
+      "today": "In the setup prompt, choosing \"Add Now\" under \"Add an existing domain\" and submitting your domain name, organization name, and industry details is still the standard way to register your domain.",
+      "downgraded": false,
+      "sources": [
+       "zoho.com *",
+       "unstoppabledomains.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "5:44",
+      "status": "current",
+      "instruction": "Click Proceed to domain verification, copy the TXT record details into your domain registrar's DNS manager, and click Verify TXT Record.",
+      "today": "Clicking \"Proceed to domain verification,\" adding the generated TXT record in your registrar's DNS management settings, and clicking \"Verify TXT Record\" remains the standard verification workflow.",
+      "downgraded": false,
+      "sources": [
+       "zoho.com *",
+       "zoho.com *",
+       "unstoppabledomains.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "8:54",
+      "status": "current",
+      "instruction": "Enter your desired email username in the Your login email address field and click Create.",
+      "today": "In the setup wizard following domain verification, you create your administrator email account by entering your desired username into the email address field and clicking Create.",
+      "downgraded": false,
+      "sources": [
+       "pavietnam.vn"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "11:33",
+      "status": "current",
+      "instruction": "Click Proceed to DNS Mapping, open your domain DNS settings, configure Custom MX with the three Zoho MX records, and add the SPF and DKIM TXT records.",
+      "today": "Click \"Proceed to DNS Mapping\" to view Zoho's MX, SPF, and DKIM records, then configure them in your DNS provider's management console.",
+      "downgraded": false,
+      "sources": [
+       "zoho.com *",
+       "zoho.com *"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "17:01",
+      "status": "current",
+      "instruction": "Click Verify All Records, then click through Proceed to Email Migration, Proceed to Go Mobile, and Proceed to Setup Completion.",
+      "today": "After updating your DNS records, click \"Verify All Records\" (or individual verify buttons) and advance through the wizard via \"Proceed to Email Migration\", \"Proceed to Go Mobile\", and \"Proceed to Setup Completion\".",
+      "downgraded": false,
+      "sources": [
+       "zoho.com *",
+       "medium.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "20:17",
+      "status": "current",
+      "instruction": "Open a new tab and navigate to mail.zoho.com to access your new custom domain email inbox.",
+      "today": "Navigate to mail.zoho.com in a web browser to sign in and access your new custom domain email inbox.",
+      "downgraded": false,
+      "sources": [
+       "apple.com",
+       "zolahost.com"
+      ]
+     }
+    ],
+    "outcome": "MISS",
+    "matched_steps": []
+   },
+   {
+    "video_id": "FHL75CGDjgA",
+    "title": "How to Add Custom Domain to Blogger Blogspot [Part - 6]",
+    "published": "2019-04-08T15:56:23Z",
+    "extract_s": 0.0,
+    "verify_s": 7.8,
+    "source": "video",
+    "tool": "Blogger",
+    "note": "",
+    "counts": {
+     "current": 4,
+     "changed": 3,
+     "unverifiable": 1,
+     "downgraded": 1,
+     "with_sources": 7,
+     "with_official_source": 6,
+     "with_timestamp": 8
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:25",
+      "status": "unverifiable",
+      "instruction": "Go to GoDaddy, search for your desired domain name, add it to cart, and complete the purchase.",
+      "today": "Searching for a domain on GoDaddy, adding it to your cart, and completing the purchase remains the standard purchasing process.",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 2,
+      "t": "5:53",
+      "status": "current",
+      "instruction": "Go to your GoDaddy account menu, select \"My Products\", find your domain, click the three dots icon, and select \"Manage DNS\".",
+      "today": "Navigating to \"My Products\", locating the domain, and clicking the three dots icon to select \"Manage DNS\" remains available in GoDaddy.",
+      "downgraded": false,
+      "sources": [
+       "onenine.com",
+       "site123.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "6:42",
+      "status": "changed",
+      "instruction": "In Blogger, navigate to Settings > Basic, locate the Publishing section, and click \"Set up a third-party URL for your blog\".",
+      "today": "Blogger replaced the Basic sub-tab and old link, so you must click \"Settings\" in the left menu, locate \"Publishing\", and click \"Custom domain\".",
+      "downgraded": false,
+      "sources": [
+       "google.com *"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "7:35",
+      "status": "current",
+      "instruction": "Enter \"www.\" followed by your domain name in the text box and click \"Save\" to reveal the required CNAME records and instructions.",
+      "today": "Typing your domain name preceded by \"www.\" and clicking \"Save\" still triggers the error message displaying the two required CNAME records and targets.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "hostinger.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "8:14",
+      "status": "current",
+      "instruction": "In GoDaddy DNS Management, add or edit the two CNAME records with the Host and Points to values shown in Blogger.",
+      "today": "In GoDaddy's DNS Management, you still add or edit the two CNAME records using the Host/Name and Points to values provided by Blogger.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "bloggertheme9.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "10:10",
+      "status": "current",
+      "instruction": "Click \"ADD\" in GoDaddy DNS Records to add four separate 'A' records with Host set to \"@\" pointing to each of Google's four IP addresses.",
+      "today": "In GoDaddy DNS Records, click \"Add New Record\" to add the four separate 'A' records with Name/Host set to \"@\" pointing to Google's four IP addresses.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "bloggertheme9.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "12:24",
+      "status": "changed",
+      "instruction": "After DNS changes propagate, return to Blogger Settings > Basic and click \"Save\" under Third party domain settings.",
+      "today": "In Blogger, go directly to Settings from the left sidebar, find the \"Publishing\" section, click \"Custom domain\", enter your domain, and click \"Save\".",
+      "downgraded": false,
+      "sources": [
+       "google.com *"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "12:51",
+      "status": "changed",
+      "instruction": "Click \"Edit\" next to your domain under Publishing, enable \"Redirect [naked domain] to www.[domain]\", and click \"Save\".",
+      "today": "In Blogger Settings under \"Publishing\", turn on the toggle switch labeled \"Redirect domain\" directly without needing to click an \"Edit\" link or separate \"Save\" button.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "cluelessinthecloud.com"
+      ]
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     3,
+     7
+    ]
+   },
+   {
+    "video_id": "njri8_gJTs0",
+    "title": "Google Analytics Beginners Tutorial (see update in description)",
+    "published": "2022-01-25T21:22:55Z",
+    "extract_s": 0.0,
+    "verify_s": 5.7,
+    "source": "video",
+    "tool": "Google Analytics",
+    "note": "",
+    "counts": {
+     "current": 3,
+     "changed": 6,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 9,
+     "with_official_source": 5,
+     "with_timestamp": 9
+    },
+    "n_steps": 9,
+    "steps": [
+     {
+      "n": 1,
+      "t": "2:35",
+      "status": "changed",
+      "instruction": "Navigate to Behavior > Site Content > All Pages to view pageviews across your site.",
+      "today": "In Google Analytics 4, go to Reports > Engagement > Pages and screens to view pageviews across your site.",
+      "downgraded": false,
+      "sources": [
+       "skynettechnologies.com",
+       "ga4.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "2:51",
+      "status": "current",
+      "instruction": "Click the date selector in the top right to choose a date range and click Apply.",
+      "today": "In Google Analytics 4, you still click the date range selector located in the top-right corner of standard reports, select your dates, and click Apply.",
+      "downgraded": false,
+      "sources": [
+       "optizent.com",
+       "lovesdata.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "7:20",
+      "status": "changed",
+      "instruction": "Click Behavior > Behavior Flow to visualize visitor pathways and drop-off points.",
+      "today": "Go to Explore in the left-hand navigation and select the \"Path exploration\" template to visualize user paths and drop-offs, as Behavior Flow no longer exists.",
+      "downgraded": false,
+      "sources": [
+       "analytify.io",
+       "monsterinsights.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "8:04",
+      "status": "changed",
+      "instruction": "Go to Acquisition > All Traffic > Channels to review traffic sources by category.",
+      "today": "Navigate to Reports > Acquisition > Traffic acquisition to review session traffic sources by default channel group.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "ga4.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "8:58",
+      "status": "changed",
+      "instruction": "Select Acquisition > All Traffic > Referrals to view specific external websites linking to your site.",
+      "today": "In Google Analytics 4, go to Reports > Acquisition > Traffic acquisition, and change the primary dimension to \"Session source / medium\" or \"Session source\" to view external referral domains.",
+      "downgraded": false,
+      "sources": [
+       "measureu.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "10:14",
+      "status": "changed",
+      "instruction": "Click Audience > Overview to see high-level demographics and user details.",
+      "today": "In Google Analytics 4, go to Reports > User attributes > Demographic details (or Overview) to view high-level demographics and user details.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "semrush.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "10:55",
+      "status": "changed",
+      "instruction": "Select Audience > Geo > Location and click on a country to drill down into regional and city-level traffic.",
+      "today": "In Google Analytics 4, go to Reports > User attributes > Demographic details, where country is the default dimension, and change the primary dimension to \"Region\" or \"Town/City\" (or add a secondary dimension) to view localized traffic.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "google.com *",
+       "semrush.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "12:47",
+      "status": "current",
+      "instruction": "Click the Admin gear icon in the bottom left corner to manage tracking properties and permissions.",
+      "today": "Click the Admin gear icon in the bottom-left corner of the navigation sidebar.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "3mediaweb.com"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "13:04",
+      "status": "current",
+      "instruction": "Click Property Access Management under the Property column to invite and manage user roles.",
+      "today": "In the Admin area under the Property column/section, click \"Property access management\" (or \"Access Management\") to invite users and manage their roles.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "google.com *"
+      ]
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     1,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   {
+    "video_id": "vshlg0U3UqA",
+    "title": "How to Set Up Google Analytics - Complete Beginner Guide",
+    "published": "2022-04-30T12:37:27Z",
+    "extract_s": 0.0,
+    "verify_s": 10.4,
+    "source": "video",
+    "tool": "Google Analytics",
+    "note": "",
+    "counts": {
+     "current": 6,
+     "changed": 3,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 9,
+     "with_official_source": 6,
+     "with_timestamp": 9
+    },
+    "n_steps": 9,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:00",
+      "status": "current",
+      "instruction": "Navigate to analytics.google.com and sign in with your Google account.",
+      "today": "Navigate to analytics.google.com and sign in with your Google account.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "medium.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:46",
+      "status": "current",
+      "instruction": "Click the Start measuring button to begin setting up your account.",
+      "today": "Click the Start measuring button to begin setting up your account.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "medium.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:57",
+      "status": "current",
+      "instruction": "Enter your desired Account name under Account details and click Next.",
+      "today": "Enter an account name under Account details and click the Next button.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "medium.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "3:42",
+      "status": "changed",
+      "instruction": "Enter a Property name, select your Reporting time zone and Currency, then click Show advanced options.",
+      "today": "The \"Show advanced options\" link (formerly used to create legacy Universal Analytics properties) has been removed, so simply enter your property name, reporting time zone, and currency, then click Next.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "medium.com",
+       "rootandbranchgroup.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "5:22",
+      "status": "changed",
+      "instruction": "Toggle on Create a Universal Analytics property, enter your Website URL, select Create a Universal Analytics property only, and click Next.",
+      "today": "Universal Analytics property creation has been sunset and deprecated by Google, so you instead proceed directly through Google Analytics 4 property creation by entering a property name, reporting time zone, and currency, then clicking Next.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "beehiiv.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "6:19",
+      "status": "changed",
+      "instruction": "Select your Industry category, Business size, and intended usage options under About your business, then click Create.",
+      "today": "After selecting your Industry category and Business size under \"Business details\", click Next to reach the \"Choose business objectives\" step, select your objectives, and then click Create.",
+      "downgraded": false,
+      "sources": [
+       "monsterinsights.com",
+       "kpplaybook.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "7:05",
+      "status": "current",
+      "instruction": "Check the agreement boxes in the Google Analytics Terms of Service Agreement popup and click I Accept.",
+      "today": "Check the required terms agreement boxes in the Google Analytics Terms of Service Agreement popup and click I Accept.",
+      "downgraded": false,
+      "sources": [
+       "youtube.com",
+       "diviflash.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "7:25",
+      "status": "current",
+      "instruction": "Uncheck or select your preferences for email communications and click Save.",
+      "today": "In the email communications popup, check or uncheck your preferred email options and click Save.",
+      "downgraded": false,
+      "sources": [
+       "mito.hu",
+       "diviflash.com"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "8:08",
+      "status": "current",
+      "instruction": "Copy the Global Site Tag (gtag.js) tracking code snippet to paste into the <head> section of your website.",
+      "today": "Google still instructs you to copy the Google tag (gtag.js) snippet from the manual installation instructions and paste it immediately after the opening <head> element on every page of your website.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "google.com *"
+      ]
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     5
+    ]
+   },
+   {
+    "video_id": "trBA7xGgzjk",
+    "title": "How To Create A Facebook Business Page In 2022",
+    "published": "2022-01-07T16:30:06Z",
+    "extract_s": 0.0,
+    "verify_s": 21.6,
+    "source": "video",
+    "tool": "Facebook",
+    "note": "",
+    "counts": {
+     "current": 5,
+     "changed": 5,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 10,
+     "with_official_source": 6,
+     "with_timestamp": 10
+    },
+    "n_steps": 10,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:13",
+      "status": "current",
+      "instruction": "Go to facebook.com and log into your account or click Create New Account.",
+      "today": "Navigating to facebook.com gives you the option to log in to an existing account or click the \"Create new account\" button.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "sendible.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:43",
+      "status": "current",
+      "instruction": "Click the Menu icon in the top right corner and select Page.",
+      "today": "Clicking the Menu icon (grid icon) in the top-right corner and selecting \"Page\" under the Create section remains an active way to begin creating a Page.",
+      "downgraded": false,
+      "sources": [
+       "sendible.com",
+       "mashable.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:11",
+      "status": "current",
+      "instruction": "Fill in your Page name, choose relevant Categories, enter a Description, and click Create Page.",
+      "today": "On the Create a Page screen, you enter your Page name, select relevant categories, add an optional description/bio, and click the \"Create Page\" button.",
+      "downgraded": false,
+      "sources": [
+       "sendible.com",
+       "wikihow.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "4:06",
+      "status": "current",
+      "instruction": "Click Add Profile Picture and Add Cover Photo to upload your images, then click Save.",
+      "today": "Once the page is created, clicking the buttons to add your profile picture and cover photo followed by clicking Save (or Next/Done) continues to complete the setup.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "writtenwordmedia.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "7:00",
+      "status": "changed",
+      "instruction": "Navigate to Settings in the left sidebar, click Page visibility, select Page unpublished, click Save Changes, select a reason, and click Unpublish.",
+      "today": "Switch into your Page profile, navigate to Settings & privacy > Settings > Privacy > Facebook Page information, click View next to Deactivation and deletion, choose Deactivate Page, and click Continue.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "7:47",
+      "status": "changed",
+      "instruction": "Click Add a Button, choose an action (such as Call Now), enter your contact details, and click Save.",
+      "today": "Switch into your Page profile, click the three horizontal dots (…) beneath your cover photo, select Edit Action Button (or Add Action Button), choose your button option, and follow the on-screen prompts to save.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "tomo360.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "8:35",
+      "status": "changed",
+      "instruction": "Click Create @username, enter your desired username, and click Create Username.",
+      "today": "Switch into your Page profile, go to Settings & privacy > Settings, select General Page settings, and click Edit next to Username to enter and save your new handle.",
+      "downgraded": false,
+      "sources": [
+       "clickregion.org.au"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "9:51",
+      "status": "current",
+      "instruction": "Under Set your Page up for success, expand Provide info and preferences and fill in your Website, Location, Business hours, and Phone number.",
+      "today": "New Facebook Pages continue to display a \"Set your Page up for success\" onboarding module where you expand \"Provide info and preferences\" to add your website, location, business hours, and phone number.",
+      "downgraded": false,
+      "sources": [
+       "hisawyer.com",
+       "adespresso.com"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "11:19",
+      "status": "changed",
+      "instruction": "Go to Settings > Page visibility, select Page published, and click Save Changes.",
+      "today": "In the modern Facebook Pages experience, publishing or unpublishing has been replaced by deactivation and reactivation under Settings > Privacy > Facebook Page information > Deactivation and deletion.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "businessinsider.com"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "12:39",
+      "status": "changed",
+      "instruction": "Click More under your page name, select Edit tabs, and reorder or toggle tabs according to your preference.",
+      "today": "Click More under your page name, select Manage sections instead of \"Edit tabs\", and check or uncheck available sections to add or hide them, as tabs can no longer be reordered.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "reddit.com",
+       "youtube.com"
+      ]
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     5,
+     7,
+     9
+    ]
+   },
+   {
+    "video_id": "6Kn0MFAaQDM",
+    "title": "Facebook Ads Tutorial 2024 - How To Create Facebook Ads For Beginners (QUICK GUIDE)",
+    "published": "2021-06-14T06:15:40Z",
+    "extract_s": 0.0,
+    "verify_s": 10.7,
+    "source": "video",
+    "tool": "Facebook Ads",
+    "note": "",
+    "counts": {
+     "current": 8,
+     "changed": 1,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 9,
+     "with_official_source": 2,
+     "with_timestamp": 9
+    },
+    "n_steps": 9,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:14",
+      "status": "current",
+      "instruction": "Navigate to facebook.com/adsmanager and log in to your Facebook account.",
+      "today": "Navigating to facebook.com/adsmanager and logging into your Facebook account still takes you directly to Meta Ads Manager.",
+      "downgraded": false,
+      "sources": [
+       "coinis.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:42",
+      "status": "current",
+      "instruction": "Click \"+ Create\", select \"Traffic\" as your campaign objective, and click \"Continue\".",
+      "today": "Clicking \"+ Create\", choosing \"Traffic\" from the campaign objectives list, and clicking \"Continue\" remains the standard flow to initiate a traffic campaign.",
+      "downgraded": false,
+      "sources": [
+       "digitalgrowthtutor.com",
+       "coinis.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:01",
+      "status": "current",
+      "instruction": "Enter a campaign name, click \"Next\", ensure \"Website\" is selected, and set your daily budget.",
+      "today": "Naming the campaign, clicking \"Next\" to navigate to the ad set level, confirming \"Website\" as the conversion destination, and specifying your daily budget are still the exact required steps.",
+      "downgraded": false,
+      "sources": [
+       "digitalgrowthtutor.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "3:39",
+      "status": "current",
+      "instruction": "Scroll down to Audience and set your desired location, age group, gender, and detailed targeting interests.",
+      "today": "In the ad set Audience section, you can still define location, age, gender, and detailed targeting interests, either directly via audience controls/suggestions or by switching to original audience options.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "zolyp.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "7:10",
+      "status": "current",
+      "instruction": "Under Optimization for ad delivery, select \"Landing page views\" and click \"Next\".",
+      "today": "In the ad set setup under Optimization & delivery, you can still select \"Landing page views\" for ad delivery and click \"Next\" to proceed to the ad level.",
+      "downgraded": false,
+      "sources": [
+       "mostmarketing.net",
+       "digitalmarketingcompany.com",
+       "landingcube.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "8:01",
+      "status": "current",
+      "instruction": "Under Identity, click \"Create Page\" to set up a new Facebook Page, enter your details and profile picture, then click \"Create Page\".",
+      "today": "Under Identity at the ad level, you can still click the option to create a new Facebook Page, fill in your details and profile picture, and confirm by clicking \"Create Page\".",
+      "downgraded": false,
+      "sources": [
+       "zeely.ai",
+       "getbumpa.com",
+       "semrush.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "10:13",
+      "status": "current",
+      "instruction": "Under Ad creative, click \"Add media\" > \"Add image\" to upload your visual, then fill in your Primary text, Headline, Description, Website URL, and Call to action.",
+      "today": "Under the Ad creative section, you still upload your image by clicking \"Add media\" followed by \"Add image,\" and then enter your Primary text, Headline, Description, Website URL, and Call to action.",
+      "downgraded": false,
+      "sources": [
+       "serp-it.com",
+       "roaspig.com",
+       "scribd.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "13:12",
+      "status": "current",
+      "instruction": "Click \"Publish\", choose your payment method, enter your payment details, and click \"Save\".",
+      "today": "When you click \"Publish\" without an active payment method on the ad account, a modal prompts you to select your payment method, input the payment details, and click \"Save\" to finish publishing.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "savemyleads.com",
+       "medium.com"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "17:03",
+      "status": "changed",
+      "instruction": "Open Events Manager, click \"Connect data sources\" > \"Web\" > \"Facebook pixel\", name your pixel, and connect it to your website using the Pixel Caffeine WordPress plugin.",
+      "today": "In Events Manager, click \"Connect data sources\" > \"Web\" to create or select a dataset (which now houses the Meta Pixel), and connect it using Meta's official WordPress partner integration, direct code, or current plugins like PixelYourSite, as the Pixel Caffeine plugin has been deprecated and abandoned.",
+      "downgraded": false,
+      "sources": [
+       "capconvert.com",
+       "leadsie.com",
+       "youtube.com"
+      ]
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     9
+    ]
+   },
+   {
+    "video_id": "2f6mfgzTQSA",
+    "title": "How To Create Instagram Business Account In Hindi | Instagram Par Business Account Kaise Banaye",
+    "published": "2020-08-20T14:16:42Z",
+    "extract_s": 0.0,
+    "verify_s": 45.5,
+    "source": "video",
+    "tool": "Instagram",
+    "note": "",
+    "counts": {
+     "current": 3,
+     "changed": 4,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 7,
+     "with_official_source": 1,
+     "with_timestamp": 7
+    },
+    "n_steps": 7,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:05",
+      "status": "changed",
+      "instruction": "Tap the menu icon in the top right corner of your profile and select Settings.",
+      "today": "Tap the hamburger menu icon in the top right corner of your profile and select \"Settings and activity\" (or \"Settings and privacy\").",
+      "downgraded": false,
+      "sources": [
+       "instagram.com *",
+       "shopify.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:17",
+      "status": "changed",
+      "instruction": "Scroll down and tap Switch to Professional Account.",
+      "today": "Scroll down to the \"For professionals\" section, tap \"Account type and tools,\" and then select \"Switch to professional account\".",
+      "downgraded": false,
+      "sources": [
+       "traackr.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "1:31",
+      "status": "changed",
+      "instruction": "Select Business and tap Next.",
+      "today": "After tapping \"Switch to professional account,\" you must first tap through intro screens and choose a business category before reaching the screen where you select \"Business\" and tap Next.",
+      "downgraded": false,
+      "sources": [
+       "interakt.shop",
+       "creatoriq.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "1:46",
+      "status": "current",
+      "instruction": "Tap Continue through the introductory slides.",
+      "today": "Tap \"Continue\" through the introductory slides explaining professional account features before proceeding to select your category.",
+      "downgraded": false,
+      "sources": [
+       "interakt.shop",
+       "shopify.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "2:08",
+      "status": "current",
+      "instruction": "Search for or select your business category, then tap Next.",
+      "today": "Select or search for the category that best describes your business and tap Done or Next to continue.",
+      "downgraded": false,
+      "sources": [
+       "flockler.com",
+       "withnation.ai"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "2:35",
+      "status": "current",
+      "instruction": "Review and enter your public business contact information, then tap Next.",
+      "today": "Review and enter your business contact info (or tap \"Don't use my contact info\"), then tap Next.",
+      "downgraded": false,
+      "sources": [
+       "flockler.com",
+       "withnation.ai"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "3:04",
+      "status": "changed",
+      "instruction": "Connect an existing Facebook page or tap Don't Connect to Facebook Now to complete setup.",
+      "today": "To connect an existing Facebook Page, tap Log in to Facebook (or Connect to Facebook), or tap Skip to finish setting up without linking a Page.",
+      "downgraded": false,
+      "sources": [
+       "withnation.ai"
+      ]
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     2,
+     3
+    ]
+   },
+   {
+    "video_id": "Q7AOvWpIVHU",
+    "title": "Build a Mindblowing 3D Portfolio Website // Three.js Beginner’s Tutorial",
+    "published": "2021-05-21T16:36:40Z",
+    "extract_s": 0.0,
+    "verify_s": 12.6,
+    "source": "video",
+    "tool": "Three.js",
+    "note": "",
+    "counts": {
+     "current": 7,
+     "changed": 2,
+     "unverifiable": 3,
+     "downgraded": 3,
+     "with_sources": 9,
+     "with_official_source": 4,
+     "with_timestamp": 12
+    },
+    "n_steps": 12,
+    "steps": [
+     {
+      "n": 1,
+      "t": "2:27",
+      "status": "changed",
+      "instruction": "Run `npm init @vitejs/app` in the terminal, set a project name, select the `vanilla` framework, and choose `JavaScript`.",
+      "today": "Run `npm create vite@latest` instead, since `@vitejs/app` has been deprecated and replaced by `create-vite`.",
+      "downgraded": false,
+      "sources": [
+       "npmjs.com",
+       "medium.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "2:42",
+      "status": "current",
+      "instruction": "Install Three.js by running `npm install three` in the project directory.",
+      "today": "Three.js continues to be installed via npm using `npm install three`.",
+      "downgraded": false,
+      "sources": [
+       "tutorialspoint.com",
+       "npmjs.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "3:13",
+      "status": "unverifiable",
+      "instruction": "Open `index.html` and add `<canvas id=\"bg\"></canvas>` inside the `<body>` preceding the script tag.",
+      "today": "Adding a `<canvas id=\"bg\"></canvas>` inside the `<body>` before the script tag remains valid HTML for providing a target rendering element.",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 4,
+      "t": "3:26",
+      "status": "unverifiable",
+      "instruction": "Open `style.css` and style `canvas` with `position: fixed; top: 0; left: 0;`.",
+      "today": "Setting `canvas { position: fixed; top: 0; left: 0; }` remains standard CSS for positioning the Three.js canvas across the viewport background.",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 5,
+      "t": "3:37",
+      "status": "current",
+      "instruction": "In `main.js`, import Three.js and initialize the Scene, PerspectiveCamera, and WebGLRenderer bound to the `#bg` canvas.",
+      "today": "Initializing a Scene, PerspectiveCamera, and WebGLRenderer configured with a canvas selector like `#bg` remains standard Three.js setup.",
+      "downgraded": false,
+      "sources": [
+       "tajammalmaqbool.com",
+       "threejsresources.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "5:25",
+      "status": "current",
+      "instruction": "Create a Torus geometry and material, combine them into a `THREE.Mesh`, and add the mesh to the scene.",
+      "today": "Creating a TorusGeometry and a Material, combining them into a Mesh, and adding that mesh to the Scene works exactly as described.",
+      "downgraded": false,
+      "sources": [
+       "threejs.org *",
+       "tajammalmaqbool.com",
+       "xiniushu.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "6:20",
+      "status": "current",
+      "instruction": "Set up a game loop by defining an `animate` function that calls `requestAnimationFrame(animate)` and re-renders the scene.",
+      "today": "Setting up an animation loop using `requestAnimationFrame(animate)` to update and re-render the scene remains fully supported and widely used.",
+      "downgraded": false,
+      "sources": [
+       "tajammalmaqbool.com",
+       "threejs-journey.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "7:44",
+      "status": "current",
+      "instruction": "Add a `PointLight` and an `AmbientLight` to illuminate the 3D objects across the scene.",
+      "today": "Adding `PointLight` and `AmbientLight` instances to illuminate objects in the scene continues to function as written.",
+      "downgraded": false,
+      "sources": [
+       "tajammalmaqbool.com",
+       "threejsresources.com"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "9:22",
+      "status": "changed",
+      "instruction": "Import `OrbitControls` from `three/examples/jsm/controls/OrbitControls` and instantiate it with the camera and renderer DOM element.",
+      "today": "In current Three.js documentation, import addons from `'three/addons/controls/OrbitControls.js'` (or include the `.js` extension) instead of `'three/examples/jsm/controls/OrbitControls'`.",
+      "downgraded": false,
+      "sources": [
+       "threejs.org *",
+       "facebook.com"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "10:10",
+      "status": "current",
+      "instruction": "Create an `addStar` function using `THREE.MathUtils.randFloatSpread` to randomly populate outer space with sphere meshes.",
+      "today": "`THREE.MathUtils.randFloatSpread` remains the standard utility method for generating random float values evenly distributed across a specified spread.",
+      "downgraded": false,
+      "sources": [
+       "threejs.org *",
+       "threejs.org *"
+      ]
+     },
+     {
+      "n": 11,
+      "t": "11:15",
+      "status": "current",
+      "instruction": "Load space and celestial body images using `THREE.TextureLoader().load()` to set background and object textures.",
+      "today": "Instantiating `new THREE.TextureLoader().load()` is still the official way to load image textures and assign them to scene backgrounds or material maps.",
+      "downgraded": false,
+      "sources": [
+       "threejs.org *"
+      ]
+     },
+     {
+      "n": 12,
+      "t": "13:48",
+      "status": "unverifiable",
+      "instruction": "Create a `moveCamera` function mapped to `document.body.onscroll` to recalculate scroll offset and update camera and object positions.",
+      "today": "Binding a `moveCamera` function to `document.body.onscroll` to read window scroll values and update Three.js camera and mesh coordinates is standard browser DOM behavior and continues to work.",
+      "downgraded": true,
+      "sources": []
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     1
+    ]
+   },
+   {
+    "video_id": "eTLWd70Y3F0",
+    "title": "How to Set up a Shopify Store in 13 Minutes - Shopify Tutorial for Beginners",
+    "published": "2022-01-21T18:12:44Z",
+    "extract_s": 0.0,
+    "verify_s": 10.7,
+    "source": "video",
+    "tool": "Shopify",
+    "note": "",
+    "counts": {
+     "current": 7,
+     "changed": 5,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 12,
+     "with_official_source": 9,
+     "with_timestamp": 12
+    },
+    "n_steps": 12,
+    "steps": [
+     {
+      "n": 1,
+      "t": "0:26",
+      "status": "changed",
+      "instruction": "Enter your email address, click \"Start free trial\", create a password, and click \"Create your store\".",
+      "today": "Instead of creating a store name and password on the landing page, enter your email, click \"Start free trial\", answer or skip the setup onboarding questions, and then create or sign in with your Shopify ID (via email, Apple, Google, or Facebook) to open your store.",
+      "downgraded": false,
+      "sources": [
+       "shopify.com *",
+       "tinyseo.com",
+       "litextension.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "0:53",
+      "status": "changed",
+      "instruction": "Navigate to Online Store > Themes, explore and add a theme, then click Actions > Publish.",
+      "today": "In your Shopify admin under Online Store > Themes, find the theme in the Draft themes (or Theme library) section and click the direct \"Publish\" button next to it rather than selecting an \"Actions\" dropdown menu.",
+      "downgraded": false,
+      "sources": [
+       "shopify.com *",
+       "shopify.com *"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "1:33",
+      "status": "current",
+      "instruction": "Click \"Customize\" to edit homepage sections, upload your logo, and configure your hero slideshow banner.",
+      "today": "Clicking \"Customize\" on your published theme opens the theme editor where you can still configure your homepage sections, header logo, and slideshow banners.",
+      "downgraded": false,
+      "sources": [
+       "gempages.net",
+       "instant.so",
+       "nextsky.co"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "5:08",
+      "status": "current",
+      "instruction": "In the Shopify admin dashboard, go to Products > Collections and click \"Create collection\" to organize your product categories.",
+      "today": "You still organize your product categories by going to Products > Collections in the Shopify admin and clicking the \"Create collection\" button.",
+      "downgraded": false,
+      "sources": [
+       "meetanshi.com",
+       "skailama.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "6:18",
+      "status": "current",
+      "instruction": "Go to Products > All products, click \"Add product\", enter product details, media, pricing, and assign each product to collections.",
+      "today": "In the Shopify admin, go directly to Products (where \"All products\" is no longer a separate sub-item) and click \"Add product\" to enter details, media, pricing, and collection assignments.",
+      "downgraded": false,
+      "sources": [
+       "shopify.com *",
+       "gokickflip.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "7:08",
+      "status": "changed",
+      "instruction": "Select your created products, click \"More actions\", and choose \"Set as active\".",
+      "today": "When you select products on the Products page, click the \"Set as active\" bulk-action button directly on the action bar without opening a \"More actions\" menu.",
+      "downgraded": false,
+      "sources": [
+       "litextension.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "7:53",
+      "status": "changed",
+      "instruction": "Click Settings > Policies and click \"Create from template\" to set up your refund, privacy, and terms policies.",
+      "today": "In Settings > Policies, automated policies generate terms automatically, but if creating manually under Written policies, click \"Insert template\" instead of \"Create from template\".",
+      "downgraded": false,
+      "sources": [
+       "shopify.com *"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "8:24",
+      "status": "changed",
+      "instruction": "Go to Online Store > Navigation to add, remove, and arrange links in both the Footer menu and Main menu.",
+      "today": "Go to Content > Menus in your Shopify admin to add, remove, and arrange links in the Main menu and Footer menu, as Navigation has been relocated from Online Store.",
+      "downgraded": false,
+      "sources": [
+       "shopify.com *",
+       "shopify.com *"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "9:50",
+      "status": "current",
+      "instruction": "Open the theme customizer and select \"Theme settings\" to adjust brand colors, typography, favicon, and checkout appearance.",
+      "today": "In the theme editor sidebar, click the gear icon labeled \"Theme settings\" to customize your colors, typography, logo, favicon, and checkout branding.",
+      "downgraded": false,
+      "sources": [
+       "shopify.com *"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "10:54",
+      "status": "current",
+      "instruction": "Go to Online Store > Preferences to add homepage SEO metadata and disable password protection after choosing a plan.",
+      "today": "Go to Online Store > Preferences to configure your homepage title and meta description under SEO and manage password protection settings.",
+      "downgraded": false,
+      "sources": [
+       "shopify.com *",
+       "shipaid.com"
+      ]
+     },
+     {
+      "n": 11,
+      "t": "12:05",
+      "status": "current",
+      "instruction": "In Settings, set up your payment providers under Payments and configure shipping zones and rates under Shipping and delivery.",
+      "today": "In your Shopify admin, go to Settings > Payments to configure payment providers and Settings > Shipping and delivery to manage shipping zones and rates.",
+      "downgraded": false,
+      "sources": [
+       "shopify.com *",
+       "shopify.com *"
+      ]
+     },
+     {
+      "n": 12,
+      "t": "13:14",
+      "status": "current",
+      "instruction": "Go to Settings > Domains to connect an existing custom domain or purchase a new one.",
+      "today": "Navigate to Settings > Domains, where you can click \"Connect existing domain\" or \"Buy new domain\" to set up your store's web address.",
+      "downgraded": false,
+      "sources": [
+       "shopify.com *",
+       "shopify.com *"
+      ]
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     1
+    ]
+   },
+   {
+    "video_id": "f_fGXgh0A8k",
+    "title": "Use Snap Camera Face Filters in OBS Live Streams FREE!",
+    "published": "2022-01-03T13:15:01Z",
+    "extract_s": 0.0,
+    "verify_s": 14.1,
+    "source": "video",
+    "tool": "Snap Camera",
+    "note": "",
+    "counts": {
+     "current": 0,
+     "changed": 7,
+     "unverifiable": 1,
+     "downgraded": 1,
+     "with_sources": 7,
+     "with_official_source": 7,
+     "with_timestamp": 8
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "n": 1,
+      "t": "0:59",
+      "status": "changed",
+      "instruction": "Go to the Snap Camera download page, accept the license agreement, and click DOWNLOAD FOR PC.",
+      "today": "Snap Camera has been discontinued and removed from official download pages; instead, install the Snapchat Camera for Chrome extension or use Snapchat for Web.",
+      "downgraded": false,
+      "sources": [
+       "snapchat.com *"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:21",
+      "status": "changed",
+      "instruction": "Open the installer and click Next through the setup wizard to complete the installation.",
+      "today": "The standalone desktop installer is no longer offered by Snap, so you must install the Snapchat Camera extension directly from the Chrome Web Store instead.",
+      "downgraded": false,
+      "sources": [
+       "snapchat.com *",
+       "snapchat.com *"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "1:43",
+      "status": "changed",
+      "instruction": "Launch Snap Camera, click the gear icon in the top-right corner, and configure your camera and microphone.",
+      "today": "Because the desktop app is discontinued, select \"Snapchat Camera\" in your web app's camera settings and open the extension pane from the Chrome extension menu instead.",
+      "downgraded": false,
+      "sources": [
+       "snapchat.com *",
+       "snapchat.com *"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "4:27",
+      "status": "changed",
+      "instruction": "Browse the lens catalog, hover over a lens you like, and click the star icon to add it to Favorites.",
+      "today": "Snap Camera's desktop lens catalog is discontinued, so you must browse and select lenses from the Snapchat Camera extension pane or via Snapchat for Web instead.",
+      "downgraded": false,
+      "sources": [
+       "snapchat.com *",
+       "snapchat.com *"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "4:41",
+      "status": "changed",
+      "instruction": "In Snap Camera Settings, assign hotkeys for Turn Lens On/Off and Trigger Lens Effect.",
+      "today": "Snap Camera was officially shut down and discontinued by Snap on January 25, 2023, meaning the standalone application is no longer available or supported.",
+      "downgraded": false,
+      "sources": [
+       "snapchat.com *",
+       "xda-developers.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "5:00",
+      "status": "changed",
+      "instruction": "Go to the Favorites tab, click the hotkey icon in the top-right corner, and set hotkeys for individual lenses.",
+      "today": "The Snap Camera desktop app has been retired and is no longer available to use or download, with Snap directing users to Snapchat for Web or the Snapchat Camera Chrome extension instead.",
+      "downgraded": false,
+      "sources": [
+       "snapchat.com *",
+       "xda-developers.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "5:15",
+      "status": "unverifiable",
+      "instruction": "In OBS Studio, click the + button in the Sources panel and select Video Capture Device.",
+      "today": "In OBS Studio, clicking the + icon in the Sources dock and selecting Video Capture Device remains the current method to add a webcam or virtual camera source.",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 8,
+      "t": "5:22",
+      "status": "changed",
+      "instruction": "In the Properties window, select Snap Camera under Device, set your Audio Device, and click OK.",
+      "today": "Because the Snap Camera app has been discontinued, Snap Camera is no longer an available virtual device option in OBS Studio unless using community-preserved third-party patches.",
+      "downgraded": false,
+      "sources": [
+       "snapchat.com *",
+       "youtube.com"
+      ]
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     1,
+     3,
+     4,
+     5,
+     6,
+     8
+    ]
+   },
+   {
+    "video_id": "pEd7jw0uNE4",
+    "title": "The BEST Voicemeeter SETUP GUIDE on YouTube!",
+    "published": "2022-07-11T14:00:21Z",
+    "extract_s": 0.0,
+    "verify_s": 9.6,
+    "source": "video",
+    "tool": "Voicemeeter Banana",
+    "note": "",
+    "counts": {
+     "current": 6,
+     "changed": 1,
+     "unverifiable": 1,
+     "downgraded": 1,
+     "with_sources": 7,
+     "with_official_source": 2,
+     "with_timestamp": 8
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:07",
+      "status": "current",
+      "instruction": "Click A1 under HARDWARE OUT in the top right and select your headphones or speakers using WDM.",
+      "today": "In Voicemeeter Banana, click the A1 selector under HARDWARE OUT at the top right and select your listening device with the WDM driver prefix.",
+      "downgraded": false,
+      "sources": [
+       "vb-audio.com *",
+       "scribd.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:10",
+      "status": "current",
+      "instruction": "Toggle the A1 button on for both virtual input strips (Voicemeeter VAIO and Voicemeeter AUX).",
+      "today": "Click to illuminate the green A1 routing button on both the Voicemeeter VAIO and Voicemeeter AUX virtual input strips.",
+      "downgraded": false,
+      "sources": [
+       "medium.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "1:18",
+      "status": "changed",
+      "instruction": "Right-click the Windows speaker icon in the taskbar, select Open Sound settings, and click Sound Control Panel.",
+      "today": "Right-click the speaker icon on the taskbar, select Sound settings, scroll down to the Advanced section, and click \"More sound settings\" (or open the classic Sound dialog directly via the Voicemeeter Menu).",
+      "downgraded": false,
+      "sources": [
+       "vb-audio.com *",
+       "wisc.edu",
+       "microsoft.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "1:26",
+      "status": "current",
+      "instruction": "In the Playback tab, right-click VoiceMeeter Input to set it as Default Device, then right-click VoiceMeeter Aux Input to set it as Default Communication Device.",
+      "today": "On the Playback tab of the Sound control panel, right-click VoiceMeeter Input to set it as Default Device, and right-click VoiceMeeter Aux Input to set it as Default Communication Device.",
+      "downgraded": false,
+      "sources": [
+       "wisc.edu"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "2:14",
+      "status": "current",
+      "instruction": "Click HARDWARE INPUT 1, select your microphone, disable the A1 routing button, and enable B2 (or B1).",
+      "today": "In Voicemeeter Banana, you still click HARDWARE INPUT 1 to choose your microphone device and toggle the A1 and B2 (or B1) bus routing buttons directly on that input strip.",
+      "downgraded": false,
+      "sources": [
+       "github.com",
+       "voicemeeter.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "2:39",
+      "status": "unverifiable",
+      "instruction": "Switch to the Recording tab in Sound Control Panel, right-click VoiceMeeter Aux Output (or VoiceMeeter Output), and set it as Default Device and Default Communication Device.",
+      "today": "In the Windows Sound Control Panel's Recording tab, right-clicking VoiceMeeter Aux Output (or VoiceMeeter Output) still provides the options to set it as Default Device and Default Communication Device.",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 7,
+      "t": "3:33",
+      "status": "current",
+      "instruction": "Click HARDWARE INPUT 2 in Voicemeeter and select CABLE Output (VB-Audio Virtual Cable).",
+      "today": "You still click the HARDWARE INPUT 2 strip header in Voicemeeter Banana to select CABLE Output (VB-Audio Virtual Cable) from the device list.",
+      "downgraded": false,
+      "sources": [
+       "voicemeeter.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "3:37",
+      "status": "current",
+      "instruction": "Open EarTrumpet from the system tray, right-click your music app, click the arrows button, and select CABLE Input (VB-Audio Virtual Cable).",
+      "today": "In EarTrumpet, right-clicking an application's volume slider reveals the double-arrow routing icon, which opens the menu to select CABLE Input (VB-Audio Virtual Cable).",
+      "downgraded": false,
+      "sources": [
+       "elgato.com",
+       "howtogeek.com"
+      ]
+     }
+    ],
+    "outcome": "OTHER",
+    "matched_steps": []
+   },
+   {
+    "video_id": "7H1r1fC_HMY",
+    "title": "How to Make Your Budget Mic Sound PRO in OBS Studio ✅",
+    "published": "2022-12-16T18:00:03Z",
+    "extract_s": 0.0,
+    "verify_s": 8.1,
+    "source": "video",
+    "tool": "OBS Studio",
+    "note": "",
+    "counts": {
+     "current": 8,
+     "changed": 0,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 8,
+     "with_official_source": 5,
+     "with_timestamp": 8
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "n": 1,
+      "t": "0:07",
+      "status": "current",
+      "instruction": "Open Settings in the bottom right corner of OBS Studio, navigate to Audio, assign your microphone to a Mic/Auxiliary Audio slot, and click Apply and OK.",
+      "today": "In the Controls dock at the bottom right, click Settings, select Audio, assign your microphone under Global Audio Devices to a Mic/Auxiliary Audio slot, and click Apply and OK.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "0:47",
+      "status": "current",
+      "instruction": "Click the three vertical dots next to your mic channel in the Audio Mixer, select Advanced Audio Properties, and set Audio Monitoring to Monitor and Output.",
+      "today": "In the Audio Mixer dock, click the three vertical dots next to your mic channel, choose Advanced Audio Properties, and set the Audio Monitoring dropdown to Monitor and Output.",
+      "downgraded": false,
+      "sources": [
+       "hollyland.com",
+       "hollyland.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:59",
+      "status": "current",
+      "instruction": "Click the three dots on your microphone track, choose Filters, click the plus icon, and add a Compressor.",
+      "today": "Click the three vertical dots on your microphone source in the Audio Mixer, select Filters, click the plus (+) icon, and select Compressor.",
+      "downgraded": false,
+      "sources": [
+       "anymp4.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "3:10",
+      "status": "current",
+      "instruction": "Configure the Compressor settings to a 4.00:1 Ratio, 2 ms Attack, and 100 ms Release, then adjust the Output Gain and Threshold while speaking quietly and loudly.",
+      "today": "In the Compressor filter properties, set the Ratio to 4.00:1, Attack to 2 ms, Release to 100 ms, and dial in the Output Gain and Threshold based on your voice levels.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "anymp4.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "4:02",
+      "status": "current",
+      "instruction": "Click the plus icon to add an Expander filter, set Ratio to 4.00:1, Attack to 2 ms, Release to 100 ms, and dial in the Threshold until background noise is silenced.",
+      "today": "In OBS Studio's audio filter settings, you still click the plus icon to add the Expander filter and configure Ratio, Attack, Release, and Threshold as described.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "5:44",
+      "status": "current",
+      "instruction": "Download and run the ReaPlugs VST FX Suite installer, setting the destination folder to C:\\Program Files\\Common Files\\VST2\\VSTPlugins.",
+      "today": "Downloading and installing the ReaPlugs VST FX Suite into that VST2 path remains a standard method for Windows systems.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "6:18",
+      "status": "current",
+      "instruction": "In OBS Audio Filters, add a VST 2.x Plug-in, select reaeq-standalone from the dropdown menu, and click Open Plug-in Interface.",
+      "today": "You still add a \"VST 2.x Plug-in\" filter from Audio Filters, choose reaeq-standalone from the dropdown menu, and click \"Open Plug-in Interface\".",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "youtube.com",
+       "techtactician.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "6:43",
+      "status": "current",
+      "instruction": "Adjust the ReaEQ frequency bands to fine-tune the low-end bass and high-end crispness of your voice.",
+      "today": "You can still use the ReaEQ interface's frequency bands to shape and fine-tune your microphone's low-end and high-end frequencies.",
+      "downgraded": false,
+      "sources": [
+       "youtube.com",
+       "streamgeeks.us"
+      ]
+     }
+    ],
+    "outcome": "MISS",
+    "matched_steps": []
+   },
+   {
+    "video_id": "C_0FSgVgqnc",
+    "title": "DNS record for site ownership verification - Google Search Console Training",
+    "published": "2019-12-11T17:30:00Z",
+    "extract_s": 0.0,
+    "verify_s": 13.7,
+    "source": "video",
+    "tool": "Google Search Console",
+    "note": "",
+    "counts": {
+     "current": 6,
+     "changed": 0,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 6,
+     "with_official_source": 3,
+     "with_timestamp": 6
+    },
+    "n_steps": 6,
+    "steps": [
+     {
+      "n": 1,
+      "t": "0:35",
+      "status": "current",
+      "instruction": "Under \"Select property type\", enter your domain in the Domain box and click CONTINUE.",
+      "today": "In the \"Select property type\" dialog, enter your domain under the Domain card and click CONTINUE.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "syntacticsinc.com",
+       "campaigndonut.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "0:44",
+      "status": "current",
+      "instruction": "Click the \"Instructions for:\" dropdown to select your domain name provider, or keep \"Any DNS provider\".",
+      "today": "In the \"Verify domain ownership via DNS record\" window, select your registrar from the \"Instructions for:\" dropdown menu or leave it set to \"Any DNS provider\".",
+      "downgraded": false,
+      "sources": [
+       "bigcommerce.com",
+       "websitestarted.com",
+       "anotherconcept.co.uk"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "0:57",
+      "status": "current",
+      "instruction": "If your provider is listed, click START VERIFICATION, sign into your provider account, and click Authorize.",
+      "today": "When an integrated provider is selected, click START VERIFICATION, sign into your domain account on the pop-up page, and authorize the connection.",
+      "downgraded": false,
+      "sources": [
+       "ionos.com",
+       "aneescraftsmanship.com",
+       "anotherconcept.co.uk"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "1:36",
+      "status": "current",
+      "instruction": "If your provider is not listed, click COPY next to the TXT record and add it to your DNS configuration with your domain registrar.",
+      "today": "Under the generic instructions, click COPY next to the provided TXT record and paste it into your registrar's DNS configuration settings.",
+      "downgraded": false,
+      "sources": [
+       "miraheze.org",
+       "websitestarted.com",
+       "anotherconcept.co.uk"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "2:11",
+      "status": "current",
+      "instruction": "Return to the Search Console verification pane and click VERIFY.",
+      "today": "In the verification popup or details pane, the action button is still labeled \"Verify\".",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "google.com *"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "2:24",
+      "status": "current",
+      "instruction": "If verification fails immediately, wait a few hours or a day, then select the property from the Search property dropdown to try again.",
+      "today": "If immediate verification fails, unverified properties remain saved in the property selector dropdown in the navigation header, allowing you to select the property and click \"Verify\" again later.",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "google.com *"
+      ]
+     }
+    ],
+    "outcome": "MISS",
+    "matched_steps": []
+   },
+   {
+    "video_id": "kdbniwINFFA",
+    "title": "How to Verify Your Domain on Google Search Console in 2019 (DNS and TXT Record)",
+    "published": "2019-09-07T00:47:10Z",
+    "extract_s": 0.0,
+    "verify_s": 15.8,
+    "source": "video",
+    "tool": "Google Search Console",
+    "note": "",
+    "counts": {
+     "current": 7,
+     "changed": 1,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 8,
+     "with_official_source": 2,
+     "with_timestamp": 8
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:38",
+      "status": "current",
+      "instruction": "Click the \"Start now\" button on the Google Search Console homepage.",
+      "today": "The landing page still prominently features the \"Start now\" button to sign in or access Google Search Console.",
+      "downgraded": false,
+      "sources": [
+       "ratherinventive.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:55",
+      "status": "current",
+      "instruction": "Open the property dropdown menu in the upper-left corner and click \"Add property\".",
+      "today": "In the upper-left navigation panel, opening the property selector dropdown still displays the \"+ Add property\" option.",
+      "downgraded": false,
+      "sources": [
+       "google.com *"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:22",
+      "status": "current",
+      "instruction": "Enter your bare domain in the \"Domain\" field and click \"CONTINUE\".",
+      "today": "Under the \"Select property type\" prompt, typing your bare domain into the \"Domain\" field and clicking \"CONTINUE\" remains the standard flow.",
+      "downgraded": false,
+      "sources": [
+       "purely.website",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "3:03",
+      "status": "current",
+      "instruction": "Click the \"COPY\" button to copy the TXT verification record to your clipboard.",
+      "today": "The DNS verification modal continues to display the TXT verification record alongside a dedicated \"COPY\" button.",
+      "downgraded": false,
+      "sources": [
+       "purely.website",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "4:31",
+      "status": "changed",
+      "instruction": "Log into your domain host (such as Bluehost), go to Domains, click the three dots icon next to your domain, and select \"DNS/Zone Editor\".",
+      "today": "In Bluehost's portal, go to Domains, select your domain to open the domain management panel, and open the \"DNS\" tab instead of clicking a three-dot menu for \"DNS/Zone Editor\".",
+      "downgraded": false,
+      "sources": [
+       "bluehost.com",
+       "bluehost.com",
+       "bluehost.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "5:15",
+      "status": "current",
+      "instruction": "Under Add DNS Record, enter \"@\" for Host Record, set Type to \"TXT\", paste the verification code into \"TXT Value\", and click \"Add Record\".",
+      "today": "Under the DNS settings, click \"+ Add record\", set the type to TXT, enter \"@\" for the host/name, paste the Google verification string into the value field, and save or add the record.",
+      "downgraded": false,
+      "sources": [
+       "skool.com",
+       "youtube.com",
+       "bluehost.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "6:50",
+      "status": "current",
+      "instruction": "Return to the Google Search Console verification dialog and click \"VERIFY\".",
+      "today": "Switch back to the Google Search Console verification modal and click \"VERIFY\".",
+      "downgraded": false,
+      "sources": [
+       "google.com *",
+       "bluehost.com",
+       "circle.so"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "7:29",
+      "status": "current",
+      "instruction": "Once the ownership verified confirmation appears, click \"DONE\".",
+      "today": "When the \"Ownership verified\" dialog appears, click \"DONE\" (or choose \"GO TO PROPERTY\").",
+      "downgraded": false,
+      "sources": [
+       "reddit.com",
+       "ionos.com",
+       "wpvivid.com"
+      ]
+     }
+    ],
+    "outcome": "HIT",
+    "matched_steps": [
+     5
+    ]
+   }
+  ]
+ },
+ "controls": {
+  "summary": {
+   "videos": 6,
+   "errors": 0,
+   "steps": 61,
+   "changed": 4,
+   "current": 47,
+   "unverifiable": 10,
+   "downgraded": 7,
+   "pct_steps_with_source": 85.2,
+   "pct_steps_with_official": 23.0,
+   "pct_steps_with_timestamp": 100.0,
+   "videos_from_transcript": 0,
+   "median_extract_s": 0.0,
+   "median_verify_s": 9.9,
+   "max_total_s": 28.8,
+   "HIT": 0,
+   "OTHER": 0,
+   "MISS": 0,
+   "videos_with_any_changed": 2
+  },
+  "rows": [
+   {
+    "video_id": "rJtF32LTX8U",
+    "title": "Claude Design = Easy Websites for Beginners",
+    "published": "2026-04-21",
+    "extract_s": 0.0,
+    "verify_s": 10.8,
+    "source": "video",
+    "tool": "Claude Design",
+    "note": "",
+    "counts": {
+     "current": 6,
+     "changed": 3,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 9,
+     "with_official_source": 0,
+     "with_timestamp": 9
+    },
+    "n_steps": 9,
+    "steps": [
+     {
+      "n": 1,
+      "t": "0:24",
+      "status": "current",
+      "instruction": "Click Design in the left sidebar of Claude to access the design workspace.",
+      "today": "In Claude, you can still access the workspace by clicking Design (or \"Claude Design\", represented by a palette icon) in the left sidebar.",
+      "downgraded": false,
+      "sources": [
+       "geeksforgeeks.org",
+       "note.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:03",
+      "status": "current",
+      "instruction": "Under New prototype, enter a project name and click Wireframe.",
+      "today": "On the Claude Design homepage, you can still select Prototype (or New prototype) to enter a project name and choose Wireframe mode to begin.",
+      "downgraded": false,
+      "sources": [
+       "note.com",
+       "theagentcamp.com",
+       "productcompass.pm"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "1:29",
+      "status": "current",
+      "instruction": "Type a prompt specifying your website layout requirements into the text box and click Send.",
+      "today": "Enter your layout requirements into the prompt text box on the canvas interface and submit it to generate your prototype.",
+      "downgraded": false,
+      "sources": [
+       "geeksforgeeks.org",
+       "medium.com",
+       "note.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "2:11",
+      "status": "changed",
+      "instruction": "Use the Tweaks panel in the bottom right corner to adjust layout variants and navigation styles.",
+      "today": "Rather than using a fixed Tweaks panel, layout and styling changes are now made through direct inline element edits, comments, or prompting Claude directly in the conversation.",
+      "downgraded": false,
+      "sources": [
+       "magicpatterns.com",
+       "magicpatterns.com",
+       "animaapp.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "2:22",
+      "status": "current",
+      "instruction": "Enter a prompt asking Claude to convert the selected wireframe into a high-fidelity UI design.",
+      "today": "You can still submit a prompt instructing Claude to transform a selected wireframe artifact or mockup into a high-fidelity UI design.",
+      "downgraded": false,
+      "sources": [
+       "mokkup.ai",
+       "metodoviral.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "3:07",
+      "status": "changed",
+      "instruction": "Click Edit at the top bar to directly select and modify text content on the page.",
+      "today": "You no longer need to click an Edit button on the top bar; simply click directly on any text element on the canvas to edit it in place.",
+      "downgraded": false,
+      "sources": [
+       "incrypted.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "4:47",
+      "status": "current",
+      "instruction": "Drag your image into the prompt bar and instruct Claude to set it as the full-screen hero image.",
+      "today": "Dragging and dropping an image into the chat prompt bar to guide Claude in styling the design and setting a full-screen hero image remains fully supported.",
+      "downgraded": false,
+      "sources": [
+       "claude.com",
+       "metodoviral.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "5:24",
+      "status": "current",
+      "instruction": "Prompt Claude to fix responsiveness and add a mobile hamburger menu.",
+      "today": "Iterating via conversational prompts to adjust responsive layouts and incorporate mobile navigation elements like a hamburger menu continues to work as expected.",
+      "downgraded": false,
+      "sources": [
+       "claude.com",
+       "getclaudeskills.com",
+       "moda.app"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "6:14",
+      "status": "changed",
+      "instruction": "Click Share in the top right and select Handoff to Claude Code to copy the implementation command.",
+      "today": "Click \"Export\" (not \"Share\") in the top right and select \"Hand off to Claude Code\" to get the implementation command and handoff options.",
+      "downgraded": false,
+      "sources": [
+       "claude.com",
+       "claude.com"
+      ]
+     }
+    ]
+   },
+   {
+    "video_id": "q7PRxCeewBk",
+    "title": "Instagram Account Kaise Banaye ? Instagram Page Kaise Banaye ? How To Create Instagram Account ?",
+    "published": "2026-05-19",
+    "extract_s": 0.0,
+    "verify_s": 8.9,
+    "source": "video",
+    "tool": "Instagram",
+    "note": "",
+    "counts": {
+     "current": 10,
+     "changed": 0,
+     "unverifiable": 2,
+     "downgraded": 2,
+     "with_sources": 10,
+     "with_official_source": 3,
+     "with_timestamp": 12
+    },
+    "n_steps": 12,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:25",
+      "status": "current",
+      "instruction": "Open the Instagram app and tap \"Create new account\".",
+      "today": "Opening the Instagram app presents the option to tap \"Create new account\" (or \"Sign up\") at the bottom of the login screen.",
+      "downgraded": false,
+      "sources": [
+       "wikihow.com",
+       "flocksocial.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:48",
+      "status": "current",
+      "instruction": "Enter your mobile number (or select \"Sign up with email address\") and tap \"Next\".",
+      "today": "You can enter your mobile number or tap \"Sign up with email address\" to use an email instead, followed by tapping \"Next\".",
+      "downgraded": false,
+      "sources": [
+       "esafety.gov.au",
+       "sebuda.com",
+       "flocksocial.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:00",
+      "status": "current",
+      "instruction": "Enter the 6-digit confirmation code received via WhatsApp or SMS and tap \"Next\".",
+      "today": "Instagram sends a 6-digit confirmation code via SMS, WhatsApp, or email, which you enter before tapping \"Next\".",
+      "downgraded": false,
+      "sources": [
+       "mobilemasr.com",
+       "sebuda.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "2:29",
+      "status": "current",
+      "instruction": "Create a strong password of at least 6 characters and tap \"Next\".",
+      "today": "You are prompted to create a password of at least 6 characters and tap \"Next\" to continue account setup.",
+      "downgraded": false,
+      "sources": [
+       "mobilemasr.com",
+       "sebuda.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "2:50",
+      "status": "unverifiable",
+      "instruction": "Select your date of birth, tap \"SET\", and then tap \"Next\".",
+      "today": "Select your date of birth using the date picker, confirm by tapping \"Set\", and then tap \"Next\" to continue.",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 6,
+      "t": "3:01",
+      "status": "unverifiable",
+      "instruction": "Enter your full name, then choose or confirm your username and tap \"Next\".",
+      "today": "Enter your full name and tap \"Next\", then create or confirm your username and tap \"Next\".",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 7,
+      "t": "3:28",
+      "status": "current",
+      "instruction": "Tap \"I agree\" to accept Instagram's terms and policies.",
+      "today": "Tap \"I agree\" to accept Instagram's terms and policies.",
+      "downgraded": false,
+      "sources": [
+       "youtube.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "3:34",
+      "status": "current",
+      "instruction": "Tap \"Add picture\" to select a profile photo from your gallery, then tap \"Done\" (or tap \"Skip\").",
+      "today": "Tap \"Add picture\" to upload a profile picture from your gallery and tap \"Done\", or tap \"Skip\" to bypass it.",
+      "downgraded": false,
+      "sources": [
+       "youtube.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "5:43",
+      "status": "current",
+      "instruction": "Go to your profile, tap the menu icon (three lines) in the top right, and select \"Account type and tools\".",
+      "today": "Tapping the three lines menu still leads directly to \"Settings and activity\", where you scroll down to select \"Account type and tools\".",
+      "downgraded": false,
+      "sources": [
+       "instagram.com *"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "6:03",
+      "status": "current",
+      "instruction": "Tap \"Switch to professional account\" and tap \"Next\" through the feature slides.",
+      "today": "Tap \"Switch to professional account\" and proceed by tapping \"Next\" through the introductory feature slides.",
+      "downgraded": false,
+      "sources": [
+       "instagram.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 11,
+      "t": "6:19",
+      "status": "current",
+      "instruction": "Select a category that best describes your profile (e.g., \"Digital creator\") and tap \"Switch to professional account\".",
+      "today": "Select your category and tap \"Done\" or \"Switch to professional account\" at the bottom to proceed.",
+      "downgraded": false,
+      "sources": [
+       "youtube.com",
+       "opendorse.com"
+      ]
+     },
+     {
+      "n": 12,
+      "t": "6:45",
+      "status": "current",
+      "instruction": "Select \"Creator\" (or \"Business\") and tap \"Next\" to complete your professional setup.",
+      "today": "Choose either \"Creator\" or \"Business\" and tap \"Next\" to continue setting up your professional account.",
+      "downgraded": false,
+      "sources": [
+       "instagram.com *",
+       "youtube.com"
+      ]
+     }
+    ]
+   },
+   {
+    "video_id": "siKYcxapixI",
+    "title": "🔥 Work From Home | Create & Sell Coloring Books Using ChatGPT + Canva | Earn ₹50,000+ | Online Work",
+    "published": "2026-06-19",
+    "extract_s": 0.0,
+    "verify_s": 28.8,
+    "source": "video",
+    "tool": "Canva",
+    "note": "",
+    "counts": {
+     "current": 7,
+     "changed": 0,
+     "unverifiable": 3,
+     "downgraded": 1,
+     "with_sources": 7,
+     "with_official_source": 5,
+     "with_timestamp": 10
+    },
+    "n_steps": 10,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:05",
+      "status": "current",
+      "instruction": "Click Create a design, search for 'colouring book A5', and select Colouring Book (A5).",
+      "today": "Click \"Create a design\" on the Canva homepage, type the search query to locate the document type or template preset, and select it to open a blank canvas.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:29",
+      "status": "current",
+      "instruction": "Navigate to Elements, search for 'black border', and resize the border to fit the page.",
+      "today": "Select \"Elements\" from the left-hand editor panel, search for \"black border,\" and drag the corner handles to resize it to your canvas.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *",
+       "canva.com *"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:04",
+      "status": "current",
+      "instruction": "Search for animal line art such as 'lion outline' under Elements and place the graphic onto the page.",
+      "today": "Under the \"Elements\" tab, search for line-art keywords like \"lion outline\" and click or drag the graphic onto the page.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "2:24",
+      "status": "current",
+      "instruction": "Add a text heading with the name of the animal and customize the font.",
+      "today": "Go to the \"Text\" tab in the side panel, click \"Add a heading,\" and customize the font and formatting using the top editor toolbar.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *",
+       "canva.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "4:52",
+      "status": "current",
+      "instruction": "Click Share > Download, select PDF Standard as the file type, and click Download.",
+      "today": "In Canva, clicking Share > Download, choosing PDF Standard under the file type dropdown, and clicking Download successfully saves the design.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *",
+       "canva.com *"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "5:20",
+      "status": "unverifiable",
+      "instruction": "Open ChatGPT and enter a detailed prompt to generate a colorful book cover image.",
+      "today": "You can open ChatGPT and submit a prompt describing the book cover you want to generate an image.",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 7,
+      "t": "6:50",
+      "status": "current",
+      "instruction": "Go to SuperProfile, navigate to Explore All Apps > Payment Pages, and click + Create Payment Page.",
+      "today": "In SuperProfile, you can still find Payment Pages under Explore all apps and click to create a new payment page.",
+      "downgraded": false,
+      "sources": [
+       "superprofile.bio",
+       "instagram.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "7:38",
+      "status": "current",
+      "instruction": "Select Digital Products, enter your page title, upload the cover image, and write a product description.",
+      "today": "Selecting Digital Products lets you enter the title, upload your cover image, and fill out the product description.",
+      "downgraded": false,
+      "sources": [
+       "superprofile.bio"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "8:58",
+      "status": "unverifiable",
+      "instruction": "Click Save and Continue, upload the downloaded PDF file, and set the fixed product price.",
+      "today": "Check whether the platform being used (such as an external digital storefront or specific marketplace setup) includes a \"Save and Continue\" button alongside fields to upload the PDF file and set a fixed price, as Canva's native editor and official help documentation do not document this workflow.",
+      "downgraded": false,
+      "sources": []
+     },
+     {
+      "n": 10,
+      "t": "9:50",
+      "status": "unverifiable",
+      "instruction": "Click Save and Continue to customize theme styling, then click Publish.",
+      "today": "Look out for a \"Save and Continue\" prompt leading to theme styling options followed by \"Publish,\" as this sequence is not documented in official Canva help resources.",
+      "downgraded": false,
+      "sources": []
+     }
+    ]
+   },
+   {
+    "video_id": "1PMTN6NyP-o",
+    "title": "Facebook Page Kaise Banaye 2026 | How To Create Facebook Page | Facebook Page Kaise Banaen",
+    "published": "2026-06-01",
+    "extract_s": 0.0,
+    "verify_s": 8.7,
+    "source": "video",
+    "tool": "Facebook",
+    "note": "",
+    "counts": {
+     "current": 8,
+     "changed": 0,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 8,
+     "with_official_source": 4,
+     "with_timestamp": 8
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "n": 1,
+      "t": "0:34",
+      "status": "current",
+      "instruction": "Open the Facebook app and tap the side menu icon in the upper corner.",
+      "today": "In the Facebook app, tap your menu icon (the three horizontal lines or profile avatar) located in the upper or lower corner to access the menu.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "wikihow.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "0:50",
+      "status": "current",
+      "instruction": "Tap 'Create Facebook Page' (or tap 'Pages' > 'Create').",
+      "today": "In the menu, tap 'Pages' and then tap 'Create' (or '+ Create').",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "wikihow.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "1:16",
+      "status": "current",
+      "instruction": "Select 'Create a new Page' and tap 'Next'.",
+      "today": "Select 'Create a new Page' (or tap 'Get Started') and tap 'Next' to proceed with page setup.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "wikihow.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "1:53",
+      "status": "current",
+      "instruction": "Enter your desired page name in the 'Page name' field and tap 'Next'.",
+      "today": "Type your desired name into the 'Page name' field and tap 'Next'.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "2:14",
+      "status": "current",
+      "instruction": "Search and select categories that describe your page, then tap 'Create'.",
+      "today": "After searching for and selecting up to three categories describing your Page, tap the 'Create' button (or 'Create Page' on desktop).",
+      "downgraded": false,
+      "sources": [
+       "wikihow.com",
+       "wikihow.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "3:04",
+      "status": "current",
+      "instruction": "Fill in your Page details such as Bio, Contact information, and Location, then tap 'Next'.",
+      "today": "You can enter your Page details including Bio, Contact information, and Location, then tap 'Next' to proceed.",
+      "downgraded": false,
+      "sources": [
+       "wikihow.com",
+       "messenger.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "3:47",
+      "status": "current",
+      "instruction": "Tap the camera icons to set your profile picture and cover photo, then tap 'Next'.",
+      "today": "Tap the camera icons on the profile picture and cover photo placeholders to upload your images, then tap 'Next'.",
+      "downgraded": false,
+      "sources": [
+       "wikihow.com",
+       "messenger.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "4:18",
+      "status": "current",
+      "instruction": "Proceed through the remaining setup prompts by tapping 'Next' and then tap 'Done' to access your new Page.",
+      "today": "Continue tapping 'Next' through the subsequent setup screens (such as inviting friends and notification preferences) and tap 'Done' to finish creating your Page.",
+      "downgraded": false,
+      "sources": [
+       "wikihow.com",
+       "messenger.com"
+      ]
+     }
+    ]
+   },
+   {
+    "video_id": "w-iIZQi35kU",
+    "title": "$2.7M With Claude Ai Dropshipping Full Guide (Just Copy Me)",
+    "published": "2026-05-21",
+    "extract_s": 0.0,
+    "verify_s": 6.6,
+    "source": "video",
+    "tool": "Claude",
+    "note": "",
+    "counts": {
+     "current": 6,
+     "changed": 1,
+     "unverifiable": 3,
+     "downgraded": 3,
+     "with_sources": 7,
+     "with_official_source": 0,
+     "with_timestamp": 10
+    },
+    "n_steps": 10,
+    "steps": [
+     {
+      "n": 1,
+      "t": "6:17",
+      "status": "current",
+      "instruction": "Open the sidebar in Claude and click Customize.",
+      "today": "In Claude's sidebar, clicking Customize remains the standard way to access your personal workspace settings and connectors.",
+      "downgraded": false,
+      "sources": [
+       "usecarly.com",
+       "claude.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "6:22",
+      "status": "current",
+      "instruction": "Click Connectors, open the Add connector dropdown, and select Add custom connector.",
+      "today": "Under Customize > Connectors, click the add button (\"+\" or \"+ Add\") and select \"Add custom connector\".",
+      "downgraded": false,
+      "sources": [
+       "usecarly.com",
+       "claude.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "6:28",
+      "status": "changed",
+      "instruction": "Set the Name to Zendrop, paste https://app.zendrop.com/mcp/v1 into Remote MCP server URL, and click Add.",
+      "today": "Enter the connector name and remote MCP server URL, but click \"Continue\" (to review detected authentication settings) instead of an \"Add\" button.",
+      "downgraded": false,
+      "sources": [
+       "claude.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "6:44",
+      "status": "current",
+      "instruction": "Click Connect and then click Authorize to connect Claude to your Zendrop account.",
+      "today": "Click \"Connect\" on the connector's entry and complete the authorization prompt to link your external account.",
+      "downgraded": false,
+      "sources": [
+       "usecarly.com",
+       "hatchable.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "8:40",
+      "status": "unverifiable",
+      "instruction": "Enter your product research prompt into Claude with your desired niche filled in, then send the message.",
+      "today": "Entering a niche-specific product research prompt into Claude's message box and sending it continues to work standardly.",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 6,
+      "t": "10:20",
+      "status": "current",
+      "instruction": "Ask Claude to link your selected product number and add it directly to your Zendrop import list.",
+      "today": "You can ask Claude to add catalog products to your Zendrop import list if you have connected Zendrop via its Model Context Protocol (MCP) server.",
+      "downgraded": false,
+      "sources": [
+       "zendrop.com",
+       "zendrop.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "11:45",
+      "status": "unverifiable",
+      "instruction": "Submit a deep market research prompt to Claude containing your product name and Zendrop link to discover target marketing angles.",
+      "today": "Prompting Claude with your product name and external link to analyze marketing angles works as standard in the chat interface.",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 8,
+      "t": "16:15",
+      "status": "unverifiable",
+      "instruction": "Prompt Claude to write a short 12-second UGC ad script emphasizing your chosen marketing angle.",
+      "today": "Requesting Claude to generate a 12-second UGC script tailored to your marketing angle works directly in the chat box as expected.",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 9,
+      "t": "16:40",
+      "status": "current",
+      "instruction": "In Zendrop, go to AI Creatives, click Create New Video, choose an avatar and product, paste the script from Claude, and click Generate Video.",
+      "today": "In Zendrop's AI Creatives feature, you select an avatar and product, input your custom script, and generate your UGC-style video.",
+      "downgraded": false,
+      "sources": [
+       "zendrop.com"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "19:36",
+      "status": "current",
+      "instruction": "Go to the Orders tab in Zendrop and toggle on Auto Fulfillment to automatically fulfill new orders.",
+      "today": "You can still go to the Orders section in Zendrop and switch the Auto Fulfillment toggle to On to fulfill incoming orders automatically.",
+      "downgraded": false,
+      "sources": [
+       "zendrop.com"
+      ]
+     }
+    ]
+   },
+   {
+    "video_id": "iltmB3Igc1c",
+    "title": "HOW TO LIVE STREAM BGMI ON YOUTUBE USING OBS STUDIO AND SCRCPY 🔥 Laptop/Phone Livestream Setup",
+    "published": "2026-08-02",
+    "extract_s": 0.0,
+    "verify_s": 12.2,
+    "source": "video",
+    "tool": "OBS Studio",
+    "note": "",
+    "counts": {
+     "current": 10,
+     "changed": 0,
+     "unverifiable": 2,
+     "downgraded": 1,
+     "with_sources": 11,
+     "with_official_source": 2,
+     "with_timestamp": 12
+    },
+    "n_steps": 12,
+    "steps": [
+     {
+      "n": 1,
+      "t": "0:52",
+      "status": "current",
+      "instruction": "Download and extract SCRCPY GUI, then download and install OBS Studio on your PC.",
+      "today": "Downloading and extracting SCRCPY GUI and downloading/installing OBS Studio for your system remains fully supported.",
+      "downgraded": false,
+      "sources": [
+       "streamguardian.co.uk",
+       "theory7.net"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:46",
+      "status": "current",
+      "instruction": "In the OBS Auto-Configuration Wizard, select Optimize for streaming, set Base Resolution to 1920x1080 at 60 FPS, and connect your YouTube account.",
+      "today": "In the Auto-Configuration Wizard (accessible under Tools if skipped), selecting \"Optimize for streaming, recording is secondary\", setting the base canvas resolution to 1920x1080 at 60 FPS, and connecting your YouTube account remains the standard process.",
+      "downgraded": false,
+      "sources": [
+       "obsbot.com",
+       "own3d.tv"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:55",
+      "status": "current",
+      "instruction": "Go to OBS Settings > Output and Video to configure your Video Encoder, Bitrate (10000-12000 Kbps), and 1920x1080 canvas resolution.",
+      "today": "Navigating to Settings to manually configure your Video Encoder and Bitrate under Output, and adjusting Canvas (Base) Resolution under Video, works as described.",
+      "downgraded": false,
+      "sources": [
+       "obsbot.com",
+       "theory7.net"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "5:56",
+      "status": "unverifiable",
+      "instruction": "Open Settings on your mobile phone, navigate to Developer options, and toggle on USB debugging.",
+      "today": "Enabling USB debugging within Developer options in Android Settings remains unchanged.",
+      "downgraded": true,
+      "sources": []
+     },
+     {
+      "n": 5,
+      "t": "6:25",
+      "status": "unverifiable",
+      "instruction": "Connect your phone to the PC via USB cable, click SCAN in SCRCPY GUI PRO, and click START MIRRORING.",
+      "today": "Check whether your specific third-party tool named \"SCRCPY GUI PRO\" has those exact buttons, as no standard or official tool by that specific name and interface could be verified.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "7:06",
+      "status": "current",
+      "instruction": "In OBS Studio, click + under Sources, select Window Capture, and set the Window to scrcpy.exe.",
+      "today": "Clicking \"+\" under Sources, choosing \"Window Capture\", and selecting the application window running scrcpy.exe remains the standard method.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "7:50",
+      "status": "current",
+      "instruction": "Click + under Sources, select Media Source to add your stream overlay video, and add a Chroma Key filter to remove any green background.",
+      "today": "Adding a \"Media Source\" via the \"+\" button in Sources and applying an \"Effect Filter\" named \"Chroma Key\" to key out green remains fully supported and unchanged.",
+      "downgraded": false,
+      "sources": [
+       "youtube.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "8:44",
+      "status": "current",
+      "instruction": "In YouTube Studio Analytics, click See live count, copy the page URL, and add it in OBS as a Browser source.",
+      "today": "Clicking \"See live count\" in YouTube Studio Analytics and pasting that URL into an OBS Studio \"Browser\" source remains functional for displaying a live subscriber counter.",
+      "downgraded": false,
+      "sources": [
+       "instagram.com",
+       "freewebtools.com"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "10:58",
+      "status": "current",
+      "instruction": "Under Audio Mixer in OBS, click the three dots on Desktop Audio and Mic/Aux to select your desired playback and recording devices.",
+      "today": "In the Audio Mixer dock, clicking the three vertical dots next to Desktop Audio or Mic/Aux and opening Properties still lets you select your playback and recording devices.",
+      "downgraded": false,
+      "sources": [
+       "makeuseof.com",
+       "pushpay.com"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "12:44",
+      "status": "current",
+      "instruction": "Right-click Window Capture to add Color Correction and Sharpen filters, and right-click Mic/Aux to add Noise Suppression, Compressor, Limiter, and Noise Gate.",
+      "today": "Right-clicking Window Capture or Mic/Aux and selecting Filters still allows you to add Color Correction, Sharpen, Noise Suppression, Compressor, Limiter, and Noise Gate.",
+      "downgraded": false,
+      "sources": [
+       "sweetwater.com",
+       "fastshortcuts.com"
+      ]
+     },
+     {
+      "n": 11,
+      "t": "14:03",
+      "status": "current",
+      "instruction": "Open YouTube Studio's Live control room, configure stream details, and select Ultra low-latency under Stream latency.",
+      "today": "In YouTube Studio's Live Control Room under Stream Settings, you can still select \"Ultra low-latency\" (or Ultra-low latency) in the Stream latency section.",
+      "downgraded": false,
+      "sources": [
+       "google.com"
+      ]
+     },
+     {
+      "n": 12,
+      "t": "17:30",
+      "status": "current",
+      "instruction": "In OBS Studio, click Manage Broadcast > Select Existing Broadcast, choose your scheduled stream, and click Select broadcast and start streaming.",
+      "today": "In OBS Studio connected to YouTube, clicking Manage Broadcast, opening the Select Existing Broadcast tab, and choosing \"Select broadcast and start streaming\" still functions as described.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "facebook.com"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "holdout_controls": {
+  "summary": {
+   "videos": 4,
+   "errors": 0,
+   "steps": 46,
+   "changed": 0,
+   "current": 46,
+   "unverifiable": 0,
+   "downgraded": 0,
+   "pct_steps_with_source": 100.0,
+   "pct_steps_with_official": 58.7,
+   "pct_steps_with_timestamp": 100.0,
+   "videos_from_transcript": 0,
+   "median_extract_s": 21.6,
+   "median_verify_s": 6.7,
+   "max_total_s": 115.8,
+   "HIT": 0,
+   "OTHER": 0,
+   "MISS": 0,
+   "videos_with_any_changed": 0
+  },
+  "rows": [
+   {
+    "video_id": "B4vV28a8mPM",
+    "title": "How to Use OBS Studio - Complete OBS Tutorial for Beginners (2026!)",
+    "published": "2026-08-03",
+    "extract_s": 106.6,
+    "verify_s": 9.2,
+    "source": "video",
+    "tool": "OBS Studio",
+    "note": "",
+    "counts": {
+     "current": 12,
+     "changed": 0,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 12,
+     "with_official_source": 10,
+     "with_timestamp": 12
+    },
+    "n_steps": 12,
+    "steps": [
+     {
+      "n": 1,
+      "t": "0:24",
+      "status": "current",
+      "instruction": "Go to obsproject.com and download the appropriate version for Windows, macOS, or Linux.",
+      "today": "The official OBS Studio website at obsproject.com continues to provide download options for Windows, macOS, and Linux.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "601media.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "2:30",
+      "status": "current",
+      "instruction": "Open OBS Studio and click Settings in the bottom-right Controls panel.",
+      "today": "In the default OBS Studio interface, the Settings button is located in the Controls dock in the bottom-right corner.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "601media.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:53",
+      "status": "current",
+      "instruction": "Select the Video tab and configure your Base (Canvas) Resolution, Output (Scaled) Resolution, and Common FPS Values.",
+      "today": "The Video tab in Settings still contains the configuration options for Base (Canvas) Resolution, Output (Scaled) Resolution, and Common FPS Values.",
+      "downgraded": false,
+      "sources": [
+       "601media.com",
+       "pressbooks.pub"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "4:55",
+      "status": "current",
+      "instruction": "Switch to the Stream tab to select your streaming destination (e.g., YouTube or Twitch) and connect your account.",
+      "today": "The Stream tab in Settings allows you to select streaming services such as YouTube or Twitch and connect your account.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "601media.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "5:46",
+      "status": "current",
+      "instruction": "Click Output to configure your streaming bitrate and encoder, as well as your Recording Path, Quality, and Format.",
+      "today": "In Settings under the Output tab, you can still configure your streaming Video Bitrate and Encoder, as well as your Recording Path, Recording Quality, and Recording Format.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "dacast.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "7:56",
+      "status": "current",
+      "instruction": "Click Audio to specify your Desktop Audio and Mic/Auxiliary Audio devices, then click OK to save changes.",
+      "today": "In Settings under the Audio tab, you can specify your Desktop Audio and Mic/Auxiliary Audio devices under Global Audio Devices and click OK to save.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "castr.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "9:34",
+      "status": "current",
+      "instruction": "Select or create a scene under Scenes, then click the + button under Sources to add a Capture Card Device for your webcam or camera.",
+      "today": "In the Sources dock, clicking the + button allows you to select \"Capture Card Device\" (on macOS) or \"Video Capture Device\" to add your webcam or camera feed.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "gamingonlinux.com",
+       "focusrite.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "10:37",
+      "status": "current",
+      "instruction": "Click the + button under Scenes to add a new scene for screen sharing, then click + under Sources to add a Screen Capture or Window Capture device.",
+      "today": "Under Scenes, click + to add a scene, then under Sources, click + and choose \"Display Capture\" (or \"macOS Screen Capture\" on Mac) or \"Window Capture\" to share your screen.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "techsmith.com"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "11:48",
+      "status": "current",
+      "instruction": "Create a combined scene by adding both your screen capture and camera sources, then resize and hold Alt/Option to crop elements.",
+      "today": "In the preview area, you can still resize bounding boxes directly and hold Alt on Windows/Linux or Option on macOS while dragging edges to crop a source.",
+      "downgraded": false,
+      "sources": [
+       "obsbot.com",
+       "eachnineteachnine.com"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "13:12",
+      "status": "current",
+      "instruction": "Add prerecorded video playback by creating a new scene, adding a Media source, and browsing to your video file.",
+      "today": "Adding a \"Media Source\" from the Sources panel and using the Browse button to select a local video file functions the same way.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "telycam.com"
+      ]
+     },
+     {
+      "n": 11,
+      "t": "14:17",
+      "status": "current",
+      "instruction": "Click Studio Mode in the Controls panel to queue up scenes in the Preview window before pushing them to Program with Transition.",
+      "today": "The Controls dock still provides the \"Studio Mode\" button to display side-by-side Preview and Program views and apply scene changes with the \"Transition\" button.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "note.com",
+       "livepush.io"
+      ]
+     },
+     {
+      "n": 12,
+      "t": "18:08",
+      "status": "current",
+      "instruction": "Click Start Recording or Start Streaming in the Controls panel to begin broadcasting or saving your video.",
+      "today": "The Controls dock retains the dedicated \"Start Recording\" and \"Start Streaming\" buttons to capture video or go live.",
+      "downgraded": false,
+      "sources": [
+       "obsproject.com *",
+       "livepush.io"
+      ]
+     }
+    ]
+   },
+   {
+    "video_id": "sFZuzTCtD_Y",
+    "title": "How to Create a Clickable Envelope Digital Invitation in Canva (Easy Way)",
+    "published": "2026-05-25",
+    "extract_s": 13.6,
+    "verify_s": 4.9,
+    "source": "video",
+    "tool": "Canva",
+    "note": "",
+    "counts": {
+     "current": 12,
+     "changed": 0,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 12,
+     "with_official_source": 11,
+     "with_timestamp": 12
+    },
+    "n_steps": 12,
+    "steps": [
+     {
+      "n": 1,
+      "t": "0:13",
+      "status": "current",
+      "instruction": "Click Website on the Canva homepage to start a new project.",
+      "today": "On the Canva homepage, clicking the Websites design category or typing \"website\" in the search bar allows you to start a new website project.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "0:20",
+      "status": "current",
+      "instruction": "Click Elements, search for \"flower background\" under Videos, and add a video to the canvas as the background.",
+      "today": "In the Elements tab, you can search for \"flower background,\" filter by Videos, and select \"Set video as background\" to fill the canvas.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "0:39",
+      "status": "current",
+      "instruction": "Search for \"envelope\" in Elements > Photos, select a closed envelope image, and position it in the center of the canvas.",
+      "today": "You can search for \"envelope\" under Elements, filter by Photos, and place the selected image in the center of the canvas.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *",
+       "layerpath.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "1:03",
+      "status": "current",
+      "instruction": "Click Text to add a heading reading \"You've been Invited\" and a subheading reading \"( Tap to open )\", styling them as desired.",
+      "today": "Clicking the Text tab on the sidebar allows you to add and customize a heading and subheading with your desired wording and styling.",
+      "downgraded": false,
+      "sources": [
+       "layerpath.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "1:52",
+      "status": "current",
+      "instruction": "Search for \"wax seal\" under Elements > Photos, resize the chosen seal, and place it on the envelope flap.",
+      "today": "Searching for \"wax seal\" under Elements, filtering by Photos, and resizing or dragging the element onto the canvas functions as described.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "2:12",
+      "status": "current",
+      "instruction": "Duplicate page 1 to create page 2, delete the text and closed envelope on page 2, and move the wax seal to the side.",
+      "today": "You can duplicate page 1 using the Duplicate page icon or toolbar option, delete unwanted text and envelope elements, and drag the wax seal to the side.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *",
+       "canva.com *"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "2:25",
+      "status": "current",
+      "instruction": "Search for an open envelope under Elements > Photos, position it on page 2, and place the wax seal beside it.",
+      "today": "Searching for an open envelope under Elements filtered to Photos, placing it on page 2, and positioning the wax seal beside it works as written.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "2:44",
+      "status": "current",
+      "instruction": "Search for \"wedding card texture\" under Graphics, add an invitation card with your event text, and group the card and text together.",
+      "today": "You can search for \"wedding card texture\" under Elements filtered by Graphics, add your card and text, and group them together via the floating toolbar's \"Group\" button or shortcut.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *",
+       "canva.com *",
+       "domestika.org"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "3:13",
+      "status": "current",
+      "instruction": "Return to page 1, right-click each element, select Link, and set the link to page 2.",
+      "today": "Right-click an element, select Link (or press Ctrl/Cmd + K), and choose the target page under the Pages in this document section.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *",
+       "guideflow.com",
+       "medium.com"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "4:05",
+      "status": "current",
+      "instruction": "On page 2, select the open envelope, click Edit photo > Magic Grab, brush over the front flap to separate it, and layer the invitation card inside the envelope.",
+      "today": "In the photo editor tools under Magic Studio, select Magic Grab, switch to the Brush tool to paint over the flap, and click Grab to detach the element.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 11,
+      "t": "4:37",
+      "status": "current",
+      "instruction": "Select the grouped invitation card, click Animate > Create an Animation, drag the card upward, select Smooth, and click Done.",
+      "today": "Select the card, click Animate, choose Create an animation, drag the element along your path, choose the Smooth movement style, and click Done.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *"
+      ]
+     },
+     {
+      "n": 12,
+      "t": "5:06",
+      "status": "current",
+      "instruction": "Click Publish Website, navigate to Settings to disable Navigation menu, and click Publish.",
+      "today": "Select Publish Website, access Settings, toggle off the Navigation menu option, and proceed with publishing.",
+      "downgraded": false,
+      "sources": [
+       "canva.com *"
+      ]
+     }
+    ]
+   },
+   {
+    "video_id": "4qLIKh3Rses",
+    "title": "Instagram ki id kaise banaye | How to create Instagram account",
+    "published": "2026-09-13",
+    "extract_s": 11.8,
+    "verify_s": 7.7,
+    "source": "video",
+    "tool": "Instagram",
+    "note": "",
+    "counts": {
+     "current": 10,
+     "changed": 0,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 10,
+     "with_official_source": 0,
+     "with_timestamp": 10
+    },
+    "n_steps": 10,
+    "steps": [
+     {
+      "n": 1,
+      "t": "0:53",
+      "status": "current",
+      "instruction": "Open the Instagram app and tap \"Create new account\".",
+      "today": "Opening the Instagram app and tapping \"Create new account\" remains the standard first step to sign up.",
+      "downgraded": false,
+      "sources": [
+       "flocksocial.com",
+       "multilogin.com"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:54",
+      "status": "current",
+      "instruction": "Tap \"Sign up with email address\" (or input your mobile number).",
+      "today": "On the contact screen, you can switch from entering a mobile number to email by tapping \"Sign up with email\" (or \"Sign up with email address\").",
+      "downgraded": false,
+      "sources": [
+       "upleap.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "2:05",
+      "status": "current",
+      "instruction": "Enter your email address and tap \"Next\".",
+      "today": "Entering your email address into the provided field and tapping \"Next\" advances the registration process.",
+      "downgraded": false,
+      "sources": [
+       "quora.com",
+       "upleap.com"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "2:24",
+      "status": "current",
+      "instruction": "Enter the confirmation code received via email and tap \"Next\".",
+      "today": "Typing the numeric confirmation code delivered to your email and selecting \"Next\" verifies your account as expected.",
+      "downgraded": false,
+      "sources": [
+       "quora.com",
+       "upleap.com"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "2:35",
+      "status": "current",
+      "instruction": "Enter a strong password into the \"Password\" field and tap \"Next\".",
+      "today": "Enter a strong password into the \"Password\" field and tap \"Next\" to continue account registration.",
+      "downgraded": false,
+      "sources": [
+       "cloutfluence.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "3:00",
+      "status": "current",
+      "instruction": "Set your date of birth, tap \"SET\", and then tap \"Next\".",
+      "today": "Select your date of birth using the date picker, tap \"Set\", and then tap \"Next\" to proceed.",
+      "downgraded": false,
+      "sources": [
+       "cloutfluence.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "3:19",
+      "status": "current",
+      "instruction": "Enter your full name in the \"Full name\" field and tap \"Next\".",
+      "today": "Type your full name into the name field and tap \"Next\" to proceed.",
+      "downgraded": false,
+      "sources": [
+       "cloutfluence.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "3:28",
+      "status": "current",
+      "instruction": "Set an available username and tap \"Next\".",
+      "today": "Choose an available username and tap \"Next\" to continue setting up your profile.",
+      "downgraded": false,
+      "sources": [
+       "cloutfluence.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "4:13",
+      "status": "current",
+      "instruction": "Tap \"I agree\" on the terms and policies screen.",
+      "today": "Tapping \"I agree\" on the terms and policies screen remains the required action to confirm agreement and finish registering the account.",
+      "downgraded": false,
+      "sources": [
+       "orangehotelmarketing.com",
+       "cloutfluence.com"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "4:25",
+      "status": "current",
+      "instruction": "Tap \"Next\" or \"Skip\" through device permissions, profile setup, and contact syncing to complete account creation.",
+      "today": "You can proceed through the post-registration setup prompts for permissions, profile photo, and contact syncing by tapping \"Next\" or \"Skip\".",
+      "downgraded": false,
+      "sources": [
+       "securityinabox.org",
+       "cloutfluence.com"
+      ]
+     }
+    ]
+   },
+   {
+    "video_id": "MyUYmsmbVX4",
+    "title": "Facebook Monetization Setup | Facebook Payout Account Setup | Payout Account Setup Facebook",
+    "published": "2026-05-30",
+    "extract_s": 29.7,
+    "verify_s": 5.6,
+    "source": "video",
+    "tool": "Facebook",
+    "note": "",
+    "counts": {
+     "current": 12,
+     "changed": 0,
+     "unverifiable": 0,
+     "downgraded": 0,
+     "with_sources": 12,
+     "with_official_source": 6,
+     "with_timestamp": 12
+    },
+    "n_steps": 12,
+    "steps": [
+     {
+      "n": 1,
+      "t": "1:28",
+      "status": "current",
+      "instruction": "Tap the Set up button on the Monetise earnings notification banner.",
+      "today": "Tapping the Set up button directly on the earnings notification banner continues to take you straight into the onboarding setup flow.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "facebook.com *"
+      ]
+     },
+     {
+      "n": 2,
+      "t": "1:37",
+      "status": "current",
+      "instruction": "Enter your Legal first name, Legal surname, Date of birth, and Country, then tap Next.",
+      "today": "You are still prompted on the initial setup screen to enter your legal first name, legal surname, date of birth, and country before tapping Next.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 3,
+      "t": "4:12",
+      "status": "current",
+      "instruction": "Select your Business type as Individual/sole proprietor/single-member LLC and tap Next.",
+      "today": "Selecting Individual/sole proprietor/single-member LLC remains the standard business type option before tapping Next.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "facebook.com *"
+      ]
+     },
+     {
+      "n": 4,
+      "t": "5:49",
+      "status": "current",
+      "instruction": "Fill in your Primary address details, phone number, email address, Permanent account number (PAN), check the certification box, and tap Next.",
+      "today": "Entering your primary address, contact details, tax identification number (such as PAN for India), and checking the certification box remains the active form step before continuing.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "facebook.com *"
+      ]
+     },
+     {
+      "n": 5,
+      "t": "8:49",
+      "status": "current",
+      "instruction": "Select Bank transfer as your payout method, enter your bank IFSC code and Bank account number, and tap Link payout method.",
+      "today": "Select Bank transfer (or manually link bank account) to input your bank details, including IFSC code and account number for eligible regions, and click Link payout method.",
+      "downgraded": false,
+      "sources": [
+       "youtube.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 6,
+      "t": "9:47",
+      "status": "current",
+      "instruction": "Tap Add tax info and proceed by tapping Continue as [Your Name].",
+      "today": "Click Add tax info and proceed through the authorization prompt by clicking Continue as [Your Name].",
+      "downgraded": false,
+      "sources": [
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 7,
+      "t": "10:20",
+      "status": "current",
+      "instruction": "Select No for both US citizen status and intermediary agent questions, then tap Next.",
+      "today": "Answer No to being a US citizen/resident and No to acting as an intermediary agent, then click Next.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "youtube.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 8,
+      "t": "10:59",
+      "status": "current",
+      "instruction": "Select your Country of citizenship, verify or enter your PAN number in Non-US TIN, and tap Next.",
+      "today": "Choose your Country of citizenship, verify or provide your tax identification number (such as PAN for India) under Non-US TIN, and click Next.",
+      "downgraded": false,
+      "sources": [
+       "facebook.com *",
+       "youtube.com",
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 9,
+      "t": "11:39",
+      "status": "current",
+      "instruction": "Confirm your address and mailing address settings by tapping Next through the address confirmation screens.",
+      "today": "Review and confirm your permanent address and mailing address details, then proceed by tapping Next.",
+      "downgraded": false,
+      "sources": [
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 10,
+      "t": "12:54",
+      "status": "current",
+      "instruction": "Select 0% of services will be physically performed inside the United States, then tap Next.",
+      "today": "Select \"0% of services will be physically performed inside the United States\" and tap Next to continue your tax profile setup.",
+      "downgraded": false,
+      "sources": [
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 11,
+      "t": "13:12",
+      "status": "current",
+      "instruction": "Select your Country for tax treaty benefits and tap Next.",
+      "today": "Select your country of residence to determine eligibility for tax treaty benefits and tap Next.",
+      "downgraded": false,
+      "sources": [
+       "youtube.com"
+      ]
+     },
+     {
+      "n": 12,
+      "t": "13:41",
+      "status": "current",
+      "instruction": "Check the consent box, type your full name in the Signature field, tap Next, then tap Submit Form and finish with Done.",
+      "today": "Check the electronic signature consent box, enter your full legal name in the Signature field, tap Next to review your W-8BEN form, and finish by tapping Submit Form and Done.",
+      "downgraded": false,
+      "sources": [
+       "youtube.com",
+       "youtube.com"
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

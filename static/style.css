@@ -273,3 +273,25 @@ button.ghost:hover { border-color: rgba(255, 200, 61, 0.5); color: var(--gold); 
 .yt-embed { width: 100%; aspect-ratio: 16/9; border: 1px solid var(--edge); border-radius: 13px; margin-top: 10px; background: #000; }
 
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* Tutorial Rescue: verdict rows, sources, creator update card */
+.tr-meta { color: var(--muted); font-size: .82rem; margin: -2px 0 8px; }
+.tr-sum { margin: 4px 0 8px; font-weight: 600; color: var(--gold-hot); }
+.tr-body { flex: 1; min-width: 220px; }
+.ts { font-variant-numeric: tabular-nums; color: var(--teal-pop); font-size: .82rem; text-decoration: none; min-width: 42px; }
+a.ts:hover { text-decoration: underline; }
+.tr-today { font-weight: 600; }
+.tr-old { color: var(--muted); font-size: .83rem; margin-top: 2px; text-decoration: line-through; text-decoration-color: rgba(255, 138, 112, 0.6); }
+.tr-nosrc { color: var(--warn); font-size: .78rem; margin-top: 4px; }
+.srcs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.src { font-size: .74rem; color: var(--muted); border: 1px solid var(--edge); border-radius: 999px; padding: 2px 9px; text-decoration: none; }
+.src:hover { border-color: var(--edge-hi); color: var(--ink); }
+.src.official { color: var(--ok); border-color: rgba(81, 227, 173, 0.35); }
+.src.official::before { content: "✓ "; }
+.pill.wait { opacity: .55; }
+.tr-card { margin-top: 14px; border: 1px solid rgba(255, 200, 61, 0.35); background: var(--gold-soft); border-radius: 14px; padding: 12px 14px; }
+.tr-card h3 { margin: 0 0 8px; font-size: .88rem; color: var(--gold); font-weight: 600; }
+.tr-card pre { white-space: pre-wrap; font-family: inherit; font-size: .86rem; margin: 0 0 10px; color: var(--ink); }
+.tr-suggest { width: 100%; border: 0; height: 64px; margin-top: 10px; background: transparent; color-scheme: light; border-radius: 10px; }
+.tr-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.tr-note { color: var(--muted); font-size: .83rem; margin-top: 2px; }
