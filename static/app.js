@@ -4,8 +4,8 @@
 // ---- strings (bilingual-ready; hi values refined later) ----
 const STRINGS = {
   tagline: {
-    en: "Your AI engineer — decides, guides by voice, checks it works",
-    hi: "आपका AI इंजीनियर — फ़ैसला, आवाज़ से गाइड, और जाँच भी",
+    en: "Not every creator has an engineer. Raahi is yours.",
+    hi: "हर क्रिएटर के पास इंजीनियर नहीं होता। राही आपका AI इंजीनियर है।",
   },
   chat_placeholder: { en: "Ask Raahi anything…", hi: "राही से कुछ भी पूछें…" },
   send: { en: "Send", hi: "भेजें" },
