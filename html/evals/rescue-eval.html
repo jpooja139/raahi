@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutorial Rescue Eval Results</title>
+<link rel="stylesheet" href="../assets/hub.css">
+<style>
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+  .stat b { display: block; font-size: 1.7rem; line-height: 1.2; color: var(--accent); }
+  .stat span { color: var(--muted); font-size: .88rem; }
+  @media (max-width: 640px) { .stats { grid-template-columns: 1fr; } }
+  td.hit { color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+  td.partial { color: var(--warn); background: var(--warn-soft); font-weight: 600; }
+  td.other { color: var(--muted); font-weight: 600; }
+  td.miss { color: var(--bad); background: var(--bad-soft); font-weight: 600; }
+  .bar-row { grid-template-columns: 90px 1fr 60px; }
+</style>
+</head>
+<body>
+<header class="top"><a href="../index.html">&larr; Hub</a></header>
+<main>
+  <h1>Tutorial Rescue eval results</h1>
+  <p class="lede">Given an old YouTube tutorial that viewers say no longer works, does Raahi find the step that changed? And on a recent tutorial that works, does Raahi stay quiet?</p>
+  <p class="src">Source: eval/RESULTS.md (18 Oct 2026).</p>
+
+  <div class="stats">
+    <div class="stat"><b>10 / 16</b><span>reported changes found (hand-reviewed)</span></div>
+    <div class="stat"><b>0 / 46</b><span>false alarms on unseen 2026 tutorials</span></div>
+    <div class="stat"><b>95.9%</b><span>of steps on old tutorials cite a source</span></div>
+  </div>
+  <p class="src">Source: eval/RESULTS.md. Run 2 numbers; the 0 / 46 is the holdout set.</p>
+
+  <h2>Sets</h2>
+  <div class="wrap"><table>
+    <thead><tr><th>Set</th><th>Videos</th><th>Steps</th><th>Chosen how</th></tr></thead>
+    <tbody>
+      <tr><td><code>cases.json</code></td><td>16</td><td>145</td><td>Old tutorials (2019&ndash;2022) where viewers' comments name a specific step that no longer works. 47 candidates scanned, 16 kept. Keywords for each reported change were frozen before the first run.</td></tr>
+      <tr><td><code>controls.json</code></td><td>6</td><td>61</td><td>Most-viewed 2026 tutorials with no "outdated" comment, one per query.</td></tr>
+      <tr><td><code>holdout_controls.json</code></td><td>4</td><td>46</td><td>2026 UI walk-throughs picked by title after run 1 and before run 2. No prompt change was looked at against these.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">Video lengths: 3&ndash;23 minutes (median 13). All 26 videos were read from the video itself, not the transcript. Source: eval/RESULTS.md.</p>
+
+  <h2>Run 1 vs Run 2</h2>
+  <p>The only change between the two runs is the verify prompt. Run 2 reused run 1's cached extractions, so its scores differ only in the verify stage. Run 1's controls showed "changed" verdicts for wording nitpicks and for "I couldn't find that option". Run 2's prompt says a step is <code>changed</code> only when a viewer following it would get stuck, and only when a page found describes the new way. It also says that not finding the old option is not evidence of change.</p>
+  <div class="wrap"><table>
+    <thead><tr><th></th><th>Run 1</th><th>Run 2</th></tr></thead>
+    <tbody>
+      <tr><td>Cases: reported change found (hand-reviewed, strict)</td><td>9 / 16</td><td><b>10 / 16</b></td></tr>
+      <tr><td>Cases: keyword score (automatic, looser)</td><td>12 / 16</td><td>12 / 16</td></tr>
+      <tr><td>Controls: steps marked changed</td><td>10 / 61</td><td><b>4 / 61</b></td></tr>
+      <tr><td>Controls: videos with any changed step</td><td>5 / 6</td><td>2 / 6</td></tr>
+      <tr><td>Holdout: steps marked changed</td><td>not run</td><td><b>0 / 46</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="bars">
+    <div class="bar-group">
+      <div class="lbl">Controls: steps marked changed (out of 61)</div>
+      <div class="bar-row"><span>Run 1</span><div class="track"><div class="fill a" style="width:16.4%"></div></div><span>10 / 61</span></div>
+      <div class="bar-row"><span>Run 2</span><div class="track"><div class="fill b" style="width:6.6%"></div></div><span>4 / 61</span></div>
+    </div>
+  </div>
+  <p class="src">Bar widths are the fraction of 61 steps. Raw rows: eval/results_v1.json (run 1), eval/results.json (run 2). Source: eval/RESULTS.md.</p>
+
+  <h2>Cases, hand-reviewed (run 2)</h2>
+  <p>"Strict" means a step marked changed describes the change viewers reported. A keyword match alone does not count.</p>
+  <div class="wrap"><table style="min-width:760px">
+    <thead><tr><th>Video</th><th>Tool</th><th>What viewers reported</th><th>Raahi (run 2)</th><th>Outcome</th></tr></thead>
+    <tbody>
+      <tr><td>b4ij06Tt3U4</td><td>Google Domains</td><td>Google Domains is gone (Squarespace)</td><td>Steps 1&ndash;6 changed: buy/forward on Squarespace Domains</td><td class="hit">hit</td></tr>
+      <tr><td>1G51dz5Gt-g</td><td>Google Sites</td><td>Domain purchase via Google Domains gone</td><td>Steps 1&ndash;4 changed: third-party registrar, start at sites.google.com</td><td class="hit">hit</td></tr>
+      <tr><td>FHL75CGDjgA</td><td>Blogger</td><td>"Third-party URL" option missing</td><td>Settings &gt; Publishing &gt; <b>Custom domain</b> (google.com)</td><td class="hit">hit</td></tr>
+      <tr><td>njri8_gJTs0</td><td>Google Analytics</td><td>UA menus (Behavior, Acquisition) gone</td><td>GA4 paths for 6 steps, e.g. Reports &gt; Engagement &gt; Pages and screens</td><td class="hit">hit</td></tr>
+      <tr><td>vshlg0U3UqA</td><td>Google Analytics</td><td>"Tracking code" / UA property flow gone</td><td>UA creation removed, GA4 property + Google tag (google.com)</td><td class="hit">hit</td></tr>
+      <tr><td>trBA7xGgzjk</td><td>Facebook</td><td>Settings / Unpublish page moved</td><td>Settings &amp; privacy &gt; &hellip; &gt; Deactivation and deletion (facebook.com)</td><td class="hit">hit</td></tr>
+      <tr><td>2f6mfgzTQSA</td><td>Instagram</td><td>"Switch to professional" not in Settings</td><td>For professionals &gt; <b>Account type and tools</b></td><td class="hit">hit</td></tr>
+      <tr><td>Q7AOvWpIVHU</td><td>Vite / Three.js</td><td><code>npm init @vitejs/app</code> outdated</td><td><code>npm create vite@latest</code></td><td class="hit">hit</td></tr>
+      <tr><td>f_fGXgh0A8k</td><td>Snap Camera</td><td>App discontinued</td><td>7 of 8 steps changed, Snapchat for Web / Chrome extension (snapchat.com)</td><td class="hit">hit</td></tr>
+      <tr><td>kdbniwINFFA</td><td>Bluehost DNS</td><td>DNS/Zone Editor not where shown</td><td>Domains &gt; your domain &gt; <b>DNS</b> tab (bluehost.com &times;3)</td><td class="hit">hit (run 1: miss)</td></tr>
+      <tr><td>6Kn0MFAaQDM</td><td>Pixel Caffeine</td><td>Plugin no longer works</td><td>Suggests Meta's own WordPress integration instead; doesn't say the plugin is dead</td><td class="partial">partial</td></tr>
+      <tr><td>eTLWd70Y3F0</td><td>Shopify</td><td>No Slideshow section; trial no longer 14 days</td><td>Found other changes (Navigation moved to Content &gt; Menus, shopify.com), not the reported ones</td><td class="other">other (keyword match on "trial" rejected)</td></tr>
+      <tr><td>pEd7jw0uNE4</td><td>Voicemeeter</td><td>"Aux" output missing</td><td>Windows Sound settings path changed; Voicemeeter steps rated current</td><td class="other">other</td></tr>
+      <tr><td>xdGG-9aKq74</td><td>Zoho Mail</td><td>"Forever Free" plan removed</td><td>Rated current. Run 1 said the free plan still exists under "Sign Up Now". Possibly regional; unresolved</td><td class="miss">miss (run 1 keyword match rejected)</td></tr>
+      <tr><td>7H1r1fC_HMY</td><td>OBS Studio</td><td>Audio monitoring / ReaEQ interface changed</td><td>All 8 steps rated current</td><td class="miss">miss</td></tr>
+      <tr><td>C_0FSgVgqnc</td><td>Search Console</td><td>DNS provider dropdown gone</td><td>Rated current, with google.com sources: Raahi and the viewers disagree</td><td class="miss">miss</td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">Source: eval/RESULTS.md.</p>
+
+  <h2>Controls and holdout</h2>
+  <p>On the 6 controls, 4 of 61 steps were marked changed, on 2 of 6 videos. Both videos are Claude products, which shipped UI changes in 2026.</p>
+  <ul>
+    <li>Claude Design: "Export, not Share, for Hand off to Claude Code" (claude.com &times;2): plausibly real.</li>
+    <li>Claude Design: Tweaks panel and Edit button. Sources are competitor and blog sites: doubtful.</li>
+    <li>Claude connectors: "Continue" instead of "Add" (claude.com). The button was renamed, so under run 2's own rule this should have been <code>current</code>: a false alarm.</li>
+  </ul>
+  <div class="note"><b>Holdout</b> (OBS, Canva, Instagram in Hindi, Facebook payouts; all 2026): 46/46 steps rated current, 46/46 with a source, 27/46 with an official source.</div>
+  <p class="src">Source: eval/RESULTS.md.</p>
+
+  <h2>Evidence coverage</h2>
+  <p>Run 2, all 252 steps.</p>
+  <div class="wrap"><table>
+    <thead><tr><th></th><th>Cases</th><th>Controls</th><th>Holdout</th></tr></thead>
+    <tbody>
+      <tr><td>Steps with &ge;1 grounding source</td><td>95.9%</td><td>85.2%</td><td>100%</td></tr>
+      <tr><td>Steps with an official-vendor source</td><td>53.8%</td><td>23.0%</td><td>58.7%</td></tr>
+      <tr><td>Steps with a timestamp link</td><td>100%</td><td>100%</td><td>100%</td></tr>
+      <tr><td>Verdicts downgraded (no source)</td><td>6</td><td>7</td><td>0</td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">Source: eval/RESULTS.md.</p>
+
+  <h2>Latency</h2>
+  <div class="wrap"><table>
+    <thead><tr><th>Stage</th><th>Setting</th><th>Median</th><th>Range</th></tr></thead>
+    <tbody>
+      <tr><td>Verify (all steps, batches of 4 in parallel)</td><td>one video at a time (run 2)</td><td>10.8 s (cases)</td><td>5.7&ndash;50.7 s</td></tr>
+      <tr><td>Verify</td><td>4 videos at once (run 1)</td><td>14.2 s</td><td>up to 111.8 s</td></tr>
+      <tr><td>Extract (Gemini watches the video)</td><td>one video at a time (holdout)</td><td>21.6 s</td><td>11.8&ndash;106.6 s (the 106.6 s video is 21 min long)</td></tr>
+      <tr><td>Extract</td><td>4 videos at once (run 1)</td><td>44.4 s</td><td>up to 650.9 s</td></tr>
+    </tbody>
+  </table></div>
+  <p>Extraction is the slow, variable stage, and it slows down sharply under concurrent load. A video is only extracted once (cached 7 days), so a demo video should be warmed beforehand.</p>
+  <p class="src">Source: eval/RESULTS.md.</p>
+
+  <h2>What these results do not show</h2>
+  <ul>
+    <li><b>Small and hand-built.</b> 16 cases, 10 controls. One person (the build agent) chose the cases and did the hand review. Nobody independent has checked it yet.</li>
+    <li><b>Tuned on controls.</b> The run 2 prompt was written after seeing run 1's controls. The 4 holdout videos are the only untuned precision check.</li>
+    <li><b>One run each.</b> Gemini is not deterministic, and repeated runs may differ by a case or two.</li>
+    <li><b>Changed steps that viewers didn't report were not scored.</b> On old videos Raahi marks about a third of steps changed, and most of those spot-checked look right (GA4 paths, Shopify Content &gt; Menus), but this was not scored step by step.</li>
+    <li><b>Viewers can be wrong too.</b> Two misses (Zoho, Search Console) may be region- or account-specific; Raahi cites official pages for its "current" verdict.</li>
+  </ul>
+  <p class="src">Source: eval/RESULTS.md.</p>
+
+  <h2>Reproduce and raw data</h2>
+  <p>Raw rows are in <code>eval/results.json</code> (run 2) and <code>eval/results_v1.json</code> (run 1) in the repo. To reproduce: <code>python -m eval.rescue_eval --force --workers 1 --sets cases,controls,holdout_controls</code> (needs <code>USE_VERTEX=1</code> and Vertex credentials).</p>
+  <p class="src">Source: eval/RESULTS.md.</p>
+
+  <nav class="related">Related: <a href="../rescue/pipeline.html">Rescue pipeline</a> &middot; <a href="../caveats/limitations.html">Limitations</a></nav>
+</main>
+<footer>Raahi hub &middot; <a href="../index.html">index</a></footer>
+</body>
+</html>

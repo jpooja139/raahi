@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decision Records</title>
+<link rel="stylesheet" href="../assets/hub.css">
+</head>
+<body>
+<header class="top"><a href="../index.html">&larr; Hub</a></header>
+<main>
+  <h1>Decision records</h1>
+  <p class="lede">Six decisions behind Tutorial Rescue. Timings marked "dev" were measured in development on one video, not benchmarked.</p>
+
+  <div class="adr"><h2>ADR-1 &middot; Vertex AI for everything, including YouTube video</h2><dl>
+    <dt>Context</dt><dd>The API-key path hit prepaid quota limits, which made grounded checks fragile. Video ingestion had used the key client.</dd>
+    <dt>Decision</dt><dd>Run all reasoning on Vertex with service-account auth. Pass YouTube URLs as video parts with <code>mime_type="video/*"</code>.</dd>
+    <dt>Evidence</dt><dd>"video/mp4" returns 500 INTERNAL on Vertex, verified 2026-10-18. Source: app/gemini.py, docs/architecture.md section 3.</dd>
+    <dt>Consequence</dt><dd>One backend, no key in the request path, postpaid billing. <code>key_client()</code> is just <code>client()</code> under <code>USE_VERTEX=1</code>. Rollback is one env var.</dd>
+  </dl></div>
+
+  <div class="adr"><h2>ADR-2 &middot; Verify in parallel batches of 4, thinking low</h2><dl>
+    <dt>Context</dt><dd>One grounded call for all steps was slow.</dd>
+    <dt>Decision</dt><dd><code>VERIFY_BATCH=4</code>, batches run in parallel, <code>VERIFY_THINKING="low"</code>. Batches keep the original step numbers so they merge without renumbering.</dd>
+    <dt>Evidence</dt><dd>On one 10-step video in development, verify went from about 108 s (one call, default thinking) to about 12 s. In the eval, the whole-tutorial verify median is 10.8 s, run one video at a time over 16 old tutorials. Accuracy at default thinking was not compared. Source: development log, 18 Oct 2026; <a href="../evals/rescue-eval.html">eval</a>.</dd>
+    <dt>Consequence</dt><dd>If one batch fails, its steps show unconfirmed and the result is not cached.</dd>
+  </dl></div>
+
+  <div class="adr"><h2>ADR-3 &middot; Low media resolution for extraction</h2><dl>
+    <dt>Context</dt><dd>Video tokens drive extraction time and cost.</dd>
+    <dt>Decision</dt><dd><code>VIDEO_RESOLUTION="low"</code>.</dd>
+    <dt>Evidence</dt><dd>Exact menu and button names were extracted from all 26 eval videos at low resolution. Extraction median was 21.6 s, one video at a time (holdout, 11.8–106.6 s), and slower under concurrent load (up to 651 s with 4 at once). Higher resolutions were not compared. Source: <a href="../evals/rescue-eval.html">eval</a>.</dd>
+    <dt>Consequence</dt><dd>Very small on-screen text may be misread. Not yet tested across many videos.</dd>
+  </dl></div>
+
+  <div class="adr"><h2>ADR-4 &middot; STEP-block text, parsed by regex, not a second JSON pass</h2><dl>
+    <dt>Context</dt><dd>Sources must be tied to the exact step they support.</dd>
+    <dt>Decision</dt><dd>The grounded call answers in a fixed <code>STEP n: verdict / TODAY: ...</code> format. A regex parses it into blocks with UTF-8 byte offsets.</dd>
+    <dt>Evidence</dt><dd>Grounding supports index the response's bytes, so offsets must point at the text we show. A second LLM pass would re-word it and break the link. A unit test covers byte offsets with Hindi. Source: app/rescue.py <code>parse_blocks</code>; tests/test_rescue.py.</dd>
+    <dt>Consequence</dt><dd>A step the model skips gets "not checked" and shows as unverifiable.</dd>
+  </dl></div>
+
+  <div class="adr"><h2>ADR-5 &middot; The model never writes the public comment</h2><dl>
+    <dt>Context</dt><dd>The comment is posted publicly under a creator's name.</dd>
+    <dt>Decision</dt><dd><code>update_card</code> fills a template, English or Hindi, from sourced verdicts only. Unsourced steps appear only as "couldn't confirm".</dd>
+    <dt>Evidence</dt><dd>Unit tests: update card uses only sourced verdicts; empty without evidence. Source: tests/test_rescue.py; docs/architecture.md 3b.</dd>
+    <dt>Consequence</dt><dd>The wording is plain and repeatable. It is less flexible than free text.</dd>
+  </dl></div>
+
+  <div class="adr"><h2>ADR-6 &middot; 7-day cache, never cache partial results</h2><dl>
+    <dt>Context</dt><dd>A verdict is true "as of" its check date. Docs change, so old results go stale.</dd>
+    <dt>Decision</dt><dd><code>CACHE_DAYS=7</code>. The result is stored only when no batch failed.</dd>
+    <dt>Evidence</dt><dd>Source: app/rescue.py <code>analyze</code>.</dd>
+    <dt>Consequence</dt><dd>A failed check can never be served as a good one. A repeat check within a week costs nothing extra.</dd>
+  </dl></div>
+
+  <nav class="related">Related: <a href="../rescue/pipeline.html">Pipeline</a> &middot; <a href="../caveats/limitations.html">Limitations</a> &middot; <a href="../ops/runbook.html">Runbook</a></nav>
+</main>
+<footer>Raahi hub &middot; <a href="../index.html">index</a></footer>
+</body>
+</html>

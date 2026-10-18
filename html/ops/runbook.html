@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Runbook</title>
+<link rel="stylesheet" href="../assets/hub.css">
+</head>
+<body>
+<header class="top"><a href="../index.html">&larr; Hub</a></header>
+<main>
+  <h1>Runbook</h1>
+  <p class="lede">Run locally on Vertex, redeploy safely, roll back.</p>
+
+  <h2>Run locally on Vertex</h2>
+<pre><code>gcloud auth application-default login   # once
+USE_VERTEX=1 GCP_PROJECT=raahi-hackathon python3 -m uvicorn app.main:app --port 8000</code></pre>
+  <p>Open http://localhost:8000. Without Vertex, copy <code>.env.example</code> to <code>.env</code> and add your own keys. Team members can run <code>./fetch-env.sh</code> after gcloud login. Do not paste keys into docs or chat.</p>
+  <p class="src">Source: README.md.</p>
+
+  <h2>The live service</h2>
+  <p>Cloud Run, region <code>asia-south1</code>, service <code>raahi</code>. It already has <code>USE_VERTEX=1</code>, <code>GCP_PROJECT</code>, <code>GCP_LOCATION</code> and <code>CONTEXT_BUCKET</code>, plus Secret Manager references for the two API keys.</p>
+  <p class="src">Source: <code>gcloud run services describe raahi</code>, read 2026-10-18 (env names only; live revision raahi-00017-lbw). Runtime service account holds aiplatform.user and secret accessor only: docs/architecture.md section 1.</p>
+
+  <div class="note bad"><b>Warning: do not use deploy.sh for a redeploy.</b> It uses <code>--set-env-vars</code>, which replaces all env vars. That would drop <code>USE_VERTEX</code> and the secret references.</div>
+
+  <h2>Safe redeploy</h2>
+<pre><code>gcloud run deploy raahi --source . --region asia-south1 --project raahi-hackathon</code></pre>
+  <p>Do not add <code>--set-env-vars</code>. Existing env and secrets are kept. After deploy, check <code>/api/health</code> (it reports the version).</p>
+  <p class="src">Source: Cloud Run keeps the current revision's env and secrets when a deploy passes none; README.md for /api/health.</p>
+
+  <h2>Rollback</h2>
+  <ul>
+    <li>Turn off Vertex: unset <code>USE_VERTEX</code>. Note the architecture doc names <code>USE_VERTEX=0</code>. Either way the app returns to the API-key path. Grounded checks may then show steps as unverified if prepaid quota runs out.</li>
+    <li>Previous revision:
+<pre><code>gcloud run services update-traffic raahi --to-revisions=&lt;rev&gt;=100 --region asia-south1</code></pre></li>
+    <li>Secret rotation needs no code change: add a new Secret Manager version; the next revision picks it up.</li>
+  </ul>
+  <p class="src">Source: docs/architecture.md sections 3 and 4; README.md.</p>
+
+  <h2>Failure modes</h2>
+  <div class="wrap"><table>
+    <thead><tr><th>Failure</th><th>What the user sees</th></tr></thead>
+    <tbody>
+      <tr><td>Gemini 429 or per-minute quota</td><td>Automatic backoff-retry (20 s, 40 s), then a readable error. No blank spinner.</td></tr>
+      <tr><td>Search grounding outage</td><td>Rescue returns extracted steps, each unconfirmed, with a "NOT verified against current docs" note. The update comment is withheld.</td></tr>
+      <tr><td>One parallel grounding batch fails</td><td>Its steps show unconfirmed, a "some steps couldn't be checked" note appears, and the result is not cached.</td></tr>
+      <tr><td>YouTube blocks transcript (cloud IPs)</td><td>Studio switches to video ingestion; the UI notes "cloud mode, captions need a local run".</td></tr>
+      <tr><td>Live session GoAway (about 10 min)</td><td>Client reconnects (capped at 3, with backoff) carrying roadmap state.</td></tr>
+      <tr><td>One malformed link in 105</td><td>That link reports <code>unreachable</code>; the scan completes.</td></tr>
+      <tr><td>Check target on a private or metadata IP</td><td>Refused by the SSRF guard, stated plainly.</td></tr>
+      <tr><td>API flood</td><td>40 requests/min per IP, then 429 with retry advice.</td></tr>
+      <tr><td>Page refresh mid-roadmap</td><td>State restores from localStorage.</td></tr>
+      <tr><td>Secret rotation</td><td>New Secret Manager version; next revision picks it up.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">Source: docs/architecture.md section 4.</p>
+
+  <nav class="related">Related: <a href="../rescue/pipeline.html">Pipeline</a> &middot; <a href="../decisions/adr-index.html">Decisions</a> &middot; <a href="../caveats/limitations.html">Limitations</a></nav>
+</main>
+<footer>Raahi hub &middot; <a href="../index.html">index</a></footer>
+</body>
+</html>
