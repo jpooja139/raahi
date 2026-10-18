@@ -90,7 +90,32 @@ def generate_grounded(prompt: str, thinking: str = ""):
     except Exception as e:
         raise GeminiError(f"Grounded search failed: {e}") from e
     cand = (resp.candidates or [None])[0]
-    return resp.text or "", (cand.grounding_metadata if cand else None)
+    gm = cand.grounding_metadata if cand else None
+    parts = (cand.content.parts if cand is not None and cand.content else None) or []
+    text = join_text_parts(parts, gm)
+    return text or resp.text or "", gm
+
+
+def join_text_parts(parts, gm) -> str:
+    """Join the non-thought text parts. Grounding supports give byte offsets
+    *within their own Part* (segment.part_index); when the answer spans several
+    text parts, shift each support onto the joined text so sources stay on the
+    right step."""
+    texts, offsets, pos = [], {}, 0
+    for i, p in enumerate(parts):
+        if getattr(p, "text", None) and not getattr(p, "thought", None):
+            offsets[i] = pos
+            texts.append(p.text)
+            pos += len(p.text.encode("utf-8"))
+    if gm is not None and len(offsets) > 1:
+        for sup in gm.grounding_supports or []:
+            seg = sup.segment
+            shift = offsets.get(getattr(seg, "part_index", None)) if seg is not None else None
+            if shift:
+                seg.start_index = (seg.start_index or 0) + shift
+                if seg.end_index is not None:
+                    seg.end_index += shift
+    return "".join(texts)
 
 
 def generate_json(

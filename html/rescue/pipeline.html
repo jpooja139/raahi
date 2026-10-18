@@ -78,7 +78,7 @@
   <p class="src">Source: docs/architecture.md section 3b. In code the downgraded status is named "unverifiable"; the UI calls it unconfirmed.</p>
 
   <h2>What the unit tests cover</h2>
-  <p>Pure helpers in tests/test_rescue.py: URL forms, timestamp parsing, ISO duration, STEP-block parsing (markdown, dashes, first verdict wins), byte offsets with Hindi text, source dedupe and cap, downgrading unsourced verdicts and bad timestamps, update-card content (English and Hindi month), step ranges, root domains, official flagging, counts. The live Gemini calls are not unit-tested.</p>
+  <p>Pure helpers in tests/test_rescue.py: URL forms, timestamp parsing, ISO duration, STEP-block parsing (markdown, dashes, first verdict wins), byte offsets with Hindi text, source dedupe and cap, downgrading unsourced verdicts and bad timestamps (the unsourced claim is hidden), "changed" with no replacement step, refusing non-tutorial videos, sources on multi-part answers, user-content hosts never official, update-card content (English and Hindi month), step ranges, root domains, official flagging, counts, no-cache headers on the UI. The live Gemini calls are not unit-tested.</p>
   <p class="src">Source: test names in tests/test_rescue.py.</p>
 
   <nav class="related">Related: <a href="../decisions/adr-index.html">Decisions</a> &middot; <a href="../caveats/limitations.html">Limitations</a> &middot; <a href="../ops/runbook.html">Runbook</a> &middot; <a href="../research/problem-evidence.html">Problem evidence</a></nav>

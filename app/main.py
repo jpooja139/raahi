@@ -18,6 +18,16 @@ def _gemini_http(e: GeminiError):
 app = FastAPI(title="Raahi")
 STATIC = Path(__file__).resolve().parent.parent / "static"
 
+@app.middleware("http")
+async def _revalidate_ui(request, call_next):
+    """The page and its scripts must be re-checked on every load (a cheap 304 via
+    ETag); otherwise a browser keeps last deploy's app.js against the new API."""
+    resp = await call_next(request)
+    if request.url.path == "/" or request.url.path.startswith("/static/"):
+        resp.headers["Cache-Control"] = "no-cache"
+    return resp
+
+
 # -- minimal per-IP rate limit: 40 API requests / 60 s (demo-grade, in-memory) --
 import time as _time
 from collections import defaultdict, deque

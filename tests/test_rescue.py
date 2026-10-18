@@ -169,3 +169,65 @@ def test_counts():
     c = rescue.counts(rescue.validate(_steps(), blocks, {1: [SRC]}, duration_s=600))
     assert c == {"current": 0, "changed": 1, "unverifiable": 3, "downgraded": 1,
                  "with_sources": 1, "with_official_source": 0, "with_timestamp": 3}
+
+
+def test_downgraded_step_hides_the_unsourced_claim():
+    blocks = rescue.parse_blocks(TEXT)
+    by = {s.n: s for s in rescue.validate(_steps(), blocks, {1: [SRC]}, duration_s=600)}
+    assert by[2].downgraded and by[2].today == ""   # the model's "still there" is not shown
+
+
+def test_changed_without_a_replacement_is_not_shown_as_changed():
+    text = "STEP 1: changed\nTODAY:\n\nSTEP 2: current\nTODAY: Settings > Custom domains.\n"
+    out = rescue.validate(_steps()[:2], rescue.parse_blocks(text), {1: [SRC], 2: [SRC]}, 600, "hi")
+    assert out[0].status == "unverifiable" and out[0].today == rescue.NO_TODAY["hi"]
+    assert out[0].sources == [SRC] and not out[0].downgraded
+    assert "Today:" not in rescue.update_card(out, "Google Sites", datetime(2026, 10, 18, tzinfo=timezone.utc))
+
+
+@pytest.mark.parametrize("host", ["sites.google.com", "groups.google.com", "docs.google.com", "someone.blogspot.com"])
+def test_user_content_hosts_are_never_official(host):
+    out = rescue.mark_official({1: [Source(title=host, domain=host, uri="u")]}, ["google.com", "blogspot.com"])
+    assert not out[1][0].official
+
+
+def test_multi_part_answer_keeps_sources_on_the_right_step():
+    from app import gemini
+    p1 = "STEP 1: changed\nTODAY: Google Domains अब बंद है।\n\n"
+    p2 = "STEP 2: current\nTODAY: Settings > Custom domains.\n"
+    # supports index bytes within their own part, as the API reports them
+    s2 = p2.encode("utf-8").index(b"Settings")
+    gm = NS(grounding_chunks=[NS(web=NS(uri="https://r/1", title="a.com", domain="a.com")),
+                              NS(web=NS(uri="https://r/2", title="b.com", domain="b.com"))],
+            grounding_supports=[NS(segment=NS(part_index=0, start_index=16, end_index=40), grounding_chunk_indices=[0]),
+                                NS(segment=NS(part_index=2, start_index=s2, end_index=s2 + 8), grounding_chunk_indices=[1])])
+    parts = [NS(text=p1, thought=None), NS(text="thinking…", thought=True), NS(text=p2, thought=None)]
+    text = gemini.join_text_parts(parts, gm)
+    assert text == p1 + p2
+    src = rescue.sources_by_step(rescue.parse_blocks(text), gm)
+    assert [s.domain for s in src[1]] == ["a.com"]
+    assert [s.domain for s in src[2]] == ["b.com"]
+
+
+@pytest.mark.parametrize("name,ok", [("Google Sites", True), ("None", False), ("n/a", False), ("", False), ('"None".', False)])
+def test_is_tool_name(name, ok):
+    assert rescue.is_tool_name(name) is ok
+
+
+def test_non_tutorial_is_refused_not_invented(monkeypatch):
+    monkeypatch.setattr(rescue.store, "get", lambda k: None)
+    monkeypatch.setattr(rescue.store, "put", lambda k, v: pytest.fail("a refusal must not be cached"))
+    monkeypatch.setattr(rescue, "_video_meta", lambda vid: ("Never Gonna Give You Up", "2009-10-25", 213))
+    llm = rescue._LLMExtraction(video_title="x", published_hint="unknown", tool_name="None", official_domains=[],
+                                steps=[rescue._LLMStep(t="0:30", instruction="Execute a backflip off the bar counter")])
+    monkeypatch.setattr(rescue, "_extract_from_video", lambda url: llm)
+    with pytest.raises(rescue.gemini.GeminiError, match="software tutorial"):
+        rescue.extract("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+
+
+def test_ui_is_revalidated_on_every_load():
+    from fastapi.testclient import TestClient
+    from app.main import app
+    c = TestClient(app)
+    for path in ["/", "/static/app.js"]:
+        assert c.get(path).headers["cache-control"] == "no-cache"

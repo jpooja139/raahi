@@ -124,10 +124,11 @@ OAuth), creator tech map, recipe sharing.
 
 The "outdated" regex behind these rates was not hand-checked for precision, so treat the rates as upper bounds; the old-vs-new gap is the stronger signal.
 
-**How a verdict earns its place on screen** (`app/rescue.py`, 25 unit tests in `tests/test_rescue.py`):
+**How a verdict earns its place on screen** (`app/rescue.py`, 39 unit tests in `tests/test_rescue.py`):
 - **Sources:** they come from the grounding metadata's byte-offset supports, never from what the model writes about its sources.
-- **Unsourced verdicts:** a "current" or "changed" verdict with no source behind it is shown as *unconfirmed*.
-- **"Official" sources:** a root-domain string match against the tool vendor's domains, not model opinion.
+- **Unsourced verdicts:** a "current" or "changed" verdict with no source behind it is shown as *unconfirmed*, and the model's unsourced claim is not displayed. A "changed" verdict that names no replacement step is also shown as unconfirmed.
+- **Not a tutorial:** a video that doesn't teach a software product (music, vlog, news) is refused, not given invented steps.
+- **"Official" sources:** a root-domain string match against the tool vendor's domains, not model opinion. Hosts where anyone can publish (sites.google.com, *.blogspot.com, …) are never official.
 - **Timestamps:** any past the video's real end (YouTube Data API) are dropped.
 - **The public comment:** a template filled from sourced verdicts only. The model never writes it.
 - **Caching:** a partial or failed check is never cached.

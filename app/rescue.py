@@ -117,6 +117,8 @@ Return:
   - instruction: one imperative sentence naming the exact menu, button, option or
     product as it appears in the video, e.g. "Click Settings > Custom domains > Start setup"
   Merge trivial clicks into one step. Skip intro, outro and sponsor segments.
+If the video does not teach how to do something in a software product, website or app
+(music, vlog, review, news, gameplay), return tool_name "" and steps []. Never invent steps.
 """
 
 TRANSCRIPT_PROMPT = EXTRACT_PROMPT + """
@@ -153,8 +155,8 @@ Steps:
 
 LANG_RULE = {
     "en": "in English",
-    "hi": "in simple Hindi (Devanagari), keeping product, menu and button names in English "
-          "exactly as they appear on screen",
+    "hi": "in simple Hindi written in Devanagari script (never Hindi in Latin letters), keeping "
+          "product, menu and button names in English exactly as they appear on screen",
 }
 NOT_CHECKED = {
     "en": "Not checked: the search pass returned no verdict for this step.",
@@ -165,6 +167,13 @@ UNAVAILABLE = {
           "against current docs.",
     "hi": "आज के docs से जाँच अभी उपलब्ध नहीं है। ये वीडियो के स्टेप हैं, इनकी जाँच नहीं हुई है।",
 }
+NO_TODAY = {
+    "en": "Sources suggest this step changed, but no replacement step was found. Compare your screen with the video here.",
+    "hi": "स्रोतों के अनुसार यह स्टेप बदला है, पर नया तरीका नहीं मिला। अपनी स्क्रीन को वीडियो के इस हिस्से से मिलाएँ।",
+}
+# Hosts where anyone can publish; never "official" even under the vendor's domain.
+USER_CONTENT_HOSTS = {"sites.google.com", "groups.google.com", "docs.google.com",
+                      "drive.google.com", "script.google.com"}
 PARTIAL = {
     "en": "Some steps couldn't be checked right now; they are marked unverifiable.",
     "hi": "कुछ स्टेप अभी जाँचे नहीं जा सके; उन्हें 'पुष्टि नहीं' दिखाया गया है।",
@@ -284,7 +293,9 @@ def mark_official(sources: dict[int, list[Source]], official_domains: list[str])
     out = {}
     for n, ss in sources.items():
         for s in ss:
-            s.official = root_domain(s.domain) in roots
+            host = s.domain.lower().strip(".")
+            user_content = host in USER_CONTENT_HOSTS or host.endswith(".blogspot.com")
+            s.official = root_domain(s.domain) in roots and not user_content
         out[n] = sorted(ss, key=lambda s: not s.official)
     return out
 
@@ -303,7 +314,9 @@ def validate(steps: list[ExtractedStep], blocks: dict[int, dict],
         if b is None:
             status, today, down = "unverifiable", NOT_CHECKED.get(lang, NOT_CHECKED["en"]), False
         elif b["status"] != "unverifiable" and not src:
-            status, today, down = "unverifiable", b["today"], True
+            status, today, down = "unverifiable", "", True  # the unsourced claim is not shown
+        elif b["status"] == "changed" and not b["today"]:
+            status, today, down = "unverifiable", NO_TODAY.get(lang, NO_TODAY["en"]), False
         else:
             status, today, down = b["status"], b["today"], False
         out.append(RescueStep(
@@ -396,7 +409,8 @@ def _video_meta(vid: str) -> tuple[str, str, int | None]:
     Blanks when the API is unavailable; ValueError when the video doesn't exist."""
     try:
         data = asyncio.run(youtube._get("videos", {"part": "snippet,contentDetails", "id": vid}))
-    except youtube.YouTubeError:
+    except Exception as e:  # noqa: BLE001 — API down, quota or network: run without metadata
+        print(f"[rescue] YouTube metadata unavailable for {vid}: {type(e).__name__}", flush=True)
         return "", "", None
     items = data.get("items") or []
     if not items:
@@ -422,12 +436,23 @@ def _extract_from_transcript(vid: str) -> _LLMExtraction:
     return gemini.generate_json(TRANSCRIPT_PROMPT.format(transcript=text), _LLMExtraction)
 
 
+NOT_A_TUTORIAL = ("This doesn't look like a software tutorial, so there are no steps to check. "
+                  "Paste a how-to video for an app or website.")
+
+
+def is_tool_name(name: str) -> bool:
+    """The model names a product only when it found one; 'None'/'N/A' mean it didn't."""
+    return name.strip().strip(".\"'").lower() not in {"", "none", "null", "n/a", "na", "unknown", "nothing"}
+
+
 def extract(url: str, force: bool = False) -> Extraction:
     vid = video_id(url)
     key = f"rescue_ex_{vid}"
     if not force and (doc := store.get(key)):
         try:
-            return Extraction.model_validate(doc)
+            ex = Extraction.model_validate(doc)
+            if is_tool_name(ex.tool):  # an entry cached before the non-tutorial check is redone
+                return ex
         except Exception:  # noqa: BLE001 — stale schema: re-extract
             pass
     title, published, duration = _video_meta(vid)
@@ -451,8 +476,8 @@ def extract(url: str, force: bool = False) -> Extraction:
             ) from e2
     steps = [ExtractedStep(n=i, t=s.t, instruction=s.instruction.strip())
              for i, s in enumerate((s for s in llm.steps if s.instruction.strip()), 1)][:MAX_STEPS]
-    if not steps:
-        raise gemini.GeminiError("No steps found. Is this a step-by-step tutorial?")
+    if not steps or not is_tool_name(llm.tool_name):
+        raise gemini.GeminiError(NOT_A_TUTORIAL)
     ex = Extraction(
         video_id=vid, video_title=title or llm.video_title,
         published=published or llm.published_hint, duration_s=duration,

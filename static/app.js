@@ -508,33 +508,48 @@ function renderRescue(box, url, ex, r) {
   };
   const again = el("button", "ghost", T(TR.recheck));
   again.type = "button";
-  again.onclick = () => runRescue(true);
+  again.onclick = () => { document.getElementById("tr-input").value = url; runRescue(true); };
   actions.appendChild(guideBtn);
   actions.appendChild(again);
   rep.appendChild(actions);
   box.appendChild(rep);
 }
 
+let trRun = 0;  // only the latest run may draw; an older, slower response is dropped
+
 async function runRescue(force) {
   const box = document.getElementById("tr-report");
   const url = document.getElementById("tr-input").value.trim();
   if (!url) return;
+  const run = ++trRun;
+  const btn = document.querySelector("#tr-form button[type=submit]");
+  btn.disabled = true;
   box.innerHTML = "";
   box.appendChild(el("div", "spin", T(TR.reading)));
-  let ex;
   try {
-    ex = await api("/api/rescue/extract", { url });
-  } catch (err) {
-    box.innerHTML = "";
-    box.appendChild(el("div", "error", err.message));
-    return;
-  }
-  renderRescue(box, url, ex, null);
-  try {
-    const r = await api("/api/rescue", { url, lang: LANG, force: !!force });
-    renderRescue(box, url, ex, r);
-  } catch (err) {
-    box.appendChild(el("div", "error", err.message));
+    let ex;
+    try {
+      ex = await api("/api/rescue/extract", { url });
+    } catch (err) {
+      if (run !== trRun) return;
+      box.innerHTML = "";
+      box.appendChild(el("div", "error", err.message));
+      return;
+    }
+    if (run !== trRun) return;
+    renderRescue(box, url, ex, null);
+    try {
+      const r = await api("/api/rescue", { url, lang: LANG, force: !!force });
+      if (run !== trRun) return;
+      renderRescue(box, url, ex, r);
+    } catch (err) {
+      if (run !== trRun) return;
+      box.querySelectorAll(".spin").forEach((n) => n.remove());
+      box.querySelectorAll(".pill.wait").forEach((p) => { p.className = "pill broken"; p.textContent = T(TR.st.unverifiable); });
+      box.appendChild(el("div", "error", err.message));
+    }
+  } finally {
+    if (run === trRun) btn.disabled = false;
   }
 }
 
@@ -799,6 +814,8 @@ Object.assign(STRINGS, {
   st_url: { en: "YouTube video URL (your existing video)", hi: "YouTube वीडियो URL" },
   st_go: { en: "Plan my edit", hi: "एडिट प्लान करो" },
   st_instruction: { en: "e.g. remove silences, add captions, create a Short", hi: "जैसे: silences हटाओ, captions, एक Short" },
+  ld_try: { en: "try @GoogleDevelopers", hi: "@GoogleDevelopers आज़माएँ" },
+  st_full: { en: "✂️ the full treatment", hi: "✂️ पूरा पैकेज" },
   tr_honest: { en: "Measured: found the change viewers reported in 10 of 16 old tutorials; 0 of 46 steps wrongly flagged on new ones. A verdict with no source is shown as unconfirmed.", hi: "मापा गया: 16 में से 10 पुराने ट्यूटोरियल में दर्शकों का बताया बदलाव मिला; नए ट्यूटोरियल के 46 में से 0 स्टेप गलत बताए। बिना स्रोत वाला जवाब 'पुष्टि नहीं' दिखता है।" },
   st_honest: { en: "Real today: edit plan, SRT captions, Shorts timecodes — works in any editor. Cloud rendering: planned v2.", hi: "आज असली: एडिट प्लान, SRT captions, Shorts timecodes। Cloud rendering: v2 में।" },
   st_wait: { en: "Reading transcript & planning your edit… ~30 seconds", hi: "Transcript पढ़कर एडिट प्लान बन रहा है… ~30 सेकंड" },
