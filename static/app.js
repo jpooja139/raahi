@@ -4,8 +4,8 @@
 // ---- strings (bilingual-ready; hi values refined later) ----
 const STRINGS = {
   tagline: {
-    en: "Not every creator has an engineer. Raahi is yours.",
-    hi: "हर क्रिएटर के पास इंजीनियर नहीं होता। राही आपका AI इंजीनियर है।",
+    en: "The AI engineer for creators who master content, not tech. It decides, guides by voice and proves it works, in Hindi or English.",
+    hi: "उन क्रिएटर्स का AI इंजीनियर जो कंटेंट के उस्ताद हैं, टेक के नहीं। फ़ैसला, आवाज़ से गाइड, और सबूत कि काम हुआ — हिंदी या English में।",
   },
   chat_placeholder: { en: "Ask Raahi anything…", hi: "राही से कुछ भी पूछें…" },
   send: { en: "Send", hi: "भेजें" },
@@ -599,14 +599,10 @@ micBtn.addEventListener("click", () => {
 });
 
 // ---- UI: hero/head strings + example chips ----
-STRINGS.tagline = {
-  en: "For creators who master content, not tech — in Hindi or English, by voice or text.",
-  hi: "उन क्रिएटर्स के लिए जो कंटेंट के उस्ताद हैं, टेक के नहीं — हिंदी या English में, आवाज़ से या लिखकर।",
-};
 STRINGS.chat_title = { en: "Talk to Raahi", hi: "राही से बात करें" };
 const HERO = {
-  en: 'Your AI engineer. Decides. Guides. <span>Proves it works.</span>',
-  hi: 'आपका AI इंजीनियर। फ़ैसला। गाइड। <span>और सबूत कि काम हुआ।</span>',
+  en: 'Not every creator has an engineer. <span>Raahi is yours.</span>',
+  hi: 'हर क्रिएटर के पास इंजीनियर नहीं होता। <span>राही आपका इंजीनियर है।</span>',
 };
 const heroEl = document.getElementById("hero-h1");
 const _setLang = setLang;
