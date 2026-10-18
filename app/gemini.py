@@ -42,12 +42,16 @@ def client():
 
 
 def key_client():
-    """YouTube-URL video ingestion is not available on Vertex AI yet —
-    those calls go through the Gemini API key explicitly."""
+    """YouTube-URL video ingestion. Vertex accepts YouTube URLs when the part's
+    mime_type is "video/*" ("video/mp4" returns 500 INTERNAL — verified
+    2026-10-18), so under USE_VERTEX this is just client(); otherwise the
+    Gemini API key."""
     global _key_client
+    if config.USE_VERTEX:
+        return client()
     if config.GEMINI_API_KEY.lower() in ("", "dummy", "changeme", "your-key-here"):
         raise GeminiKeyMissing(
-            "Video ingestion needs GEMINI_API_KEY (Vertex does not accept YouTube URLs yet)."
+            "Video ingestion needs GEMINI_API_KEY or USE_VERTEX=1."
         )
     if _key_client is None:
         from google import genai
@@ -56,19 +60,58 @@ def key_client():
     return _key_client
 
 
+def youtube_part(url: str):
+    """A YouTube URL as a video part, with the mime type each backend accepts."""
+    from google.genai import types
+
+    mime = "video/*" if config.USE_VERTEX else "video/mp4"
+    return types.Part(file_data=types.FileData(file_uri=url, mime_type=mime))
+
+
+def generate_grounded(prompt: str, thinking: str = ""):
+    """One Search-grounded text call. Returns (text, grounding_metadata) so the
+    caller can tie each claim to its sources — the metadata is the evidence.
+    thinking: "" (model default) | "low" | "minimal"."""
+    from google.genai import types
+
+    c = client()
+    level = {"low": types.ThinkingLevel.LOW, "minimal": types.ThinkingLevel.MINIMAL}.get(thinking)
+    try:
+        resp = _with_429_retry(
+            lambda: c.models.generate_content(
+                model=config.MODEL_TEXT,
+                contents=[prompt],
+                config=types.GenerateContentConfig(
+                    tools=[types.Tool(google_search=types.GoogleSearch())],
+                    thinking_config=types.ThinkingConfig(thinking_level=level) if level else None,
+                ),
+            )
+        )
+    except Exception as e:
+        raise GeminiError(f"Grounded search failed: {e}") from e
+    cand = (resp.candidates or [None])[0]
+    return resp.text or "", (cand.grounding_metadata if cand else None)
+
+
 def generate_json(
     prompt: str,
     schema: Type[M],
     parts: list | None = None,
     grounding: bool = False,
     use_key_client: bool = False,
+    media_resolution: str = "",
 ) -> M:
     """One structured-output call. grounding=True runs a grounded text pass
     first (Search grounding and response_schema can't share one call), then
-    converts that answer to the schema. Retries the JSON pass once."""
+    converts that answer to the schema. Retries the JSON pass once.
+    media_resolution: "" (model default) | "low" | "medium" for video parts."""
     from google.genai import types
 
     c = key_client() if use_key_client else client()
+    media = {
+        "low": types.MediaResolution.MEDIA_RESOLUTION_LOW,
+        "medium": types.MediaResolution.MEDIA_RESOLUTION_MEDIUM,
+    }.get(media_resolution)
     contents = list(parts or []) + [prompt]
 
     if grounding:
@@ -100,6 +143,7 @@ def generate_json(
                     config=types.GenerateContentConfig(
                         response_mime_type="application/json",
                         response_schema=schema,
+                        media_resolution=media,
                     ),
                 )
             )

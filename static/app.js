@@ -382,54 +382,165 @@ document.getElementById("chat-form").addEventListener("submit", async (e) => {
   }
 });
 
-// ---- Tutorial Rescue (Task 6) ----
-document.getElementById("tr-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
+// ---- Tutorial Rescue: the video's steps appear first, then each is checked ----
+const TR = {
+  reading: { en: "Watching the video for its steps… usually under a minute", hi: "वीडियो देखकर स्टेप निकाले जा रहे हैं… आमतौर पर एक मिनट से कम" },
+  checking: { en: "Checking each step against today's docs… about 10 seconds", hi: "हर स्टेप आज के docs से जाँचा जा रहा है… लगभग 10 सेकंड" },
+  st: {
+    current: { en: "still works", hi: "अभी भी सही" },
+    changed: { en: "changed", hi: "बदल गया" },
+    unverifiable: { en: "unconfirmed", hi: "पुष्टि नहीं" },
+    pending: { en: "checking…", hi: "जाँच…" },
+  },
+  today: { en: "Today: ", hi: "आज: " },
+  old: { en: "The video said: ", hi: "वीडियो में: " },
+  nosrc: { en: "No source backed this verdict, so Raahi won't call it current or changed.", hi: "इस जवाब का कोई स्रोत नहीं मिला, इसलिए राही इसे सही या बदला हुआ नहीं कहेगा।" },
+  official: { en: "official", hi: "आधिकारिक" },
+  from_video: { en: "read from the video", hi: "वीडियो से पढ़ा" },
+  from_tr: { en: "read from the transcript", hi: "ट्रांसक्रिप्ट से पढ़ा" },
+  published: { en: "published ", hi: "प्रकाशित " },
+  card_h: { en: "For the creator: pin this comment on the video", hi: "क्रिएटर के लिए: यह कमेंट वीडियो पर पिन करें" },
+  copy: { en: "Copy comment", hi: "कमेंट कॉपी करें" },
+  copied: { en: "Copied ✓", hi: "कॉपी हुआ ✓" },
+  recheck: { en: "Re-check now", hi: "फिर से जाँचें" },
+  guide: { en: "Guide me through this", hi: "मुझे इसमें गाइड करो" },
+};
+const T = (o) => o[LANG] || o.en;
+
+function trSummary(r) {
+  const c = r.counts, n = r.steps.length;
+  const when = new Date(r.checked_at).toLocaleDateString(LANG === "hi" ? "hi-IN" : "en-IN", { day: "numeric", month: "short", year: "numeric" });
+  return LANG === "hi"
+    ? `${n} में से ${c.changed} स्टेप बदल गए · ${c.with_sources} स्टेप स्रोत के साथ जाँचे (${c.with_official_source} आधिकारिक) · ${when} तक`
+    : `${c.changed} of ${n} steps changed · ${c.with_sources} checked with sources (${c.with_official_source} official) · as of ${when}`;
+}
+
+function trStepRow(vid, s, checked) {
+  const status = checked ? s.status : "pending";
+  const row = el("div", "row tr-step");
+  const pillCls = { current: "ok", changed: "warn", unverifiable: "broken", pending: "wait" }[status];
+  row.appendChild(el("span", "pill " + pillCls, T(TR.st[status])));
+  if (s.seconds !== null && s.seconds !== undefined) {
+    const a = el("a", "ts", s.t);
+    a.href = `https://www.youtube.com/watch?v=${encodeURIComponent(vid)}&t=${s.seconds}s`;
+    a.target = "_blank"; a.rel = "noopener";
+    row.appendChild(a);
+  } else if (s.t) {
+    row.appendChild(el("span", "ts", s.t));
+  }
+  const body = el("div", "tr-body");
+  if (checked && s.status === "changed") {
+    body.appendChild(el("div", "tr-today", T(TR.today) + s.today));
+    body.appendChild(el("div", "tr-old", T(TR.old) + s.instruction));
+  } else {
+    body.appendChild(el("div", "", `${s.n}. ${s.instruction}`));
+    if (checked && s.today) body.appendChild(el("div", "tr-note", "→ " + s.today));
+  }
+  if (checked && s.downgraded) body.appendChild(el("div", "tr-nosrc", T(TR.nosrc)));
+  if (checked && s.sources && s.sources.length) {
+    const srcs = el("div", "srcs");
+    s.sources.forEach((src) => {
+      const a = el("a", "src" + (src.official ? " official" : ""), src.domain + (src.official ? " · " + T(TR.official) : ""));
+      a.href = src.uri; a.target = "_blank"; a.rel = "noopener nofollow"; a.title = src.title;
+      srcs.appendChild(a);
+    });
+    body.appendChild(srcs);
+  }
+  row.appendChild(body);
+  return row;
+}
+
+function renderRescue(box, url, ex, r) {
+  box.innerHTML = "";
+  const rep = el("div", "report");
+  rep.appendChild(el("div", "headline", ex.video_title));
+  const meta = [ex.tool, ex.published ? T(TR.published) + ex.published : "",
+                ex.source === "transcript" ? T(TR.from_tr) : T(TR.from_video)].filter(Boolean).join(" · ");
+  rep.appendChild(el("div", "tr-meta", meta));
+  if (r) rep.appendChild(el("div", "tr-sum", trSummary(r)));
+  else rep.appendChild(el("div", "spin", T(TR.checking)));
+  if (r && r.note) rep.appendChild(el("div", "error", r.note));
+  (r ? r.steps : ex.steps).forEach((s) => rep.appendChild(trStepRow(ex.video_id, s, !!r)));
+  if (!r) { box.appendChild(rep); return; }
+
+  if (r.update_card) {
+    const card = el("div", "tr-card");
+    card.appendChild(el("h3", "", T(TR.card_h)));
+    card.appendChild(el("pre", "", r.update_card));
+    const copy = el("button", "ghost", T(TR.copy));
+    copy.type = "button";
+    copy.onclick = async () => {
+      try { await navigator.clipboard.writeText(r.update_card); copy.textContent = T(TR.copied); } catch {}
+    };
+    card.appendChild(copy);
+    rep.appendChild(card);
+  }
+
+  // Google Search suggestions must be shown with grounded results. Sandboxed:
+  // no scripts run inside; links open in a new tab.
+  if (r.search_entry_html) {
+    const f = document.createElement("iframe");
+    f.className = "tr-suggest";
+    f.title = "Google Search suggestions";
+    f.setAttribute("sandbox", "allow-same-origin allow-popups allow-popups-to-escape-sandbox");
+    f.srcdoc = '<base target="_blank">' + r.search_entry_html;
+    f.onload = () => { try { f.style.height = (f.contentDocument.body.scrollHeight + 8) + "px"; } catch {} };
+    rep.appendChild(f);
+  }
+
+  const actions = el("div", "tr-actions");
+  const guideBtn = el("button", "cta", T(TR.guide));
+  guideBtn.type = "button";
+  guideBtn.onclick = () => {
+    renderDecision({
+      _source: "recipe",
+      recommendation: "Rescued: " + r.video_title,
+      why: S("Roadmap built from the tutorial — changed steps already updated to today's UI.",
+             "यह रोडमैप ट्यूटोरियल से बना है — बदले हुए स्टेप अपडेट हो चुके हैं।"),
+      cost: "", time_minutes: r.steps.length * 5, rejected: [], clarifying_questions: [],
+      roadmap: r.steps.map((s) => ({
+        n: s.n, title: s.status === "changed" && s.today ? s.today : s.instruction,
+        why: s.status === "changed" ? S("Old way: ", "पुराना तरीका: ") + s.instruction : "",
+        minutes: 5, concept: "", check: { type: "manual", target: "" },
+      })),
+    });
+    addMsg("system", S("Rescue roadmap ready — ask me in chat as you go", "रेस्क्यू रोडमैप तैयार — चैट में पूछते रहें"));
+  };
+  const again = el("button", "ghost", T(TR.recheck));
+  again.type = "button";
+  again.onclick = () => runRescue(true);
+  actions.appendChild(guideBtn);
+  actions.appendChild(again);
+  rep.appendChild(actions);
+  box.appendChild(rep);
+}
+
+async function runRescue(force) {
   const box = document.getElementById("tr-report");
   const url = document.getElementById("tr-input").value.trim();
   if (!url) return;
   box.innerHTML = "";
-  box.appendChild(el("div", "spin", STRINGS.wait_tr[LANG]));
+  box.appendChild(el("div", "spin", T(TR.reading)));
+  let ex;
   try {
-    const r = await api("/api/rescue", { url });
-    box.innerHTML = "";
-    const rep = el("div", "report");
-    const changed = r.steps.filter((s) => s.status === "changed").length;
-    rep.appendChild(el("div", "headline",
-      `${r.video_title} (${r.published_hint}) — ${changed} step(s) changed since` +
-      (r.source === "transcript" ? " · read from transcript" : "")));
-    r.steps.forEach((s) => {
-      const row = el("div", "row");
-      row.appendChild(el("span", "pill " + (s.status === "current" ? "ok" : s.status === "changed" ? "warn" : "broken"), s.status));
-      const body = el("div", "");
-      body.style.flex = "1"; body.style.minWidth = "220px";
-      body.appendChild(el("div", "", `${s.n}. ${s.instruction}`));
-      if (s.note) body.appendChild(el("div", "url", "→ " + s.note));
-      row.appendChild(body);
-      rep.appendChild(row);
-    });
-    const btn = el("button", "", LANG === "hi" ? "मुझे इसमें गाइड करो" : "Guide me through this");
-    btn.style.marginTop = "10px";
-    btn.onclick = () => {
-      renderDecision({
-        _source: "recipe",
-        recommendation: "Rescued: " + r.video_title,
-        why: LANG === "hi" ? "यह रोडमैप ट्यूटोरियल से बना है — बदले हुए स्टेप अपडेट हो चुके हैं।" : "Roadmap built from the tutorial — changed steps already updated to today's UI.",
-        cost: "", time_minutes: r.steps.length * 5, rejected: [], clarifying_questions: [],
-        roadmap: r.steps.map((s) => ({
-          n: s.n, title: s.status === "changed" && s.note ? s.note : s.instruction,
-          why: s.status === "changed" ? (LANG === "hi" ? "पुराना तरीका: " : "Old way: ") + s.instruction : "",
-          minutes: 5, concept: "", check: { type: "manual", target: "" },
-        })),
-      });
-      addMsg("system", LANG === "hi" ? "रेस्क्यू रोडमैप तैयार — चैट में पूछते रहें" : "Rescue roadmap ready — ask me in chat as you go");
-    };
-    rep.appendChild(btn);
-    box.appendChild(rep);
+    ex = await api("/api/rescue/extract", { url });
   } catch (err) {
     box.innerHTML = "";
     box.appendChild(el("div", "error", err.message));
+    return;
   }
+  renderRescue(box, url, ex, null);
+  try {
+    const r = await api("/api/rescue", { url, lang: LANG, force: !!force });
+    renderRescue(box, url, ex, r);
+  } catch (err) {
+    box.appendChild(el("div", "error", err.message));
+  }
+}
+
+document.getElementById("tr-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  runRescue(false);
 });
 
 // ---- Voice (Task 7) ----
@@ -688,6 +799,7 @@ Object.assign(STRINGS, {
   st_url: { en: "YouTube video URL (your existing video)", hi: "YouTube वीडियो URL" },
   st_go: { en: "Plan my edit", hi: "एडिट प्लान करो" },
   st_instruction: { en: "e.g. remove silences, add captions, create a Short", hi: "जैसे: silences हटाओ, captions, एक Short" },
+  tr_honest: { en: "Measured: found the change viewers reported in 10 of 16 old tutorials; 0 of 46 steps wrongly flagged on new ones. A verdict with no source is shown as unconfirmed.", hi: "मापा गया: 16 में से 10 पुराने ट्यूटोरियल में दर्शकों का बताया बदलाव मिला; नए ट्यूटोरियल के 46 में से 0 स्टेप गलत बताए। बिना स्रोत वाला जवाब 'पुष्टि नहीं' दिखता है।" },
   st_honest: { en: "Real today: edit plan, SRT captions, Shorts timecodes — works in any editor. Cloud rendering: planned v2.", hi: "आज असली: एडिट प्लान, SRT captions, Shorts timecodes। Cloud rendering: v2 में।" },
   st_wait: { en: "Reading transcript & planning your edit… ~30 seconds", hi: "Transcript पढ़कर एडिट प्लान बन रहा है… ~30 सेकंड" },
 });

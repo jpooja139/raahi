@@ -133,12 +133,25 @@ def api_guide(body: GuideIn) -> guide.GuideReply:
 
 class RescueIn(BaseModel):
     url: str
+    lang: str = "en"
+    force: bool = False  # re-check against today's docs, ignoring the 7-day cache
+
+
+@app.post("/api/rescue/extract")
+def api_rescue_extract(body: RescueIn) -> rescue.Extraction:
+    """Stage 1 alone, so the UI can show the video's steps while they're checked."""
+    try:
+        return rescue.extract(body.url)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    except GeminiError as e:
+        raise _gemini_http(e)
 
 
 @app.post("/api/rescue")
 def api_rescue(body: RescueIn) -> rescue.Rescue:
     try:
-        return rescue.analyze(body.url)
+        return rescue.analyze(body.url, body.lang, body.force)
     except ValueError as e:
         raise HTTPException(400, str(e))
     except GeminiError as e:

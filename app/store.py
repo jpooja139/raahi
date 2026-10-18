@@ -45,7 +45,7 @@ def get(key: str) -> dict | None:
     if not f.exists():
         return None
     try:
-        return json.loads(f.read_text())
+        return json.loads(f.read_text(encoding="utf-8"))
     except Exception:
         return None
 
@@ -64,7 +64,7 @@ def put(key: str, doc: dict) -> bool:
             return False
     try:
         _LOCAL_DIR.mkdir(exist_ok=True)
-        (_LOCAL_DIR / f"{key}.json").write_text(payload)
+        (_LOCAL_DIR / f"{key}.json").write_text(payload, encoding="utf-8")
         return True
     except Exception as e:
         print(f"[store] local write FAILED for {key}: {type(e).__name__}: {e}", flush=True)
