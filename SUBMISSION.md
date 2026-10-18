@@ -1,16 +1,16 @@
 # Raahi (राही)
 
-**Tagline:** Paste an old tutorial. Raahi shows which steps still work today.
+**Tagline:** Not every creator has an engineer. Raahi is yours.
 
 Live app: https://raahi-szvmusvcra-el.a.run.app · Repo: https://github.com/jpooja139/raahi · Demo video: [DEMO VIDEO LINK]
 
 ## 50-word pitch
 
-Old YouTube tutorials still get views, and many steps no longer work. Raahi's Tutorial Rescue has Gemini watch the video, then re-checks every step against today's docs with Search grounding. Each step comes back as still works, changed, or unconfirmed, with sources, plus a pin-ready comment for the creator.
+Not every creator has an engineer, so when an old tutorial's steps stop working, viewers get stuck. Raahi is that engineer. Gemini watches the tutorial, then re-checks every step against today's docs with Search grounding: still works, changed, or unconfirmed, with sources, plus a pin-ready update for the creator.
 
 ## 150-word pitch
 
-Old software tutorials keep getting views after their menus have changed. Viewers get stuck; creators rarely reply.
+Not every creator has an engineer. Old software tutorials keep getting views after their menus have changed. Viewers get stuck; creators rarely reply. Raahi is the AI engineer they don't have.
 
 Paste an old tutorial URL into Raahi's Tutorial Rescue. Gemini on Vertex AI watches the video and lists its steps with m:ss timestamps. Each step is re-checked against current docs with Google Search grounding and marked still works, changed (with today's way), or unconfirmed, with sources. Raahi then drafts a pin-ready "what changed" comment for the creator, in English or Hindi.
 
@@ -36,7 +36,7 @@ Caveat: the "outdated" regex was not hand-checked, so these rates are upper boun
 4. Each step is marked still works, changed (today's way), or unconfirmed, with sources. Official vendor sources are badged.
 5. Raahi produces a pin-ready "what changed" comment for the creator, in English or Hindi.
 
-**Supporting abilities:**
+**The rest of the engineer's job:**
 
 - **Decide:** a decision card (tool, why, cost, time, rejected options).
 - **Guide:** voice guidance on Gemini Live; say "dikhao" to send one screenshot and Raahi names the exact button.
